@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_activity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <RelativeLayout
+        android:id="@+id/titleParent"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/title_background" >
+
+        <Button
+            android:id="@+id/btnAccount"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/nav_btn_img2" />
+
+        <TextView
+            android:id="@+id/background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/categories_text"
+            android:textColor="@android:color/black" />
+
+        <Button
+            android:id="@+id/btnPostAd"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/nav_btn_img2" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mainParent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleParent" 
+        android:layout_centerHorizontal="true">
+
+        <RelativeLayout
+            android:id="@+id/block1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/btnCarNumberPlate"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                
+                android:background="@drawable/car_plate" />
+
+            <TextView
+                android:id="@+id/txtCarNumberPlate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnCarNumberPlate"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/car_number_plates_txt"
+                android:textColor="@android:color/black" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/block2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/block1" >
+
+            <Button
+                android:id="@+id/btnMobilePhoneNumbers"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/mobile_phone" />
+
+            <TextView
+                android:id="@+id/txtMobilePhoneNumbers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnMobilePhoneNumbers"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/mobile_phone_numbers_txt"
+                android:textColor="@android:color/black" />
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/block3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/block2" >
+
+            <Button
+                android:id="@+id/btnElectronics"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/electronics" />
+
+            <TextView
+                android:id="@+id/txtElectronics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnElectronics"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:lines="2"
+                android:text="@string/electronics_txt"
+                android:textColor="@android:color/black" />
+        </RelativeLayout>
+        
+        
+        <RelativeLayout
+            android:id="@+id/block4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_below="@id/block1">
+
+            <Button
+                android:id="@+id/btnCarAndEngines"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                
+                android:background="@drawable/cars_engines" />
+
+            <TextView
+                android:id="@+id/txtCarAndEngines"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnCarAndEngines"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/car_and_engines_txt"
+                android:textColor="@android:color/black" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/block5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/block4"
+            android:layout_below="@id/block2" >
+
+            <Button
+                android:id="@+id/btnRealEstate"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/real_estate" />
+
+            <TextView
+                android:id="@+id/txtRealEstate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnRealEstate"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/real_estate_txt"
+                android:textColor="@android:color/black" />
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/block6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/block5"
+            android:layout_below="@id/block3" >
+
+            <Button
+                android:id="@+id/btnLadiesOnly"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ladies_only" />
+
+            <TextView
+                android:id="@+id/txtLadiesOnly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnLadiesOnly"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/ladies_only_txt"
+                android:textColor="@android:color/black" />
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/block7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_below="@id/block4">
+
+            <Button
+                android:id="@+id/btnServices"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                
+                android:background="@drawable/services" />
+
+            <TextView
+                android:id="@+id/txtServices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnServices"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/services_txt"
+                android:textColor="@android:color/black" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/block8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/block7"
+            android:layout_below="@id/block5" >
+
+            <Button
+                android:id="@+id/btnFurniture"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/furniture" />
+
+            <TextView
+                android:id="@+id/txtFurniture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnFurniture"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/furniture_txt"
+                android:textColor="@android:color/black" />
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/block9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/block8"
+            android:layout_below="@id/block6" >
+
+            <Button
+                android:id="@+id/btnOthers"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/others" />
+
+            <TextView
+                android:id="@+id/txtOthers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnOthers"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/others_txt"
+                android:textColor="@android:color/black" />
+        </RelativeLayout>
+        
+        
+        
+        
+        
+    </RelativeLayout>
+>
+
+</RelativeLayout>
