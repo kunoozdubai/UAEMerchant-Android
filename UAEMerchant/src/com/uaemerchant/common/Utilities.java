@@ -1,13 +1,18 @@
 package com.uaemerchant.common;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+
+import org.apache.http.protocol.HTTP;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -20,6 +25,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -294,5 +300,35 @@ public class Utilities {
 		}
 		return options;
 	}
+	
+	public static String readServerResponse(InputStream inputStream) {
+		StringBuilder response = new StringBuilder("");
+		try {
+			char[] buffer = new char[1024];
+
+			try {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, HTTP.UTF_8));
+				Log.d("Response", "Login Response : " );
+				while (reader.read(buffer) != -1) {
+					response.append(buffer);
+				}
+			} finally {
+				if( inputStream != null ) {
+					inputStream.close();
+				}	        		
+			}
+		} catch (MalformedURLException malFormedExp) {
+			malFormedExp.printStackTrace();
+
+		} catch (IOException ioExp) {
+			ioExp.printStackTrace();
+		}
+
+		if( response == null || response.length() <= 0 ) {
+			response = new StringBuilder( "" );
+		}
+		return response.toString();
+	}
+
 
 }
