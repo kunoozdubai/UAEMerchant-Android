@@ -1,9 +1,9 @@
 package com.uaemerchant.common;
 
-import org.json.JSONArray;
+import org.json.JSONObject;
 
 public interface IResponseListener {
 
-	public void onSuccess(JSONArray response);
-	public void onError( JSONArray response );
+	public void onSuccess(JSONObject response);
+	public void onError( JSONObject response );
 }
