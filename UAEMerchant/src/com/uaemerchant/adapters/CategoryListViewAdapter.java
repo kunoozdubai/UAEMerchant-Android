@@ -8,7 +8,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.uaemerchant.R;
 import com.uaemerchant.pojo.Ad;
 
 public class CategoryListViewAdapter extends BaseAdapter {
@@ -58,24 +61,30 @@ public class CategoryListViewAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		View view = convertView;
-//		ViewHolder viewHolder;
+		ViewHolder viewHolder;
 
 		if (view == null) {
-//			viewHolder = new ViewHolder();
-//			view = mInflater.inflate(R.layout.law_articles_item, parent, false);
-//			viewHolder.mainParent = (RelativeLayout) view.findViewById(R.id.mainParent);
-//
-//			viewHolder.thumbnailImg = (ImageView) view
-//					.findViewById(R.id.thumbnailImg);
-//			viewHolder.titleTxt = (TextView) view.findViewById(R.id.titleTxt);
-//
-//			viewHolder.titleTxt.setText(categoryList.get(position)
-//					.getTitle());
-//			view.setTag(viewHolder);
+			viewHolder = new ViewHolder();
+			view = mInflater.inflate(R.layout.ad_item, parent, false);
+
+			viewHolder.thumbnailImg = (ImageView) view.findViewById(R.id.thumbnailImg);
+			viewHolder.itemName = (TextView) view.findViewById(R.id.itemName);
+			viewHolder.priceTxt = (TextView) view.findViewById(R.id.priceTxt);
+			viewHolder.byTxt = (TextView) view.findViewById(R.id.byTxt);
+			viewHolder.dateTxt = (TextView) view.findViewById(R.id.dateTxt);
+
+			viewHolder.itemName.setText(categoryList.get(position).getTitle());
+			viewHolder.priceTxt.setText(categoryList.get(position).getPrice());
+			viewHolder.byTxt.setText(categoryList.get(position).getName());
+			viewHolder.dateTxt.setText(categoryList.get(position).getCreated());
+			
+			view.setTag(viewHolder);
 		} else {
-//			viewHolder = (ViewHolder) view.getTag();
-//			viewHolder.titleTxt.setText(categoryList.get(position)
-//					.getTitle());
+			viewHolder = (ViewHolder) view.getTag();
+			viewHolder.itemName.setText(categoryList.get(position).getTitle());
+			viewHolder.priceTxt.setText(categoryList.get(position).getPrice());
+			viewHolder.byTxt.setText(categoryList.get(position).getName());
+			viewHolder.dateTxt.setText(categoryList.get(position).getCreated());
 		}
 		
 //		String filename = categoryList.get(position).getThumb();
@@ -97,6 +106,14 @@ public class CategoryListViewAdapter extends BaseAdapter {
 
 	public void setListener(OnClickListener listener) {
 		this.listener = listener;
+	}
+	
+	public class ViewHolder{
+		ImageView thumbnailImg;
+		TextView itemName;
+		TextView priceTxt;
+		TextView byTxt;
+		TextView dateTxt;
 	}
 
 }
