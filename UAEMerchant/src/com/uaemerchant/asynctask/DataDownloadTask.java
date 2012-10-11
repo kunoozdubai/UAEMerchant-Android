@@ -1,28 +1,32 @@
 package com.uaemerchant.asynctask;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
 import com.uaemerchant.common.IResponseListener;
 import com.uaemerchant.common.Utilities;
+import com.uaemerchant.network.JSONfunctions;
 
 
 public class DataDownloadTask extends AsyncTask<Void, Void, Void> {
 
 	private Context context;
 	private IResponseListener responseListener;
-	private JSONArray jsonArray = null;
-	private List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-	public DataDownloadTask(Context ctx, IResponseListener iResponseListener, List<NameValuePair> nameValuePairs){
+	private JSONObject jsonObject = null;
+	String requestURL;
+	String postData;
+	
+	
+	public DataDownloadTask(Context ctx, IResponseListener iResponseListener, String requestURL, String postData){
 		context = ctx;
 		responseListener = iResponseListener;
-		this.nameValuePairs = nameValuePairs;
+		this.requestURL = requestURL;
+		this.postData = postData;
+		
 	}
 	@Override
 	protected void onPreExecute() {
@@ -33,19 +37,25 @@ public class DataDownloadTask extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected Void doInBackground(Void... params) {
 		
-//		jsonArray = JSONfunctions.getArrayfromURLValues(
-//				NetworkConstants.DJI_URL, NetworkConstants.WS_INDEX,
-//				nameValuePairs);
-		
-		
+		jsonObject = JSONfunctions.httpPostRequest(requestURL, postData);
 		return null;
 	}
 
 	@Override
 	protected void onPostExecute(Void result) {
 		super.onPostExecute(result);
-		if(jsonArray != null && jsonArray.length() > 0 ){
-			responseListener.onSuccess(jsonArray);
+		if(jsonObject != null && jsonObject.length() > 0 ){
+			try {
+				String error = jsonObject.getString("ERROR");
+				if(error.equals("0")){
+					responseListener.onSuccess(jsonObject);
+				}else{
+					responseListener.onError(jsonObject);
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			
 		}else{
 			responseListener.onError(null);
 		}
