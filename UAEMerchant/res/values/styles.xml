@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+	<style name="Animation.Popup" parent="android:Animation">
+		<item name="android:windowBackground">@drawable/tr_transparent6</item>
+		<item name="android:colorForeground">#000000</item>
+	</style>
+	<style name="Transparent">
+		<item name="android:windowIsTranslucent">true</item>
+		<item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+		<item name="android:windowBackground">@drawable/tr_transparent6</item>
+		<item name="android:windowNoTitle">true</item>
+		<item name="android:colorForeground">#000000</item>
+	</style>
+	<style name="preview">
+		<item name="android:windowIsTranslucent">true</item>
+		<item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+		<item name="android:windowBackground">@drawable/preview</item>
+		<item name="android:windowNoTitle">true</item>
+		<item name="android:colorForeground">#111</item>
+	</style>
+
+</resources> 
+
