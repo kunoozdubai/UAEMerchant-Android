@@ -2,7 +2,6 @@ package com.uaemerchant.activities;
 
 import java.util.ArrayList;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -13,6 +12,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -30,11 +31,13 @@ import com.uaemerchant.common.Utilities;
 import com.uaemerchant.network.Parser;
 import com.uaemerchant.pojo.Ad;
 
-public class CategoryListActivity extends Activity implements OnClickListener, OnItemClickListener {
+public class CategoryListActivity extends Activity implements OnClickListener, OnItemClickListener, OnScrollListener {
 
 	private Context context;
 	private static ListView myList;
 	CategoryListViewAdapter adapter = null;
+	
+	private static int totalRows;
 
 	private EditText searchBar;
 	private String key = "";
@@ -131,6 +134,28 @@ public class CategoryListActivity extends Activity implements OnClickListener, O
 	}
 
 	@Override
+	public void onScroll(AbsListView lw, final int firstVisibleItem,
+	                 final int visibleItemCount, final int totalItemCount) {
+
+//	    switch(lw.getId()) {
+//	        case R.id.list:     
+//  	            final int lastItem = firstVisibleItem + visibleItemCount;
+//	            if(lastItem == totalItemCount) {
+//	    			page = page + 1;
+//	    			key = searchBar.getText().toString();
+//	    			String postJSON = createRequestJSON(catId, String.valueOf(page), "10", key);
+//	    			new DataDownloadTask(context, new AdsResponse(), NetworkConstants.UAE_MERCHANT_URL + NetworkConstants.WS_AD_LIST, postJSON).execute();
+//	            	
+//	            	Toast.makeText(context, "Reached last item", Toast.LENGTH_SHORT).show();
+//	            	lw = null;
+//	            }
+//	            break;
+//	        default:
+//	        	break;
+//	    }
+	}
+	
+	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 		Ad adObject = (Ad) adapter.getItem(position);
 
@@ -161,6 +186,7 @@ public class CategoryListActivity extends Activity implements OnClickListener, O
 				myList.setAdapter(adapter);
 				myList.setOnItemClickListener(CategoryListActivity.this);
 				adapter.setListener(CategoryListActivity.this);
+				myList.setOnScrollListener(CategoryListActivity.this);
 			} else {
 				ArrayList<Ad> newArrayList = Parser.parseAdsList(response);
 				categoryArrayList = mergeAdsList(categoryArrayList, newArrayList);
@@ -213,23 +239,30 @@ public class CategoryListActivity extends Activity implements OnClickListener, O
 			
 		}
 		return requestData.toString();
-		
-		
-		
-//		JSONObject requestJSON = new JSONObject();
-//		try {
-//			requestJSON.put(NetworkConstants.CAT_ID, catId);
-//			requestJSON.put(NetworkConstants.PAGE, page);
-//			requestJSON.put(NetworkConstants.LIMIT, limit);
-//
-//			if (!Utilities.isStringEmptyOrNull(key)) {
-//				requestJSON.put(NetworkConstants.KEY, key);
-//			}
-//
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
-//		return requestJSON;
+	}
+
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
+		if(totalRows > myList.getAdapter().getCount()){
+			if (myList.getLastVisiblePosition() + 1 >= myList.getAdapter().getCount()) {
+				myList.smoothScrollToPosition(myList.getAdapter().getCount() - 3);
+				page = page + 1;
+				key = searchBar.getText().toString();
+				String postJSON = createRequestJSON(catId, String.valueOf(page), "10", key);
+				new DataDownloadTask(context, new AdsResponse(), NetworkConstants.UAE_MERCHANT_URL + NetworkConstants.WS_AD_LIST, postJSON).execute();
+				Toast.makeText(context, "Reached last item", Toast.LENGTH_SHORT).show();
+	
+			}
+		}
+
+	}
+
+	public static int getTotalRows() {
+		return totalRows;
+	}
+
+	public static void setTotalRows(int totalRows) {
+		CategoryListActivity.totalRows = totalRows;
 	}
 
 }
