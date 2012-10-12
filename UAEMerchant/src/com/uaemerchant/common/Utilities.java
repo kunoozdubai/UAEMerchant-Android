@@ -41,6 +41,7 @@ public class Utilities {
 	public static Context mainActivityContext;
 	
 	public static HashMap<String, BitmapDrawable> imageMap = new HashMap<String, BitmapDrawable>();
+	public static HashMap<String, BitmapDrawable> thumbMap = new HashMap<String, BitmapDrawable>();
 
 	/**
 	 * @param name
@@ -85,7 +86,7 @@ public class Utilities {
 		errorMessage = errorMessage.trim();
 
 		progressDialog = new ProgressDialog(ctx);
-		progressDialog.setCancelable(false);
+//		progressDialog.setCancelable(false);
 		progressDialog.setMessage(errorMessage);
 
 //		((DJIMainActivity) CommonConstants.DJI_MAIN_ACTIVITY_CONTEXT)
@@ -227,7 +228,7 @@ public class Utilities {
 		}
 	}
 
-	public static int downloadImage(String fileName, String URL) {
+	public static int downloadImage(String fileName, String url) {
 		File folder = new File(CommonConstants.MERCHANT_IMAGE_DIR);
 		File f = null;
 		if (!folder.exists()) {
@@ -239,7 +240,7 @@ public class Utilities {
 		}
 		HttpURLConnection conn = null;
 		try {
-			URL imageUrl = new URL(URL + fileName);
+			URL imageUrl = new URL(url);
 			conn = (HttpURLConnection) imageUrl.openConnection();
 			conn.setConnectTimeout(30000);
 			conn.setReadTimeout(30000);
