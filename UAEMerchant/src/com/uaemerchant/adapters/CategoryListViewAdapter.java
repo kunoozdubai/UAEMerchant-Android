@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.uaemerchant.R;
+import com.uaemerchant.asynctask.ThumbImageDownloadTask;
+import com.uaemerchant.common.Utilities;
 import com.uaemerchant.pojo.Ad;
 
 public class CategoryListViewAdapter extends BaseAdapter {
@@ -87,19 +89,19 @@ public class CategoryListViewAdapter extends BaseAdapter {
 			viewHolder.dateTxt.setText(categoryList.get(position).getCreated());
 		}
 		
-//		String filename = categoryList.get(position).getThumb();
-//		if(!Utilities.isStringEmptyOrNull(filename) && CommonConstants.thumbMap.get(filename) == null){
-//			if(filename.contains(".jpg") || filename.contains(".png")){
-//				new ThumbImageDownloadTask(context, NetworkConstants.THUMB_URL, filename, viewHolder.thumbnailImg).execute();
-//			}
-//		}
-//		if(CommonConstants.thumbMap.get(filename) != null){
-//			viewHolder.thumbnailImg.setBackgroundDrawable(CommonConstants.thumbMap.get(filename));
-//		}else{
-//			viewHolder.thumbnailImg.setBackgroundResource(R.drawable.new_image);
-//		}
-//		viewHolder.downloadBtn.setOnClickListener(listener);
-//		viewHolder.downloadBtn.setTag(viewHolder);
+		String url = categoryList.get(position).getPhoto1();
+		String filename = String.valueOf(url.hashCode()); 
+		ImageView imageView  = (ImageView)view.findViewById(R.id.thumbnailImg);
+		if(!Utilities.isStringEmptyOrNull(url) && Utilities.thumbMap.get(url) == null){
+				new ThumbImageDownloadTask(context, filename, url, imageView).execute();
+			
+		}
+		if(Utilities.thumbMap.get(filename) != null){
+			imageView.setBackgroundDrawable(Utilities.thumbMap.get(filename));
+//			viewHolder.thumbnailImg.setBackgroundDrawable(Utilities.thumbMap.get(filename));
+		}else{
+			imageView.setBackgroundResource(R.drawable.test);
+		}
 
 		return view;
 	}
