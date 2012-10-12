@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.uaemerchant.R;
 import com.uaemerchant.common.Utilities;
+import com.uaemerchant.dialogs.AccountDialog;
 
 public class UAEMerchantMainActivity extends Activity implements android.view.View.OnClickListener{
 
@@ -77,6 +78,7 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 		int id = v.getId();
 		
 		if(id == R.id.btnAccount){
+			new AccountDialog(context).show();
 			Toast.makeText(context, "btnAccount Clicked", Toast.LENGTH_SHORT).show();
 		}else if(id == R.id.btnPostAd){
 			Toast.makeText(context, "btnPostAd Clicked", Toast.LENGTH_SHORT).show();
