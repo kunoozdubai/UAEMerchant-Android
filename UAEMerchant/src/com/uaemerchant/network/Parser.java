@@ -6,12 +6,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.uaemerchant.activities.CategoryListActivity;
 import com.uaemerchant.common.NetworkConstants;
 import com.uaemerchant.pojo.Ad;
 
 public class Parser {
 
-	
 	public static ArrayList<Ad> parseAdsList(JSONObject object) {
 
 		ArrayList<Ad> adsList = new ArrayList<Ad>();
@@ -34,11 +34,13 @@ public class Parser {
 		String email = "";
 		String phone = "";
 		String name = "";
-		
+
 		JSONArray response = new JSONArray();
-		if(!object.isNull("response")){
+		if (!object.isNull("response")) {
 			try {
 				response = (JSONArray) object.getJSONArray("response");
+				int totalRows = object.getInt("totalrows");
+				CategoryListActivity.setTotalRows(totalRows);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -101,7 +103,8 @@ public class Parser {
 				if (!jsonObject.isNull((NetworkConstants.NAME))) {
 					name = jsonObject.getString(NetworkConstants.NAME);
 				}
-				Ad ad = new Ad(adId, userId, catId, title, price, city, address, longitude, latitude, description, photo1, photo2, photo3, created, status, email, phone, name);
+				Ad ad = new Ad(adId, userId, catId, title, price, city, address, longitude, latitude, description, photo1, photo2, photo3, created, status,
+						email, phone, name);
 				adsList.add(ad);
 
 				adId = "";
@@ -127,6 +130,18 @@ public class Parser {
 			}
 		}
 		return adsList;
+	}
+
+	public static String parseRegisterationResponse(JSONObject response) {
+		String userId = "";
+		try {
+			if (!response.isNull("response")) {
+				userId = response.getString("response");
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return userId;
 	}
 
 }
