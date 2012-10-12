@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Used in View/Spinner1.java -->
+    <string-array name="cities">
+        <item>Dubai</item>
+        <item>Ajman</item>
+        <item>Sharjah</item>
+        <item>Abu Dhabi</item>
+        <item>Umm Al Quwain</item>
+        <item>Ras Al Khaimah</item>
+        <item>Fujairah</item>
+    </string-array>
+</resources>
