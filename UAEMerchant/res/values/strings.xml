@@ -16,6 +16,7 @@
     <string name="furniture_txt">Furniture</string>
     <string name="others_txt">Others</string>
     <string name="city_spinner_prompt">City</string>
+    <string name="category_spinner_prompt">Category</string>
     
 
 </resources>
