@@ -15,9 +15,11 @@ import java.util.HashMap;
 import org.apache.http.protocol.HTTP;
 
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -25,11 +27,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.uaemerchant.R;
 import com.uaemerchant.activities.UAEMerchantMainActivity;
+import com.uaemerchant.dialogs.AccountDialog;
+import com.uaemerchant.dialogs.PostDialog;
+import com.uaemerchant.dialogs.RegisterDialog;
 
 public class Utilities {
 
@@ -309,7 +314,6 @@ public class Utilities {
 
 			try {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, HTTP.UTF_8));
-				Log.d("Response", "Login Response : " );
 				while (reader.read(buffer) != -1) {
 					response.append(buffer);
 				}
@@ -330,6 +334,38 @@ public class Utilities {
 		}
 		return response.toString();
 	}
+	
+	public static String getCatId(String name) {
+		
+		if (name.equals("Car Number Plates")) {
+			return "1";
+		}
+		if (name.equals("Mobile Phone Numbers")) {
+			return "2";
+		}
+		if (name.equals("Electronics")) {
+			return "3";
+		}
+		if (name.equals("Car and Engines")) {
+			return "4";
+		}
+		if (name.equals("Real Estate")) {
+			return "5";
+		}
+		if (name.equals("Ladies Only")) {
+			return "6";
+		}
+		if (name.equals("Services")) {
+			return "7";
+		}
+		if (name.equals("Furniture")) {
+			return "8";
+		}
+		if (name.equals("Others")) {
+			return "9";
+		}
 
+		return "";
+	}
 
 }
