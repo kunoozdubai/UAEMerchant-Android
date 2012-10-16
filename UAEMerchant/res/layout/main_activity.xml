@@ -25,7 +25,7 @@
             android:background="@drawable/nav_btn_img2" />
 
         <TextView
-            android:id="@+id/background"
+            android:id="@+id/titleTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
