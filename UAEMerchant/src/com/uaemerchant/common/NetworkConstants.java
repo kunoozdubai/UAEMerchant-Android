@@ -6,6 +6,7 @@ public class NetworkConstants {
 	
 	
 	public static String UAE_MERCHANT_URL = "http://app.uaemerchant.net/";
+	public static String UAE_MERCHANT_IMAGE_URL = "http://app.uaemerchant.net/gallery/";
 	public static String WS_AD_LIST  = "adlist.php";
 	public static String WS_REGISTER  = "register.php";
 	public static String WS_POST  = "post.php";
