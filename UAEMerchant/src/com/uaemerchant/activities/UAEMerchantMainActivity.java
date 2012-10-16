@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.uaemerchant.R;
 import com.uaemerchant.common.Utilities;
 import com.uaemerchant.dialogs.AccountDialog;
+import com.uaemerchant.dialogs.PostDialog;
 
 public class UAEMerchantMainActivity extends Activity implements android.view.View.OnClickListener{
 
@@ -81,6 +82,7 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 			new AccountDialog(context).show();
 			Toast.makeText(context, "btnAccount Clicked", Toast.LENGTH_SHORT).show();
 		}else if(id == R.id.btnPostAd){
+			new PostDialog(context).show();
 			Toast.makeText(context, "btnPostAd Clicked", Toast.LENGTH_SHORT).show();
 		}else if(id == R.id.btnCarNumberPlate || id == R.id.btnMobilePhoneNumbers || id == R.id.btnElectronics
 				|| id == R.id.btnCarAndEngines || id == R.id.btnRealEstate || id == R.id.btnLadiesOnly 
@@ -94,47 +96,6 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 			intent.putExtra("catName", catName);
 			startActivity(intent);
 		}
-		
-//		switch (id){
-//		
-//		case R.id.btnAccount:
-//			Toast.makeText(context, "btnAccount Clicked", Toast.LENGTH_SHORT).show();
-//			break;
-//		case R.id.btnPostAd:
-//			Toast.makeText(context, "btnPostAd Clicked", Toast.LENGTH_SHORT).show();
-//			break;
-//		case R.id.btnCarNumberPlate:
-//			Toast.makeText(context, "btnCarNumberPlate Clicked", Toast.LENGTH_SHORT).show();
-//			break;
-//		case R.id.btnMobilePhoneNumbers:
-//			Toast.makeText(context, "btnMobilePhoneNumbers Clicked", Toast.LENGTH_SHORT).show();
-//			break;
-//		case R.id.btnElectronics:
-//			Toast.makeText(context, "btnElectronics Clicked", Toast.LENGTH_SHORT).show();
-//			break;
-//		case R.id.btnCarAndEngines:
-//			Toast.makeText(context, "btnCarAndEngines Clicked", Toast.LENGTH_SHORT).show();
-//			break;
-//		case R.id.btnRealEstate:
-//			Toast.makeText(context, "btnRealEstate Clicked", Toast.LENGTH_SHORT).show();
-//			break;
-//		case R.id.btnLadiesOnly:
-//			Toast.makeText(context, "btnLadiesOnly Clicked", Toast.LENGTH_SHORT).show();
-//			break;
-//		case R.id.btnServices:
-//			Toast.makeText(context, "btnServices Clicked", Toast.LENGTH_SHORT).show();
-//			break;
-//		case R.id.btnFurniture:
-//			Toast.makeText(context, "btnFurniture Clicked", Toast.LENGTH_SHORT).show();
-//			break;
-//		case R.id.btnOthers:
-//			Toast.makeText(context, "btnOthers Clicked", Toast.LENGTH_SHORT).show();
-//			break;
-//			
-//		default:
-//			break;
-//		}
-		
 	}
 
 	private String getCatName(int id) {
@@ -166,7 +127,6 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 		if (id == R.id.btnOthers) {
 			return getString(R.string.others_txt);
 		}
-
 		return "";
 	}
 
@@ -199,7 +159,6 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 		if (id == R.id.btnOthers) {
 			return "9";
 		}
-
 		return "";
 	}
 }
