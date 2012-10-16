@@ -90,11 +90,11 @@ public class CategoryListViewAdapter extends BaseAdapter {
 		}
 		
 		String url = categoryList.get(position).getPhoto1();
-		String filename = String.valueOf(url.hashCode()); 
+		String[] urlTokens = url.split("/");
+		String filename = urlTokens[urlTokens.length - 1];
 		ImageView imageView  = (ImageView)view.findViewById(R.id.thumbnailImg);
 		if(!Utilities.isStringEmptyOrNull(url) && Utilities.thumbMap.get(url) == null){
 				new ThumbImageDownloadTask(context, filename, url, imageView).execute();
-			
 		}
 		if(Utilities.thumbMap.get(filename) != null){
 			imageView.setBackgroundDrawable(Utilities.thumbMap.get(filename));
