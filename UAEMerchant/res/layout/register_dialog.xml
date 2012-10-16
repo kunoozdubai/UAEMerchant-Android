@@ -14,7 +14,7 @@
     <RelativeLayout
         android:id="@+id/titleParent"
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:background="@drawable/title_background" >
 
         <TextView
