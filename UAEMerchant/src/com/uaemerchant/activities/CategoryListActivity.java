@@ -28,6 +28,7 @@ import com.uaemerchant.asynctask.DataDownloadTask;
 import com.uaemerchant.common.IResponseListener;
 import com.uaemerchant.common.NetworkConstants;
 import com.uaemerchant.common.Utilities;
+import com.uaemerchant.dialogs.ItemDetailDialog;
 import com.uaemerchant.network.Parser;
 import com.uaemerchant.pojo.Ad;
 
@@ -158,7 +159,7 @@ public class CategoryListActivity extends Activity implements OnClickListener, O
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 		Ad adObject = (Ad) adapter.getItem(position);
-
+		new ItemDetailDialog(context, adObject).show();
 		Toast.makeText(context, "Item Clicked: " + adObject.getTitle(), Toast.LENGTH_SHORT).show();
 	}
 
