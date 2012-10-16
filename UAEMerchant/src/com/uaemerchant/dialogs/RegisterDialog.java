@@ -58,14 +58,6 @@ public class RegisterDialog extends Dialog implements View.OnClickListener, OnCa
 
 	}
 
-	private void showRegisterAlertDialog() {
-		Builder alertBuilder = new Builder(context);
-
-		alertBuilder.setTitle("Register!");
-		alertBuilder.setMessage("You need to register to post your ads");
-		alertBuilder.create().show();
-	}
-
 	private void initializeViews() {
 
 		Button button = (Button) registerView.findViewById(R.id.saveBtn);
@@ -108,7 +100,7 @@ public class RegisterDialog extends Dialog implements View.OnClickListener, OnCa
 
 	}
 
-	private OnKeyListener accountKeyListener = new OnKeyListener() {
+	private OnKeyListener registerKeyListener = new OnKeyListener() {
 
 		@Override
 		public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
