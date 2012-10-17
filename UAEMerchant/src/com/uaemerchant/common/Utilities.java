@@ -1,6 +1,7 @@
 package com.uaemerchant.common;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,11 +16,9 @@ import java.util.HashMap;
 import org.apache.http.protocol.HTTP;
 
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -27,14 +26,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.uaemerchant.R;
 import com.uaemerchant.activities.UAEMerchantMainActivity;
-import com.uaemerchant.dialogs.AccountDialog;
-import com.uaemerchant.dialogs.PostDialog;
-import com.uaemerchant.dialogs.RegisterDialog;
 
 public class Utilities {
 
@@ -163,6 +159,26 @@ public class Utilities {
 			editor.commit();
 		}
 	}
+	public static int getIntegerValuesFromPreference(Context context,
+			String name, int defaultValue) {
+
+		SharedPreferences myPref = context.getSharedPreferences(
+				CommonConstants.USER_DEFAULT_PREFERENCES, Context.MODE_PRIVATE);
+		return myPref.getInt(name, defaultValue);
+
+	}
+	
+	public static void setIntegerValuesToPreferences(Context context,
+			String name, int value) {
+		SharedPreferences myPref = context.getSharedPreferences(
+				CommonConstants.USER_DEFAULT_PREFERENCES, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = myPref.edit();
+
+		if (editor != null) {
+			editor.putInt(name, value);
+			editor.commit();
+		}
+	}
 
 	/**
 	 * 
@@ -206,6 +222,39 @@ public class Utilities {
 			out.write(buffer, 0, read);
 		}
 	}
+	
+	public static String copyFileInBuffer(InputStream is)
+			throws IOException {
+//		StringBuilder data = new StringBuilder();
+//		byte[] buffer = new byte[1024];
+//		int read;
+//		while ((read = is.read(buffer)) != -1) {
+//			//out.write(buffer, 0, read);
+//			data.append(buffer.toString());
+//			buffer = new byte[1024];
+//		}
+		
+			byte[] data = {};
+		   
+		    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		     byte[] b = new byte[1024];
+		     int bytesRead;
+		     try {
+		      while (( bytesRead = is.read(b)) != -1) {
+		       bos.write(b, 0, bytesRead);
+		      }
+		     } catch (IOException e) {
+		      e.printStackTrace();
+		     }
+		     data = bos.toByteArray();
+		   
+		   return Base64.encodeToString(data, Base64.DEFAULT);
+		
+		
+		
+		
+	}
+	
 
 	public static boolean isArrayValuesEmptyOrNull(String[] values) {
 		for (int i = 0; i < values.length; i++) {
