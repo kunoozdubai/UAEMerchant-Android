@@ -1,11 +1,8 @@
 package com.uaemerchant.dialogs;
 
-import java.util.ArrayList;
-
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,20 +14,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.uaemerchant.R;
-import com.uaemerchant.activities.CategoryListActivity;
-import com.uaemerchant.adapters.CategoryListViewAdapter;
 import com.uaemerchant.asynctask.DataDownloadTask;
 import com.uaemerchant.common.CommonConstants;
 import com.uaemerchant.common.IResponseListener;
 import com.uaemerchant.common.NetworkConstants;
 import com.uaemerchant.common.Utilities;
 import com.uaemerchant.network.Parser;
-import com.uaemerchant.pojo.Ad;
 
 public class RegisterDialog extends Dialog implements View.OnClickListener, OnCancelListener {
 	private View registerView;
