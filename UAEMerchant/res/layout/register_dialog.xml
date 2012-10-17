@@ -161,6 +161,13 @@
                 android:layout_toLeftOf="@id/cityInput"
                 android:text="City"
                 android:textColor="@android:color/black" />
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="23dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/combo_arrow" />
         </RelativeLayout>
         
             <Button
