@@ -11,7 +11,6 @@ import android.widget.ImageView;
 
 import com.uaemerchant.activities.UAEMerchantMainActivity;
 import com.uaemerchant.common.CommonConstants;
-import com.uaemerchant.common.NetworkConstants;
 import com.uaemerchant.common.Utilities;
 
 public class ThumbImageDownloadTask extends AsyncTask<Void, Void, Void> {
