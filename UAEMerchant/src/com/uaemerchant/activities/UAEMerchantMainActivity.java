@@ -3,10 +3,13 @@ package com.uaemerchant.activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,11 +19,13 @@ import android.widget.Toast;
 import com.uaemerchant.R;
 import com.uaemerchant.common.Utilities;
 import com.uaemerchant.dialogs.AccountDialog;
+import com.uaemerchant.dialogs.AddPicturesDialog;
 import com.uaemerchant.dialogs.PostDialog;
 
 public class UAEMerchantMainActivity extends Activity implements android.view.View.OnClickListener{
 
 	private Context context;
+	private static String imagePath = "";
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -161,4 +166,30 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 		}
 		return "";
 	}
+	
+	public static void setImagePath(String path){
+		imagePath = path;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 100) {
+			if (resultCode == RESULT_OK) {
+				AddPicturesDialog.setPhoto(imagePath);	
+			} 
+		}else if(requestCode == 200){
+			if (resultCode == RESULT_OK) {
+				Uri selectedImage = data.getData();
+				String[] filePathColumn = {MediaStore.Images.Media.DATA};
+				Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+				cursor.moveToFirst();
+				int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+				String imagePath = cursor.getString(columnIndex);
+				cursor.close();
+				AddPicturesDialog.setPhoto(imagePath);
+			}
+		}
+		
+	}
+	
 }
