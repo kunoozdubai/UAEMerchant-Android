@@ -5,15 +5,12 @@ import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -22,6 +19,7 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 import com.uaemerchant.R;
+import com.uaemerchant.common.CommonConstants;
 import com.uaemerchant.common.Utilities;
 
 public class UAEMerchantGoogleMapActivity extends MapActivity {
@@ -29,8 +27,11 @@ public class UAEMerchantGoogleMapActivity extends MapActivity {
 	private Context context;
 	private MapView mapView;
 
-	private static final double latitudeE6 = 25; // 25269700
-	private static final double longitudeE6 = 55; // 55309500
+//	private static final double latitudeE6 = 25; // 25269700
+//	private static final double longitudeE6 = 55; // 55309500
+	
+	private static final double latitudeE6 = CommonConstants.LATITUDE;
+	private static final double longitudeE6 = CommonConstants.LONGITUDE;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
