@@ -1,5 +1,7 @@
 package com.uaemerchant.dialogs;
 
+import java.util.HashMap;
+
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -25,6 +27,7 @@ import com.uaemerchant.common.CommonConstants;
 import com.uaemerchant.common.IResponseListener;
 import com.uaemerchant.common.NetworkConstants;
 import com.uaemerchant.common.Utilities;
+import com.uaemerchant.pojo.Ad;
 
 public class PostDialog extends Dialog implements View.OnClickListener, OnCancelListener {
 	private View postView;
@@ -42,6 +45,10 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 	String longitude;
 	String latitude;
 	
+	private Ad ad = null;
+	
+	private static HashMap<Integer, String> imagePaths = new HashMap<Integer, String>(3); 
+	
 	
 	public PostDialog(Context context) {
 		super(context, R.style.preview);
@@ -55,7 +62,7 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 	@Override
 	public void show() {
 		super.show();
-		String userId = Utilities.getStringValuesFromPreference(context, CommonConstants.PREF_USER_ID, "");
+		userId = Utilities.getStringValuesFromPreference(context, CommonConstants.PREF_USER_ID, "");
 		if(!Utilities.isStringEmptyOrNull(userId)){
 			initializeViews();
 		}else{
@@ -91,15 +98,13 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 	public void onClick(View v) {
 		int id = v.getId();
 		if(id == R.id.postBtn){
-			
-//			userId = Utilities.getStringValuesFromPreference(context, CommonConstants.PREF_USER_ID, "");
-//			if(Utilities.isStringEmptyOrNull(userId)){
-//				showRegisterAlertDialog();
-//				return;
-//			}else{
+
+			prepareData();
+			if(ad != null){
 				showAddPicturesDialog();
-//			}
-			
+			}else{
+				Toast.makeText(context, "Please fill in the form!", Toast.LENGTH_SHORT).show();
+			}
 		}
 
 	}
@@ -139,7 +144,8 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
         alertBuilder.setNegativeButton("No, Post Ad", new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				prepareAndPostData();
+				
+				postData();
 				hide();
 			}
 		});
@@ -148,8 +154,9 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				/// open dialog to add pictures
-				new AddPicturesDialog(context).show();
 				
+			
+				new AddPicturesDialog(context, ad, new PostResponse()).show();
 				
 			}
 		});
@@ -179,9 +186,8 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 		@Override
 		public void onSuccess(JSONObject response) {
 			Toast.makeText(context, "onSuccess", Toast.LENGTH_SHORT).show();
-//			String userId = Parser.parseRegisterationResponse(response);
 
-//			hide();				
+			hide();				
 			
 		}
 
@@ -200,7 +206,7 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 	}
 	
 	
-	private void prepareAndPostData(){
+	private void prepareData(){
 		
 		title  = ((EditText) findViewById(R.id.titleInput)).getText().toString();
 		if(Utilities.isStringEmptyOrNull(title)){
@@ -229,6 +235,12 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 			latitude = "";
 		}
 		category = Utilities.getCatId(category);
+		ad = new Ad("", userId, category, title, price, city, address, longitude, latitude, description, "", "", "", "", "", "", "", "");
+		
+		
+	}
+	
+	private void postData(){
 		
 		String postData = createRequestJSON(userId, title, city, address, description, price, category, longitude, latitude);
 		
