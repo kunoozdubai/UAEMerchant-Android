@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/categories_text"
+            android:text="Item Details"
             android:textColor="@android:color/black" />
     </RelativeLayout>
 
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="7dp"
-            android:text="Item Title"
+            android:text=""
             android:textColor="@android:color/black" />
 
         <RelativeLayout
@@ -54,21 +54,21 @@
                 android:id="@+id/photo1"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@drawable/car_plate" />
+                android:background="@drawable/placeholder" />
 
             <ImageView
                 android:id="@+id/photo2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_toRightOf="@id/photo1"
-                android:background="@drawable/car_plate" />
+                android:background="@drawable/placeholder" />
 
             <ImageView
                 android:id="@+id/photo3"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_toRightOf="@id/photo2"
-                android:background="@drawable/car_plate" />
+                android:background="@drawable/placeholder" />
         </RelativeLayout>
 
         <ImageView
@@ -78,7 +78,8 @@
             android:layout_alignParentRight="true"
             android:layout_below="@id/block1"
             android:layout_marginRight="5dp"
-            android:background="@drawable/maps" />
+            android:background="@drawable/maps" 
+            android:visibility="gone"/>
 
         <RelativeLayout
             android:id="@+id/block2"
@@ -137,7 +138,7 @@
                 android:id="@+id/priceTxt"
                 android:layout_width="100dp"
                 android:layout_height="25dp"
-                android:text="123456789"
+                android:text=""
                 android:gravity="center"
                 
                 android:background="@drawable/black_btn"
@@ -149,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/priceTxt"
                 android:layout_marginTop="15dp"
-                android:text="Waqas Butt"
+                android:text=""
                 android:textColor="@android:color/black" />
 
             <TextView
@@ -158,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/byTxt"
                 android:layout_marginTop="15dp"
-                android:text="Gujrat"
+                android:text=""
                 android:textColor="@android:color/black" />
 
             <TextView
@@ -167,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cityTxt"
                 android:layout_marginTop="15dp"
-                android:text="Kacha sanda raj garh, near karam elahi park Lahore, Pakistan"
+                android:text=""
                 android:textColor="@android:color/black" />
         </RelativeLayout>
 
@@ -187,7 +188,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/dateHeadingTxt"
             android:layout_alignLeft="@id/block3"
-            android:text="6th oct 2012"
+            android:text=""
             android:textColor="@android:color/black" />
 
         <TextView
@@ -212,7 +213,7 @@
             <ScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -223,7 +224,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="this is a very nice sofa, your kids can play on it they can use it like a trumpad that elastic thing which doesnt break off and the kid goes really high in the air its bloody awesome dude try it buy it fucking buy it man"
+                    android:text=""
                     android:textColor="@android:color/black" />
             </ScrollView>
         </RelativeLayout>
@@ -235,6 +236,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
              >
             <ImageView
                 android:id="@+id/messageBtn"
