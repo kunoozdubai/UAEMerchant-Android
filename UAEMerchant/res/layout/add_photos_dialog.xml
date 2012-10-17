@@ -54,8 +54,7 @@
                 android:id="@+id/photo1"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@drawable/car_plate"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/removePhoto1"
@@ -64,7 +63,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:background="@drawable/remove"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -78,8 +77,7 @@
                 android:id="@+id/photo2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@drawable/car_plate"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/removePhoto2"
@@ -88,7 +86,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:background="@drawable/remove"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -103,8 +101,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_toRightOf="@id/photo2"
-                android:background="@drawable/car_plate"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/removePhoto3"
@@ -113,7 +110,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:background="@drawable/remove"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </RelativeLayout>
 
         <ImageView
