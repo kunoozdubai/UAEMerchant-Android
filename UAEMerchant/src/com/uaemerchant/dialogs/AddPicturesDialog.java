@@ -1,8 +1,10 @@
 package com.uaemerchant.dialogs;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -21,7 +23,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.uaemerchant.R;
-import com.uaemerchant.asynctask.DataDownloadTask;
+import com.uaemerchant.asynctask.DataUploadTask;
+import com.uaemerchant.common.CommonConstants;
 import com.uaemerchant.common.IResponseListener;
 import com.uaemerchant.common.NetworkConstants;
 import com.uaemerchant.common.Utilities;
@@ -159,101 +162,119 @@ public class AddPicturesDialog extends Dialog implements View.OnClickListener, O
 	
 	private void postData(){
 		
-		String postData = createRequestJSON(ad.getUserId(), ad.getTitle(), ad.getCity(), ad.getAddress(), 
-				ad.getDescription(), ad.getPrice(), ad.getCatId(), ad.getLongitude(), ad.getLatitude());
+//		String postData = createRequestJSON(ad.getUserId(), ad.getTitle(), ad.getCity(), ad.getAddress(), 
+//				ad.getDescription(), ad.getPrice(), ad.getCatId(), ad.getLongitude(), ad.getLatitude());
 		
-		new DataDownloadTask(context, postListener, NetworkConstants.UAE_MERCHANT_URL + NetworkConstants.WS_POST, postData).execute();
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair(NetworkConstants.TITLE,ad.getTitle()));
+		nameValuePairs.add(new BasicNameValuePair(NetworkConstants.CITY,ad.getCity()));
+		nameValuePairs.add(new BasicNameValuePair(NetworkConstants.USER_ID,ad.getUserId()));
+		nameValuePairs.add(new BasicNameValuePair(NetworkConstants.ADDRESS,ad.getAddress()));
+		nameValuePairs.add(new BasicNameValuePair(NetworkConstants.DESCRIPTION,ad.getDescription()));
+		nameValuePairs.add(new BasicNameValuePair(NetworkConstants.PRICE,ad.getPrice()));
+		nameValuePairs.add(new BasicNameValuePair(NetworkConstants.CAT_ID,ad.getCatId()));
+		nameValuePairs.add(new BasicNameValuePair(NetworkConstants.LONGITUDE,ad.getLongitude()));
+		nameValuePairs.add(new BasicNameValuePair(NetworkConstants.LATITUDE,ad.getLatitude()));
+		
+		String[] imagePaths = new String[3];
+		imagePaths[0] = ad.getPhoto1();
+		imagePaths[1] = ad.getPhoto2();
+		imagePaths[2] = ad.getPhoto3();
+		
+		new DataUploadTask(context, postListener, NetworkConstants.UAE_MERCHANT_URL + NetworkConstants.WS_POST, nameValuePairs, imagePaths).execute();
 		hide();
 	}
 	
 	private static String createRequestJSON(String userId, String title, String city, String address, String description, String price, String category,
 			String longitude, String latitude) {
-		StringBuilder requestData = new StringBuilder();
-		requestData.append(NetworkConstants.TITLE);
-		requestData.append("=");
-		requestData.append(title);
-		requestData.append("&");
-		requestData.append(NetworkConstants.PRICE);
-		requestData.append("=");
-		requestData.append(price);
-		requestData.append("&");
-		requestData.append(NetworkConstants.USER_ID);
-		requestData.append("=");
-		requestData.append(userId);
-		requestData.append("&");
-		requestData.append(NetworkConstants.CAT_ID);
-		requestData.append("=");
-		requestData.append(category);
-		requestData.append("&");
-		requestData.append(NetworkConstants.ADDRESS);
-		requestData.append("=");
-		requestData.append(address);
-		requestData.append("&");
-		requestData.append(NetworkConstants.CITY);
-		requestData.append("=");
-		requestData.append(city);
-		requestData.append("&");
-		requestData.append(NetworkConstants.LONGITUDE);
-		requestData.append("=");
-		requestData.append(longitude);
-		requestData.append("&");
-		requestData.append(NetworkConstants.LATITUDE);
-		requestData.append("=");
-		requestData.append(latitude);
-		requestData.append("&");
-		requestData.append(NetworkConstants.DESCRIPTION);
-		requestData.append("=");
-		requestData.append(description);
-		requestData.append("&");
+		
+		return "";
+//		StringBuilder requestData = new StringBuilder();
+//		requestData.append(NetworkConstants.TITLE);
+//		requestData.append("=");
+//		requestData.append(title);
+//		requestData.append("&");
+//		requestData.append(NetworkConstants.PRICE);
+//		requestData.append("=");
+//		requestData.append(price);
+//		requestData.append("&");
+//		requestData.append(NetworkConstants.USER_ID);
+//		requestData.append("=");
+//		requestData.append(userId);
+//		requestData.append("&");
+//		requestData.append(NetworkConstants.CAT_ID);
+//		requestData.append("=");
+//		requestData.append(category);
+//		requestData.append("&");
+//		requestData.append(NetworkConstants.ADDRESS);
+//		requestData.append("=");
+//		requestData.append(address);
+//		requestData.append("&");
+//		requestData.append(NetworkConstants.CITY);
+//		requestData.append("=");
+//		requestData.append(city);
+//		requestData.append("&");
+//		requestData.append(NetworkConstants.LONGITUDE);
+//		requestData.append("=");
+//		requestData.append(longitude);
+//		requestData.append("&");
+//		requestData.append(NetworkConstants.LATITUDE);
+//		requestData.append("=");
+//		requestData.append(latitude);
+//		requestData.append("&");
+//		requestData.append(NetworkConstants.DESCRIPTION);
+//		requestData.append("=");
+//		requestData.append(description);
+//		requestData.append("&");
 
-		String photo1 = "";
-		String photo2 = "";
-		String photo3 = "";
-		String name = "photo1";
-		FileInputStream fis = null;
-		try {
-			if (!Utilities.isStringEmptyOrNull(ad.getPhoto1())) {
-				fis = new FileInputStream(ad.getPhoto1());
-				photo1 = Utilities.copyFileInBuffer(fis);
-
-				requestData.append(name);
-				requestData.append("=");
-				requestData.append(photo1);
-				requestData.append("&");
-				name = "photo2";
-
-			}
-			if (!Utilities.isStringEmptyOrNull(ad.getPhoto2())) {
-				fis = new FileInputStream(ad.getPhoto2());
-				photo2 = Utilities.copyFileInBuffer(fis);
-
-				requestData.append(name);
-				requestData.append("=");
-				requestData.append(photo2);
-				requestData.append("&");
-				if (name.equals("photo1")) {
-					name = "photo2";
-				} else {
-					name = "photo3";
-
-				}
-
-			}
-			if (!Utilities.isStringEmptyOrNull(ad.getPhoto3())) {
-				fis = new FileInputStream(ad.getPhoto3());
-				photo3 = Utilities.copyFileInBuffer(fis);
-
-				requestData.append(name);
-				requestData.append("=");
-				requestData.append(photo3);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return requestData.toString();
+//		String photo1 = "";
+//		String photo2 = "";
+//		String photo3 = "";
+//		String name = "photo1";
+//		FileInputStream fis = null;
+//		try {
+//			if (!Utilities.isStringEmptyOrNull(ad.getPhoto1())) {
+//				fis = new FileInputStream(ad.getPhoto1());
+//				photo1 = Utilities.copyFileInBuffer(fis);
+//
+//				requestData.append(name);
+//				requestData.append("=");
+//				requestData.append(photo1);
+//				requestData.append("&");
+//				name = "photo2";
+//
+//			}
+//			if (!Utilities.isStringEmptyOrNull(ad.getPhoto2())) {
+//				fis = new FileInputStream(ad.getPhoto2());
+//				photo2 = Utilities.copyFileInBuffer(fis);
+//
+//				requestData.append(name);
+//				requestData.append("=");
+//				requestData.append(photo2);
+//				requestData.append("&");
+//				if (name.equals("photo1")) {
+//					name = "photo2";
+//				} else {
+//					name = "photo3";
+//
+//				}
+//
+//			}
+//			if (!Utilities.isStringEmptyOrNull(ad.getPhoto3())) {
+//				fis = new FileInputStream(ad.getPhoto3());
+//				photo3 = Utilities.copyFileInBuffer(fis);
+//
+//				requestData.append(name);
+//				requestData.append("=");
+//				requestData.append(photo3);
+//			}
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return requestData.toString();
 	}
 	
 	private OnKeyListener addPicturesKeyListener = new OnKeyListener() {
