@@ -17,6 +17,7 @@ import org.apache.http.protocol.HTTP;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,9 +27,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.uaemerchant.activities.UAEMerchantMainActivity;
 
@@ -415,6 +419,42 @@ public class Utilities {
 		}
 
 		return "";
+	}
+	
+	public static void call(String number) {
+		number = number.trim();
+	    try {
+	        Intent callIntent = new Intent(Intent.ACTION_CALL);
+	        callIntent.setData(Uri.parse("tel:"+number));
+	        ((UAEMerchantMainActivity)mainActivityContext).startActivity(callIntent);
+	    } catch (ActivityNotFoundException e) {
+	        Toast.makeText(mainActivityContext, "Call Failed", Toast.LENGTH_SHORT).show();
+	    }
+	}
+	
+	public static void sms(String number){
+		
+		number = number.trim();
+	    Uri uri = Uri.parse("smsto:" + number);
+	    Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+	    //intent.putExtra("sms_body", message);  
+	    ((UAEMerchantMainActivity)mainActivityContext).startActivity(intent);
+	}
+	
+	public static void email(String email){
+		email = email.trim();
+		Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);  
+		String aEmailList[] = { email };  
+//		String aEmailCCList[] = { "user3@fakehost.com","user4@fakehost.com"};  
+//		String aEmailBCCList[] = { "user5@fakehost.com" };  
+		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, aEmailList);  
+//		emailIntent.putExtra(android.content.Intent.EXTRA_CC, aEmailCCList);  
+//		emailIntent.putExtra(android.content.Intent.EXTRA_BCC, aEmailBCCList);  
+//		emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "My subject");  
+		emailIntent.setType("plain/text");  
+//		emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "My message body.");  
+		((UAEMerchantMainActivity)mainActivityContext).startActivity(emailIntent);
+		
 	}
 
 }
