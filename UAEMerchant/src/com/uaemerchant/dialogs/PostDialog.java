@@ -42,8 +42,8 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 	String address;
 	String description;
 	boolean location;
-	String longitude;
-	String latitude;
+	String longitude = "";
+	String latitude = "";
 	
 	private Ad ad = null;
 	
