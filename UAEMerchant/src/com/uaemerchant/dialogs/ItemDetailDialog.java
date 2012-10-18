@@ -145,11 +145,11 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 			Intent intent = new Intent(context, UAEMerchantGoogleMapActivity.class);
 			context.startActivity(intent);
 		} else if (id == R.id.messageBtn) {
-
+			Utilities.sms(ad.getPhone());
 		} else if (id == R.id.callBtn) {
-
+			Utilities.call(ad.getPhone());
 		} else if (id == R.id.emailBtn) {
-
+			Utilities.email(ad.getEmail());
 		} else if(id == R.id.photo1){
 			Intent intent = new Intent();
 			intent.setAction(Intent.ACTION_VIEW);
@@ -192,5 +192,7 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 		activity = null;
 		Utilities.unbindDrawables(findViewById(R.id.account_dialog));
 	}
+	
+	
 
 }
