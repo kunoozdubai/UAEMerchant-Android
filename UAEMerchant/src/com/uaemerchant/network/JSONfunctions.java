@@ -1,6 +1,7 @@
 package com.uaemerchant.network;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,12 +16,20 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.uaemerchant.common.Utilities;
 
@@ -199,6 +208,92 @@ public class JSONfunctions {
 		
 		return jsonObject;
 		
+	}
+	
+	public static JSONObject HttpMediaPostReq(String url, List<NameValuePair> nameValuePairs,String[] imagePaths) {
+		String result = "ERROR";
+		Bitmap bm = null;
+		Bitmap bmpCompressed = null;
+		String name = "photo1";
+		try {
+			HttpClient httpclient = new DefaultHttpClient();
+			BasicResponseHandler responseHandler = new BasicResponseHandler();
+			HttpPost httppost = new HttpPost(url);
+//			httppost.setHeader("Content-type", "application/x-www-form-urlencoded");
+			MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+			
+			for(int i = 0 ; i < imagePaths.length ; i ++){
+				if(!Utilities.isStringEmptyOrNull(imagePaths[i])){
+					File file = new File(imagePaths[i]);
+					if (file != null) {
+//						bm = BitmapFactory.decodeFile(imagePaths[i]);
+//						bm.getWidth();
+//						bm.getHeight();
+//						bmpCompressed = Bitmap.createScaledBitmap(bm, 320, 240, true);
+//						bmpCompressed.getWidth();
+//						bmpCompressed.getHeight();
+//						ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//						bmpCompressed.compress(CompressFormat.JPEG, 75, bos);
+//			            byte[] data = bos.toByteArray();
+////			            byte[] data = {10};  
+//			            data  = Base64.encode(data,Base64.URL_SAFE);
+//			            ByteArrayBody bab = new ByteArrayBody(data, "image/jpg", imagePaths[i]);
+//			            reqEntity.addPart(name, bab);
+						
+						
+						
+						FileBody fileBody = new FileBody(file, "image/jpeg");
+						reqEntity.addPart(name, fileBody);
+						
+			            if(name.equals("photo1")){
+			            	name = "photo2";
+			            }else {
+			            	name = "photo3";
+			            }
+			            if(bm != null){
+			            	bm.recycle();
+			            	bm = null;
+			            }
+			            if(bmpCompressed != null){
+			            	bmpCompressed.recycle();
+			            	bmpCompressed = null;
+			            }
+					}
+				}
+				
+
+				
+			}
+			
+						
+			for (int i = 0; i < nameValuePairs.size(); i++) {
+				reqEntity.addPart(nameValuePairs.get(i).getName(),
+						new StringBody(nameValuePairs.get(i).getValue()));
+			}
+			httppost.setEntity(reqEntity);
+			HttpResponse response = httpclient.execute(httppost);
+//			result = EntityUtils.toString(response.getEntity());
+			result = responseHandler.handleResponse(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			if(bm != null){
+				bm.recycle();
+				bm = null;
+			}
+			if(bmpCompressed != null){
+				bmpCompressed.recycle();
+				bmpCompressed = null;
+			}
+			Log.e("log_tag", "Error in http connection " + e);
+		}
+		Log.e("response", result);
+		JSONObject object = null;
+		try {
+			object = new JSONObject(result);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return object;
 	}
 
 }
