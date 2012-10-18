@@ -1,6 +1,7 @@
 package com.uaemerchant.dialogs;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.json.JSONObject;
 
@@ -10,6 +11,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
+import android.location.Address;
+import android.location.Criteria;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -227,9 +233,38 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 		address = ((EditText) findViewById(R.id.addressInput)).getText().toString();
 		description  = ((EditText) findViewById(R.id.descriptionInput)).getText().toString();
 		location  = ((ToggleButton) findViewById(R.id.locationInput)).isChecked();
-		if(location){
-			//get current GPS location of the device and put in longitude and latitude variables;
-			
+		if (location) {
+			// get current GPS location of the device and put in longitude and
+			// latitude variables;
+			Geocoder geocoder;
+			String bestProvider;
+			List<Address> user = null;
+			double lat;
+			double lng;
+
+			LocationManager lm = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+
+			Criteria criteria = new Criteria();
+			bestProvider = lm.getBestProvider(criteria, false);
+			Location location = lm.getLastKnownLocation(bestProvider);
+
+			if (location == null) {
+				Toast.makeText(activity, "Location Not found", Toast.LENGTH_LONG).show();
+			} else {
+				geocoder = new Geocoder(activity);
+				try {
+					user = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+					lat = (double) user.get(0).getLatitude();
+					lng = (double) user.get(0).getLongitude();
+					Toast.makeText(activity, " DDD lat: " + lat + ",  longitude: " + lng, Toast.LENGTH_LONG).show();
+					longitude = String.valueOf(lng);
+					latitude = String.valueOf(lat);
+					
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}else{
 			longitude = "";
 			latitude = "";
