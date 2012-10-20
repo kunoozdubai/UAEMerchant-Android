@@ -9,7 +9,7 @@
         android:id="@+id/backgourndImg"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#010101" />
+        android:background="#A3A3A1" />
 
     
     <RelativeLayout
