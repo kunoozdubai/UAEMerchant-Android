@@ -75,22 +75,28 @@ public class RegisterDialog extends Dialog implements View.OnClickListener, OnCa
 		int id = v.getId();
 		if(id == R.id.registerBtn){
 			
-			email = ((EditText)registerView.findViewById(R.id.emailInput)).getText().toString();
-			if(!Utilities.isValidEmail(email)){
-				Toast.makeText(context, "Please provide a valid email!", Toast.LENGTH_SHORT).show();
-				return;
-			}
-			name = ((EditText)registerView.findViewById(R.id.nameInput)).getText().toString();
-			phone = ((EditText)registerView.findViewById(R.id.phoneInput)).getText().toString();
-			city = ((Spinner) findViewById(R.id.cityInput)).getSelectedItem().toString();
-			
-			String postData = createRequestJSON(name, email, phone, city);
-			
-			new DataDownloadTask(context, new RegisterResponse(), NetworkConstants.UAE_MERCHANT_URL + NetworkConstants.WS_REGISTER, postData).execute();
+			register();
 			
 			
+		}else if(id == R.id.saveBtn){
+			register();
 		}
 
+	}
+
+	private void register() {
+		email = ((EditText)registerView.findViewById(R.id.emailInput)).getText().toString();
+		if(!Utilities.isValidEmail(email)){
+			Toast.makeText(context, "Please provide a valid email!", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		name = ((EditText)registerView.findViewById(R.id.nameInput)).getText().toString();
+		phone = ((EditText)registerView.findViewById(R.id.phoneInput)).getText().toString();
+		city = ((Spinner) findViewById(R.id.cityInput)).getSelectedItem().toString();
+		
+		String postData = createRequestJSON(name, email, phone, city);
+		
+		new DataDownloadTask(context, new RegisterResponse(), NetworkConstants.UAE_MERCHANT_URL + NetworkConstants.WS_REGISTER, postData).execute();		
 	}
 
 	private OnKeyListener registerKeyListener = new OnKeyListener() {
