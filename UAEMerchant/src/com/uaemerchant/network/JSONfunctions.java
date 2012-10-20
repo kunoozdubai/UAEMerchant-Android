@@ -240,10 +240,10 @@ public class JSONfunctions {
 //			            ByteArrayBody bab = new ByteArrayBody(data, "image/jpg", imagePaths[i]);
 //			            reqEntity.addPart(name, bab);
 						
-						
-						
 						FileBody fileBody = new FileBody(file, "image/jpeg");
+						
 						reqEntity.addPart(name, fileBody);
+						
 						
 			            if(name.equals("photo1")){
 			            	name = "photo2";
