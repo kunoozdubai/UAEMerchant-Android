@@ -36,18 +36,18 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 		
 		Utilities.mainActivityContext = context;
 		
-		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.background, Utilities.getBitmapFactoryoptions(1));
-		BitmapDrawable bitmapDrawable = new BitmapDrawable(bitmap);
-		Utilities.imageMap.put("mainBackground", bitmapDrawable);
-		bitmapDrawable = null;
+//		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.background, Utilities.getBitmapFactoryoptions(1));
+//		BitmapDrawable bitmapDrawable = new BitmapDrawable(bitmap);
+//		Utilities.imageMap.put("mainBackground", bitmapDrawable);
+//		bitmapDrawable = null;
 		
-		bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.title_background, Utilities.getBitmapFactoryoptions(1));
-		bitmapDrawable = new BitmapDrawable(bitmap);
+		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.title_background, Utilities.getBitmapFactoryoptions(1));
+		BitmapDrawable bitmapDrawable = new BitmapDrawable(bitmap);
 		Utilities.imageMap.put("titleBackground", bitmapDrawable);
 		bitmapDrawable = null;
 		
-		ImageView imageView = (ImageView) findViewById(R.id.background);
-		imageView.setBackgroundDrawable(Utilities.imageMap.get("mainBackground"));
+//		ImageView imageView = (ImageView) findViewById(R.id.background);
+//		imageView.setBackgroundDrawable(Utilities.imageMap.get("mainBackground"));
 		
 		RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.titleParent);
 		relativeLayout.setBackgroundDrawable(Utilities.imageMap.get("titleBackground"));
