@@ -59,8 +59,8 @@ public class CategoryListActivity extends Activity implements OnClickListener, O
 		context = this;
 
 		
-		ImageView imageView = (ImageView) findViewById(R.id.background);
-		imageView.setBackgroundDrawable(Utilities.imageMap.get("mainBackground"));
+//		ImageView imageView = (ImageView) findViewById(R.id.background);
+//		imageView.setBackgroundDrawable(Utilities.imageMap.get("mainBackground"));
 		
 		Bundle extras = getIntent().getExtras();
 		catName = extras.getString("catName");
@@ -208,7 +208,9 @@ public class CategoryListActivity extends Activity implements OnClickListener, O
 	@Override
 	protected void onDestroy() {
 		Utilities.unbindDrawables(findViewById(R.id.ad_list_activity));
+		Utilities.clearThumbMap();
 		System.gc();
+		
 		super.onDestroy();
 	}
 
