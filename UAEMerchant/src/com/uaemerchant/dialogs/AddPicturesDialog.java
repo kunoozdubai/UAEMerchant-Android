@@ -298,12 +298,33 @@ public class AddPicturesDialog extends Dialog implements View.OnClickListener, O
 	public void onCancel(DialogInterface dialog) {
 		context = null;
 		activity = null;
+		if(photo1 != null){
+			photo1.setBackgroundDrawable(null);
+		}
+		if(photo2 != null){
+			photo2.setBackgroundDrawable(null);
+		}
+		if(photo3 != null){
+			photo3.setBackgroundDrawable(null);
+		}
+		
+		photo1 = null;
+		photo2 = null;
+		photo3 = null;
+		
+		
 		Utilities.unbindDrawables(findViewById(R.id.account_dialog));
 	}
 	
 	public static void setPhoto(String imagePath){
-		Bitmap bitmap = BitmapFactory.decodeFile(imagePath, Utilities.getBitmapFactoryoptions(0));
-		BitmapDrawable drawable = new BitmapDrawable(bitmap);
+		Bitmap bitmap = BitmapFactory.decodeFile(imagePath, Utilities.getBitmapFactoryoptions(4));
+		Bitmap bmp = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+		BitmapDrawable drawable = new BitmapDrawable(bmp);
+		
+		if(bitmap != null){
+			bitmap.recycle();
+		}
+		
 		if(count == 1){
 			photo1.setVisibility(View.VISIBLE);
 			removePhoto1.setVisibility(View.VISIBLE);
