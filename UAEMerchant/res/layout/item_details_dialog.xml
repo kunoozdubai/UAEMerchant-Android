@@ -260,6 +260,22 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/callBtn"
                 android:background="@drawable/email_icon" />
+            
+            <ImageView
+                android:id="@+id/facebookBtn"
+                android:layout_width="55dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/emailBtn"
+                android:background="@drawable/social_facebook" />
+            <ImageView
+                android:id="@+id/twitterBtn"
+                android:layout_width="55dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/facebookBtn"
+                android:background="@drawable/social_twitter" />
+            
         </RelativeLayout>
 
         
