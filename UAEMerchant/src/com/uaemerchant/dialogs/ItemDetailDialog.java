@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.uaemerchant.R;
 import com.uaemerchant.activities.UAEMerchantGoogleMapActivity;
@@ -20,6 +21,8 @@ import com.uaemerchant.activities.UAEMerchantMainActivity;
 import com.uaemerchant.asynctask.ThumbImageDownloadTask;
 import com.uaemerchant.common.CommonConstants;
 import com.uaemerchant.common.Utilities;
+import com.uaemerchant.facebook.FacebookHandler;
+import com.uaemerchant.facebook.SessionEvents.AuthListener;
 import com.uaemerchant.pojo.Ad;
 
 public class ItemDetailDialog extends Dialog implements View.OnClickListener, OnCancelListener {
@@ -119,13 +122,18 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 
 		imageView = (ImageView) findViewById(R.id.emailBtn);
 		imageView.setOnClickListener(this);
+		
+		imageView = (ImageView) findViewById(R.id.facebookBtn);
+		imageView.setOnClickListener(this);
+		
+		imageView = (ImageView) findViewById(R.id.twitterBtn);
+		imageView.setOnClickListener(this);
 
 		if (!Utilities.isStringEmptyOrNull(ad.getLongitude()) || !Utilities.isStringEmptyOrNull(ad.getLatitude())) {
 
 			imageView = (ImageView) findViewById(R.id.locationIcon);
 			imageView.setVisibility(View.VISIBLE);
 			imageView.setOnClickListener(this);
-
 		}
 
 	}
@@ -150,6 +158,16 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 			Utilities.call(ad.getPhone());
 		} else if (id == R.id.emailBtn) {
 			Utilities.email(ad.getEmail());
+		} else if (id == R.id.facebookBtn) {
+			FacebookHandler.getInstance(context);
+			if(!Utilities.mFacebook.isSessionValid()){
+				FacebookHandler.getInstance(context).Login(new LoginFacebookListener());
+			} else {
+				shareOnFacebook();
+			}
+			Toast.makeText(context, "Facebook button clicked", Toast.LENGTH_SHORT).show();
+		} else if (id == R.id.twitterBtn) {
+			Toast.makeText(context, "Twitter button clicked", Toast.LENGTH_SHORT).show();
 		} else if(id == R.id.photo1){
 			Intent intent = new Intent();
 			intent.setAction(Intent.ACTION_VIEW);
@@ -169,6 +187,46 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 
 	}
 
+	private void shareOnFacebook() {
+		String date = ad.getCreated();
+		String[] tokens = date.split(" ");
+		date = tokens[0];
+		
+		StringBuilder captionStringBuilder = new StringBuilder();
+		captionStringBuilder.append("Title: " + ad.getTitle());
+		captionStringBuilder.append("\n");
+		captionStringBuilder.append("Price: " + ad.getPrice());
+		captionStringBuilder.append("\n");
+		captionStringBuilder.append("Name: " + ad.getName());
+		captionStringBuilder.append("\n");
+		captionStringBuilder.append("Description: " + ad.getDescription());
+		captionStringBuilder.append("\n");
+		captionStringBuilder.append("City: " + ad.getCity());
+		captionStringBuilder.append("\n");
+		captionStringBuilder.append("Address: " + ad.getAddress());
+		captionStringBuilder.append("\n");
+		captionStringBuilder.append("Date: " + date);
+		
+		String url = ad.getPhoto1();
+		String[] urlTokens = url.split("/");
+		String filename = urlTokens[urlTokens.length - 1];
+		if(!Utilities.isStringEmptyOrNull(filename)){
+			FacebookHandler.getInstance(context).sharePhoto(CommonConstants.MERCHANT_IMAGE_DIR + filename, captionStringBuilder.toString());
+		}
+		url = ad.getPhoto2();
+		urlTokens = url.split("/");
+		filename = urlTokens[urlTokens.length - 1];
+		if(!Utilities.isStringEmptyOrNull(filename)){
+			FacebookHandler.getInstance(context).sharePhoto(CommonConstants.MERCHANT_IMAGE_DIR + filename, captionStringBuilder.toString());
+		}
+		url = ad.getPhoto3();
+		urlTokens = url.split("/");
+		filename = urlTokens[urlTokens.length - 1];
+		if(!Utilities.isStringEmptyOrNull(filename)){
+			FacebookHandler.getInstance(context).sharePhoto(CommonConstants.MERCHANT_IMAGE_DIR + filename, captionStringBuilder.toString());
+		}		
+	}
+
 	private OnKeyListener itemDetailKeyListener = new OnKeyListener() {
 
 		@Override
@@ -185,6 +243,22 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 			return false;
 		}
 	};
+	
+	private class LoginFacebookListener implements AuthListener{
+
+		@Override
+		public void onAuthSucceed() {
+			Toast.makeText(context, "Facebook login scucessfull", Toast.LENGTH_SHORT).show();
+			shareOnFacebook();
+		}
+
+		@Override
+		public void onAuthFail(String error) {
+			Toast.makeText(context, "Facebook login failed", Toast.LENGTH_SHORT).show();
+		}
+		
+	}
+	
 
 	@Override
 	public void onCancel(DialogInterface dialog) {
