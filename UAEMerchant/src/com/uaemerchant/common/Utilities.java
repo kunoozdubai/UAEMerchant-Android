@@ -12,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.apache.http.protocol.HTTP;
 
@@ -29,12 +30,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.uaemerchant.activities.UAEMerchantMainActivity;
+import com.uaemerchant.facebook.AsyncFacebookRunner;
+import com.uaemerchant.facebook.Facebook;
 
 public class Utilities {
 
@@ -47,6 +49,10 @@ public class Utilities {
 	
 	public static HashMap<String, BitmapDrawable> imageMap = new HashMap<String, BitmapDrawable>();
 	public static HashMap<String, BitmapDrawable> thumbMap = new HashMap<String, BitmapDrawable>();
+	
+	public static Facebook mFacebook;
+	public static AsyncFacebookRunner mAsyncRunner;
+	public static String userUID = null;
 
 	/**
 	 * @param name
@@ -456,5 +462,30 @@ public class Utilities {
 		((UAEMerchantMainActivity)mainActivityContext).startActivity(emailIntent);
 		
 	}
+	
+	public static void clearThumbMap() {
+		Iterator thumbMapIterator = thumbMap.keySet().iterator();
+		
+		while(thumbMapIterator.hasNext()) {
+		    String key = (String) thumbMapIterator.next();
+		    BitmapDrawable bitmapDrawable = (BitmapDrawable) thumbMap.get(key);
+		    if(bitmapDrawable != null){
+		    	bitmapDrawable.getBitmap().recycle();
+		    }
+		    thumbMap.put(key, null);
+	
+		}
+		
+	}
+	
+	 public static byte[] scaleTempImage(Context context, String photoUri) throws IOException {
+	        Bitmap srcBitmap;
+	        srcBitmap = BitmapFactory.decodeFile(photoUri);
+	        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	        srcBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+	        byte[] bMapArray = baos.toByteArray();
+	        baos.close();
+	        return bMapArray;
+	    }
 
 }
