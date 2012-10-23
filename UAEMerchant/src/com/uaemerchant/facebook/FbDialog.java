@@ -192,7 +192,7 @@ public class FbDialog extends Dialog {
              */
             mContent.setBackgroundColor(Color.TRANSPARENT);
             mWebView.setVisibility(View.VISIBLE);
-            mCrossImage.setVisibility(View.VISIBLE);
+//            mCrossImage.setVisibility(View.VISIBLE);
         }
     }
 }
