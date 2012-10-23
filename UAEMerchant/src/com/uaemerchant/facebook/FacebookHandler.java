@@ -36,7 +36,7 @@ import com.uaemerchant.facebook.SessionEvents.LogoutListener;
 
 public class FacebookHandler{
 
-	public static final String APP_ID = "309983492409575"; // Sociogram
+	public static final String APP_ID = "415714138477887"; // Uaemerchant facebook app id
 	private Handler mHandler;
 	private Context context;
 	private Activity activity;
@@ -70,12 +70,12 @@ public class FacebookHandler{
 
 	public void Login(AuthListener listener){
 		this.authListener = listener;
-			if (Utilities.mFacebook.isSessionValid()) {
-				SessionEvents.onLogoutBegin();
-				Utilities.mAsyncRunner.logout(context, new LogoutRequestListener());
-			} else {
+//			if (Utilities.mFacebook.isSessionValid()) {
+//				SessionEvents.onLogoutBegin();
+//				Utilities.mAsyncRunner.logout(context, new LogoutRequestListener());
+//			} else {
 				Utilities.mFacebook.authorize(activity, permissions, AUTHORIZE_ACTIVITY_RESULT_CODE, new LoginDialogListener());
-			}
+//			}
 	}
 	public static FacebookHandler getInstance(Context context) {
 		if (facebookHandlerInstance == null) {
