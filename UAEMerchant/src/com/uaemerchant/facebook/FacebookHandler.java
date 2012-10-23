@@ -70,12 +70,13 @@ public class FacebookHandler{
 
 	public void Login(AuthListener listener){
 		this.authListener = listener;
-//			if (Utilities.mFacebook.isSessionValid()) {
+			if (Utilities.mFacebook.isSessionValid()) {
+				return;
 //				SessionEvents.onLogoutBegin();
 //				Utilities.mAsyncRunner.logout(context, new LogoutRequestListener());
-//			} else {
+			} else {
 				Utilities.mFacebook.authorize(activity, permissions, AUTHORIZE_ACTIVITY_RESULT_CODE, new LoginDialogListener());
-//			}
+			}
 	}
 	public static FacebookHandler getInstance(Context context) {
 		if (facebookHandlerInstance == null) {
