@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.sg.twitter.TwitterApp;
 import com.uaemerchant.R;
 import com.uaemerchant.common.Utilities;
 import com.uaemerchant.dialogs.AccountDialog;
@@ -25,6 +26,7 @@ import com.uaemerchant.dialogs.PostDialog;
 public class UAEMerchantMainActivity extends Activity implements android.view.View.OnClickListener{
 
 	private Context context;
+	private TwitterApp mTwitter = null;
 	private static String imagePath = "";
 	
 	@Override
@@ -190,6 +192,14 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 			}
 		}
 		
+	}
+	
+	public TwitterApp getmTwitter() {
+		return mTwitter ;
+	}
+
+	public void setmTwitter(TwitterApp mTwitter) {
+		this.mTwitter = mTwitter;
 	}
 	
 }
