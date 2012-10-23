@@ -326,8 +326,13 @@ public class Utilities {
 	}
 
 	public static boolean isStringEmptyOrNull(String checkString) {
-		return !(checkString != null && !"".equals(checkString) && checkString
-				.length() > 0);
+//		return !(checkString != null && !"".equals(checkString) && checkString
+//				.length() > 0);
+		if("".equals(checkString) || "null".equals(checkString) || null == checkString){
+			return true;
+		}
+		
+		return false;
 	}
 
 	public static void startMainActivity(Context context) {
@@ -480,11 +485,15 @@ public class Utilities {
 	
 	 public static byte[] scaleTempImage(Context context, String photoUri) throws IOException {
 	        Bitmap srcBitmap;
-	        srcBitmap = BitmapFactory.decodeFile(photoUri);
+	        srcBitmap = BitmapFactory.decodeFile(photoUri, getBitmapFactoryoptions(2));
 	        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	        srcBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
 	        byte[] bMapArray = baos.toByteArray();
 	        baos.close();
+	        if(srcBitmap != null){
+	        	srcBitmap.recycle();
+	        	srcBitmap = null;
+	        }
 	        return bMapArray;
 	    }
 
