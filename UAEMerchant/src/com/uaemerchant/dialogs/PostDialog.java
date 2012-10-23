@@ -260,6 +260,13 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 					longitude = String.valueOf(lng);
 					latitude = String.valueOf(lat);
 					
+					if("null".equals(longitude)){
+						longitude = "";
+					}
+					if("null".equals(latitude)){
+						latitude = "";
+					}
+					
 
 				} catch (Exception e) {
 					e.printStackTrace();
