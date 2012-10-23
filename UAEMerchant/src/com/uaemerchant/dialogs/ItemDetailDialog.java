@@ -1,5 +1,7 @@
 package com.uaemerchant.dialogs;
 
+import java.io.File;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -15,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sg.twitter.TwitterApp;
+import com.sg.twitter.TwitterApp.TwDialogListener;
+import com.sg.twitter.TwitterGlobals;
 import com.uaemerchant.R;
 import com.uaemerchant.activities.UAEMerchantGoogleMapActivity;
 import com.uaemerchant.activities.UAEMerchantMainActivity;
@@ -129,7 +134,8 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 		imageView = (ImageView) findViewById(R.id.twitterBtn);
 		imageView.setOnClickListener(this);
 
-		if (!Utilities.isStringEmptyOrNull(ad.getLongitude()) || !Utilities.isStringEmptyOrNull(ad.getLatitude())) {
+		if (!Utilities.isStringEmptyOrNull(ad.getLongitude()) && !Utilities.isStringEmptyOrNull(ad.getLatitude())
+				&& !ad.getLongitude().equals("-1.0000") && !ad.getLatitude().equals("-1.0000") ) {
 
 			imageView = (ImageView) findViewById(R.id.locationIcon);
 			imageView.setVisibility(View.VISIBLE);
@@ -170,6 +176,11 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 			
 		} else if (id == R.id.twitterBtn) {
 			Toast.makeText(context, "Twitter button clicked", Toast.LENGTH_SHORT).show();
+			
+			((UAEMerchantMainActivity) Utilities.mainActivityContext).setmTwitter(new TwitterApp(context, TwitterGlobals.TWITTER_CONSUMER_KEY, TwitterGlobals.TWITTER_CONSUMER_SECRET));
+			((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().setListener(mTwLoginDialogListener);
+			((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().authorize();
+			
 		} else if(id == R.id.photo1){
 			Intent intent = new Intent();
 			intent.setAction(Intent.ACTION_VIEW);
@@ -228,6 +239,38 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 			FacebookHandler.getInstance(context).sharePhoto(CommonConstants.MERCHANT_IMAGE_DIR + filename, captionStringBuilder.toString());
 		}		
 	}
+	
+	private void shareOnTwitter() {
+		if(!Utilities.isStringEmptyOrNull(ad.getPhoto1())){
+			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + ad.getPhoto1());
+			try {
+				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia("Via Sociogram 1", file);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(!Utilities.isStringEmptyOrNull(ad.getPhoto2())){
+			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + ad.getPhoto2());
+			try {
+				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia("Via Sociogram 2", file);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(!Utilities.isStringEmptyOrNull(ad.getPhoto3())){
+			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + ad.getPhoto3());
+			try {
+				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia("Via Sociogram 3", file);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		
+	}
+
 
 	private OnKeyListener itemDetailKeyListener = new OnKeyListener() {
 
@@ -260,6 +303,33 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 		}
 		
 	}
+	
+	/**
+	 * Listener for Twitter - Calls after authorize is finalized.
+	 */
+
+	private final TwDialogListener mTwLoginDialogListener = new TwDialogListener() {
+		@Override
+		public void onComplete(String value) {
+			String username = ((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().getUsername();
+			username = (username.equals("")) ? "No Name" : username;
+			Toast.makeText(context, "Connected to Twitter as " + username, Toast.LENGTH_LONG).show();
+			
+			shareOnTwitter();
+
+		}
+
+		@Override
+		public void onError(String value) {
+			String username = ((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().getUsername();
+			username = (username.equals("")) ? "No Name" : username;
+			Toast.makeText(context, "Twitter connection failed", Toast.LENGTH_LONG).show();
+//			Configuration.isTwitterLogin = true;
+//			new ShareOptionsDialog(context).showSourceDialog(com.sg.common.Configuration.mediaPath, mediaType);
+
+			shareOnTwitter();
+		}
+	};
 	
 
 	@Override
