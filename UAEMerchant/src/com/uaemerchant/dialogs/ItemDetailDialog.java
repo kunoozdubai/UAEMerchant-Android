@@ -161,11 +161,13 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 		} else if (id == R.id.facebookBtn) {
 			FacebookHandler.getInstance(context);
 			if(!Utilities.mFacebook.isSessionValid()){
+				Toast.makeText(context, "Facebook Login", Toast.LENGTH_SHORT).show();
 				FacebookHandler.getInstance(context).Login(new LoginFacebookListener());
 			} else {
+				Toast.makeText(context, "Sharing on facebook!", Toast.LENGTH_SHORT).show();
 				shareOnFacebook();
 			}
-			Toast.makeText(context, "Facebook button clicked", Toast.LENGTH_SHORT).show();
+			
 		} else if (id == R.id.twitterBtn) {
 			Toast.makeText(context, "Twitter button clicked", Toast.LENGTH_SHORT).show();
 		} else if(id == R.id.photo1){
