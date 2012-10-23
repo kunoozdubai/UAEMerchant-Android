@@ -56,7 +56,10 @@ public class UAEMerchantGoogleMapActivity extends MapActivity {
 		List<Address> addresses;
 		try {
 			addresses = geocoder.getFromLocation(latitudeE6, longitudeE6, 1);
-			Address returnedAddress = addresses.get(0);
+			Address returnedAddress = new Address(new Locale("en"));
+			if(addresses != null && addresses.size() > 0){
+				returnedAddress = addresses.get(0);
+			}
 			StringBuilder strReturnedAddress = new StringBuilder("Address:\n");
 			for (int i = 0; i < returnedAddress.getMaxAddressLineIndex(); i++) {
 				strReturnedAddress.append(returnedAddress.getAddressLine(i))
