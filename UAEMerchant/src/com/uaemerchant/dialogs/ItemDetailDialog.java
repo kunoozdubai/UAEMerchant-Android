@@ -176,10 +176,14 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 			
 		} else if (id == R.id.twitterBtn) {
 			Toast.makeText(context, "Twitter button clicked", Toast.LENGTH_SHORT).show();
-			
-			((UAEMerchantMainActivity) Utilities.mainActivityContext).setmTwitter(new TwitterApp(context, TwitterGlobals.TWITTER_CONSUMER_KEY, TwitterGlobals.TWITTER_CONSUMER_SECRET));
-			((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().setListener(mTwLoginDialogListener);
-			((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().authorize();
+			((UAEMerchantMainActivity) Utilities.mainActivityContext).setmTwitter(new TwitterApp(context, TwitterGlobals.TWITTER_CONSUMER_KEY, TwitterGlobals.TWITTER_CONSUMER_SECRET));	
+			if(((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().hasAccessToken()){
+				shareOnTwitter();
+			}else{
+//				((UAEMerchantMainActivity) Utilities.mainActivityContext).setmTwitter(new TwitterApp(context, TwitterGlobals.TWITTER_CONSUMER_KEY, TwitterGlobals.TWITTER_CONSUMER_SECRET));
+				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().setListener(mTwLoginDialogListener);
+				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().authorize();
+			}
 			
 		} else if(id == R.id.photo1){
 			Intent intent = new Intent();
@@ -241,27 +245,41 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 	}
 	
 	private void shareOnTwitter() {
-		if(!Utilities.isStringEmptyOrNull(ad.getPhoto1())){
-			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + ad.getPhoto1());
+		Toast.makeText(context, "Sharing on Twitter", Toast.LENGTH_SHORT).show();
+		
+		String url = ad.getPhoto1();
+		String[] urlTokens = url.split("/");
+		String filename = urlTokens[urlTokens.length - 1];
+		
+		if(!Utilities.isStringEmptyOrNull(filename)){
+			
+			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + filename);
 			try {
+				Toast.makeText(context, "Sharing photo1", Toast.LENGTH_SHORT).show();
 				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia("Via Sociogram 1", file);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
-		if(!Utilities.isStringEmptyOrNull(ad.getPhoto2())){
-			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + ad.getPhoto2());
+		url = ad.getPhoto2();
+		urlTokens = url.split("/");
+		filename = urlTokens[urlTokens.length - 1];
+		if(!Utilities.isStringEmptyOrNull(filename)){
+			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + filename);
 			try {
+				Toast.makeText(context, "Sharing photo2", Toast.LENGTH_SHORT).show();
 				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia("Via Sociogram 2", file);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
-		if(!Utilities.isStringEmptyOrNull(ad.getPhoto3())){
-			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + ad.getPhoto3());
+		url = ad.getPhoto3();
+		urlTokens = url.split("/");
+		filename = urlTokens[urlTokens.length - 1];
+		if(!Utilities.isStringEmptyOrNull(filename)){
+			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + filename);
 			try {
+				Toast.makeText(context, "Sharing photo3", Toast.LENGTH_SHORT).show();
 				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia("Via Sociogram 3", file);
 			} catch (Exception e) {
 				e.printStackTrace();
