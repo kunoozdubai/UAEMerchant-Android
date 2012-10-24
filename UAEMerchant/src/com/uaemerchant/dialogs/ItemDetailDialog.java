@@ -245,6 +245,26 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 	}
 	
 	private void shareOnTwitter() {
+		
+		String date = ad.getCreated();
+		String[] tokens = date.split(" ");
+		date = tokens[0];
+		
+		StringBuilder captionStringBuilder = new StringBuilder();
+		captionStringBuilder.append("Title: " + ad.getTitle());
+		captionStringBuilder.append(",\n");
+		captionStringBuilder.append("Price: " + ad.getPrice());
+		captionStringBuilder.append(",\n");
+		captionStringBuilder.append("Name: " + ad.getName());
+		captionStringBuilder.append(",\n");
+		captionStringBuilder.append("Description: " + ad.getDescription());
+		captionStringBuilder.append(",\n");
+		captionStringBuilder.append("City: " + ad.getCity());
+		captionStringBuilder.append(",\n");
+		captionStringBuilder.append("Address: " + ad.getAddress());
+		captionStringBuilder.append(",\n");
+		captionStringBuilder.append("Date: " + date);
+		
 		Toast.makeText(context, "Sharing on Twitter", Toast.LENGTH_SHORT).show();
 		
 		String url = ad.getPhoto1();
@@ -256,7 +276,7 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + filename);
 			try {
 				Toast.makeText(context, "Sharing photo1", Toast.LENGTH_SHORT).show();
-				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia("Via Sociogram 1", file);
+				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia(captionStringBuilder.toString() + ".", file);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -268,7 +288,7 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + filename);
 			try {
 				Toast.makeText(context, "Sharing photo2", Toast.LENGTH_SHORT).show();
-				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia("Via Sociogram 2", file);
+				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia(captionStringBuilder.toString() + "..", file);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -280,7 +300,7 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + filename);
 			try {
 				Toast.makeText(context, "Sharing photo3", Toast.LENGTH_SHORT).show();
-				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia("Via Sociogram 3", file);
+				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia(captionStringBuilder.toString() + "...", file);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
