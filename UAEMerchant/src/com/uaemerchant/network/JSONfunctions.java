@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -22,6 +23,7 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
@@ -211,10 +213,20 @@ public class JSONfunctions {
 	}
 	
 	public static JSONObject HttpMediaPostReq(String url, List<NameValuePair> nameValuePairs,String[] imagePaths) {
+		
+//		url = "http://app.bubblestalk.com/profiles.php";
+//		nameValuePairs = new ArrayList<NameValuePair>(3);
+//		nameValuePairs.add(new BasicNameValuePair("name", "abcdef testing"));
+//		nameValuePairs.add(new BasicNameValuePair("deviceId","9"));
+//		nameValuePairs.add(new BasicNameValuePair("status",
+//		"testing pic for uae merchant"));
+		
+		
 		String result = "ERROR";
 		Bitmap bm = null;
 		Bitmap bmpCompressed = null;
 		String name = "photo1";
+//		String name = "file";
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
 			BasicResponseHandler responseHandler = new BasicResponseHandler();
