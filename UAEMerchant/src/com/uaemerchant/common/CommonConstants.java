@@ -1,5 +1,9 @@
 package com.uaemerchant.common;
 
+import android.app.Dialog;
+
+import com.uaemerchant.pojo.Ad;
+
 
 
 public class CommonConstants {
@@ -17,6 +21,15 @@ public class CommonConstants {
 	public static double LONGITUDE;
 	
 	public static String MERCHANT_IMAGE_DIR = "/mnt/sdcard/UAEMerchant/";
+	
+	// in app
+	public static int DIALOG_CANNOT_CONNECT_ID = 1;
+	public static int DIALOG_BILLING_NOT_SUPPORTED_ID = 2;
+	public static String INAPP_PRODUCT_ID = "201";
+	
+	public static IResponseListener POST_LISTENER = null;
+	public static Ad AD = null;
+	public static Dialog POST_DIALOG_CONTEXT;
 	
 
 }

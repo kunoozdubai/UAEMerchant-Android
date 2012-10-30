@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.uaemerchant.R;
 import com.uaemerchant.asynctask.DataUploadTask;
-import com.uaemerchant.common.CommonConstants;
 import com.uaemerchant.common.IResponseListener;
 import com.uaemerchant.common.NetworkConstants;
 import com.uaemerchant.common.Utilities;
