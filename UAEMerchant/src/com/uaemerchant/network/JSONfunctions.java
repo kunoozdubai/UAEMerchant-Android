@@ -214,18 +214,10 @@ public class JSONfunctions {
 	
 	public static JSONObject HttpMediaPostReq(String url, List<NameValuePair> nameValuePairs,String[] imagePaths) {
 		
-//		url = "http://app.bubblestalk.com/profiles.php";
-//		nameValuePairs = new ArrayList<NameValuePair>(3);
-//		nameValuePairs.add(new BasicNameValuePair("name", "abcdef testing"));
-//		nameValuePairs.add(new BasicNameValuePair("deviceId","9"));
-//		nameValuePairs.add(new BasicNameValuePair("status",
-//		"testing pic for uae merchant"));
-		
-		
 		String result = "ERROR";
-		Bitmap bm = null;
-		Bitmap bmpCompressed = null;
-		String name = "photo1";
+//		Bitmap bm = null;
+//		Bitmap bmpCompressed = null;
+		String name = "file1";
 //		String name = "file";
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
@@ -257,26 +249,14 @@ public class JSONfunctions {
 						reqEntity.addPart(name, fileBody);
 						
 						
-			            if(name.equals("photo1")){
-			            	name = "photo2";
+			            if(name.equals("file1")){
+			            	name = "file2";
 			            }else {
-			            	name = "photo3";
-			            }
-			            if(bm != null){
-			            	bm.recycle();
-			            	bm = null;
-			            }
-			            if(bmpCompressed != null){
-			            	bmpCompressed.recycle();
-			            	bmpCompressed = null;
+			            	name = "file3";
 			            }
 					}
 				}
-				
-
-				
 			}
-			
 						
 			for (int i = 0; i < nameValuePairs.size(); i++) {
 				reqEntity.addPart(nameValuePairs.get(i).getName(),
@@ -288,14 +268,6 @@ public class JSONfunctions {
 			result = responseHandler.handleResponse(response);
 		} catch (Exception e) {
 			e.printStackTrace();
-			if(bm != null){
-				bm.recycle();
-				bm = null;
-			}
-			if(bmpCompressed != null){
-				bmpCompressed.recycle();
-				bmpCompressed = null;
-			}
 			Log.e("log_tag", "Error in http connection " + e);
 		}
 		Log.e("response", result);
