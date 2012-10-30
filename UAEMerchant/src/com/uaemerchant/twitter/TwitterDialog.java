@@ -1,4 +1,4 @@
-package com.sg.twitter;
+package com.uaemerchant.twitter;
 
 
 import android.app.Dialog;
@@ -7,7 +7,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -19,8 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sg.twitter.TwitterApp.TwDialogListener;
-import com.uaemerchant.R;
+import com.uaemerchant.twitter.TwitterApp.TwDialogListener;
 
 public class TwitterDialog extends Dialog {
 

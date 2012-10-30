@@ -1,4 +1,4 @@
-package com.sg.twitter;
+package com.uaemerchant.twitter;
 
 public class TwitterGlobals {
 	

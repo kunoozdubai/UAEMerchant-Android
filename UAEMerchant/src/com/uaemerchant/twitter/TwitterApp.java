@@ -4,7 +4,7 @@
  * Website: http://www.londatiga.net
  */
 
-package com.sg.twitter;
+package com.uaemerchant.twitter;
 
 import java.io.File;
 import java.io.IOException;

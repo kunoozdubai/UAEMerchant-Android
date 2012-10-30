@@ -1,4 +1,4 @@
-package com.sg.twitter;
+package com.uaemerchant.twitter;
 
 import twitter4j.auth.AccessToken;
 import android.content.Context;
