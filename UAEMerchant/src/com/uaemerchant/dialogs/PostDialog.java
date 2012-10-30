@@ -16,6 +16,7 @@ import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.uaemerchant.R;
+import com.uaemerchant.activities.UAEMerchantMainActivity;
 import com.uaemerchant.asynctask.DataDownloadTask;
 import com.uaemerchant.common.CommonConstants;
 import com.uaemerchant.common.IResponseListener;
@@ -141,7 +143,7 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
         alertBuilder.create().show(); 
 	}
 	
-	private void showAddPicturesDialog() {
+	public void showAddPicturesDialog() {
 		Builder alertBuilder = new Builder(context);
         
 		alertBuilder.setTitle("Add Pictures");
@@ -160,9 +162,13 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				/// open dialog to add pictures
+				hide();
+				CommonConstants.AD = ad;
+				CommonConstants.POST_LISTENER = new PostResponse();
+				CommonConstants.POST_DIALOG_CONTEXT = PostDialog.this;
+				startInApp();
+//				new AddPicturesDialog(context, ad, new PostResponse()).show();
 				
-			
-				new AddPicturesDialog(context, ad, new PostResponse()).show();
 				
 			}
 		});
@@ -338,11 +344,25 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 //		requestData.append(NetworkConstants.PHOTO_3);
 //		requestData.append("=");
 //		requestData.append("");
-		
-		
-		
 			
 		return requestData.toString();
+	}
+	
+	private void startInApp() {
+			if (!Utilities.isBillingSupported()) {
+				((UAEMerchantMainActivity)Utilities.mainActivityContext).createBillingDialog(1);//DreamLifeGameConstants.DIALOG_CANNOT_CONNECT_ID);
+			}else {
+				Utilities.setIsInAppTransactionInProcess(true);
+				Log.i("InApp", "BEFORE MAKING PURCHASE REQUEST .....  AT ATM ITEM ................ON CLICK");
+//				for(int i =0; i<5000; i++){
+//					// do Nothing
+//				}
+				if(!((UAEMerchantMainActivity)Utilities.mainActivityContext).mBillingService.requestPurchase(CommonConstants.INAPP_PRODUCT_ID, null)){
+					Log.i("InApp", "PURCHASE REQUEST SENT .....  AT ATM ITEM ................ON CLICK...................AFTER");
+					Utilities.setIsInAppTransactionInProcess(false);
+					((UAEMerchantMainActivity)Utilities.mainActivityContext).createBillingDialog(2); //DreamLifeGameConstants.DIALOG_BILLING_NOT_SUPPORTED_ID);
+				}
+			}
 	}
 
 }

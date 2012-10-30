@@ -17,9 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sg.twitter.TwitterApp;
-import com.sg.twitter.TwitterApp.TwDialogListener;
-import com.sg.twitter.TwitterGlobals;
 import com.uaemerchant.R;
 import com.uaemerchant.activities.UAEMerchantGoogleMapActivity;
 import com.uaemerchant.activities.UAEMerchantMainActivity;
@@ -29,6 +26,9 @@ import com.uaemerchant.common.Utilities;
 import com.uaemerchant.facebook.FacebookHandler;
 import com.uaemerchant.facebook.SessionEvents.AuthListener;
 import com.uaemerchant.pojo.Ad;
+import com.uaemerchant.twitter.TwitterApp;
+import com.uaemerchant.twitter.TwitterApp.TwDialogListener;
+import com.uaemerchant.twitter.TwitterGlobals;
 
 public class ItemDetailDialog extends Dialog implements View.OnClickListener, OnCancelListener {
 	private View itemDetailView;
