@@ -47,10 +47,12 @@ public class ThumbImageDownloadTask extends AsyncTask<Void, Void, Void> {
 				final Bitmap bitmap;
 
 				bitmap = BitmapFactory.decodeFile(CommonConstants.MERCHANT_IMAGE_DIR
-						+ filename, Utilities.getBitmapFactoryoptions(0));
-				if (bitmap != null) {
+						+ filename, Utilities.getBitmapFactoryoptions(5));
+				Bitmap bmpCompressed = Bitmap.createScaledBitmap(bitmap, 100, 100, true); 
+				
+				if (bmpCompressed != null) {
 					Utilities.thumbMap.put(filename, new BitmapDrawable(
-							bitmap));
+							bmpCompressed));
 				}else{
 					file.delete();
 				}
@@ -60,7 +62,7 @@ public class ThumbImageDownloadTask extends AsyncTask<Void, Void, Void> {
 							@Override
 							public void run() {
 								if (bitmap != null && imageView != null) {
-									imageView.setBackgroundDrawable(new BitmapDrawable(bitmap));
+									imageView.setBackgroundDrawable(Utilities.thumbMap.get(filename));
 								}
 							}
 						});
@@ -72,11 +74,13 @@ public class ThumbImageDownloadTask extends AsyncTask<Void, Void, Void> {
 			final Bitmap bitmap;
 			if (Utilities.thumbMap.get(filename) == null) {
 				bitmap = BitmapFactory.decodeFile(CommonConstants.MERCHANT_IMAGE_DIR
-						+ filename, Utilities.getBitmapFactoryoptions(0));
+						+ filename, Utilities.getBitmapFactoryoptions(5));
 				
-				if (bitmap != null) {
+				Bitmap bmpCompressed = Bitmap.createScaledBitmap(bitmap, 100, 100, true); 
+				
+				if (bmpCompressed != null) {
 					Utilities.thumbMap.put(filename, new BitmapDrawable(
-							bitmap));
+							bmpCompressed));
 				}else{
 					file.delete();
 				}
@@ -87,8 +91,7 @@ public class ThumbImageDownloadTask extends AsyncTask<Void, Void, Void> {
 							public void run() {
 								if (bitmap != null && imageView != null) {
 									imageView
-											.setBackgroundDrawable(new BitmapDrawable(
-													bitmap));
+											.setBackgroundDrawable(Utilities.thumbMap.get(filename));
 								}
 							}
 						});

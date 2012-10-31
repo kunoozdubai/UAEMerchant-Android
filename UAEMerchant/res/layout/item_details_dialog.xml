@@ -53,22 +53,19 @@
             <ImageView
                 android:id="@+id/photo1"
                 android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@drawable/placeholder" />
+                android:layout_height="100dp" />
 
             <ImageView
                 android:id="@+id/photo2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_toRightOf="@id/photo1"
-                android:background="@drawable/placeholder" />
+                android:layout_toRightOf="@id/photo1" />
 
             <ImageView
                 android:id="@+id/photo3"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_toRightOf="@id/photo2"
-                android:background="@drawable/placeholder" />
+                android:layout_toRightOf="@id/photo2" />
         </RelativeLayout>
 
         <ImageView
@@ -78,8 +75,8 @@
             android:layout_alignParentRight="true"
             android:layout_below="@id/block1"
             android:layout_marginRight="5dp"
-            android:background="@drawable/maps" 
-            android:visibility="gone"/>
+            android:background="@drawable/maps"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/block2"
@@ -93,8 +90,8 @@
                 android:id="@+id/priceHeadingTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Price: "
                 android:layout_marginTop="7dp"
+                android:text="Price: "
                 android:textColor="@android:color/white" />
 
             <TextView
@@ -138,10 +135,9 @@
                 android:id="@+id/priceTxt"
                 android:layout_width="100dp"
                 android:layout_height="25dp"
-                android:text=""
-                android:gravity="center"
-                
                 android:background="@drawable/black_btn"
+                android:gravity="center"
+                android:text=""
                 android:textColor="@android:color/white" />
 
             <TextView
@@ -207,13 +203,11 @@
             android:layout_height="80dp"
             android:layout_alignLeft="@id/block1"
             android:layout_below="@id/descriptionHeadingTxt"
-            android:layout_centerHorizontal="true"
-            >
+            android:layout_centerHorizontal="true" >
 
             <ScrollView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -228,21 +222,19 @@
                     android:textColor="@android:color/black" />
             </ScrollView>
         </RelativeLayout>
-        
-        
+
         <RelativeLayout
             android:id="@+id/block4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp"
-             >
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp" >
+
             <ImageView
                 android:id="@+id/messageBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                
                 android:background="@drawable/msg_icon" />
 
             <ImageView
@@ -260,7 +252,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/callBtn"
                 android:background="@drawable/email_icon" />
-            
+
             <ImageView
                 android:id="@+id/facebookBtn"
                 android:layout_width="55dp"
@@ -268,6 +260,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/emailBtn"
                 android:background="@drawable/social_facebook" />
+
             <ImageView
                 android:id="@+id/twitterBtn"
                 android:layout_width="55dp"
@@ -275,11 +268,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/facebookBtn"
                 android:background="@drawable/social_twitter" />
-            
         </RelativeLayout>
-
-        
-        
     </RelativeLayout>
 
 </RelativeLayout>

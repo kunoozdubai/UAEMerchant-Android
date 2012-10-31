@@ -93,10 +93,13 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 
 		photo1 = (ImageView) itemDetailView.findViewById(R.id.photo1);
 		photo1.setOnClickListener(this);
+		photo1.setBackgroundDrawable(Utilities.imageMap.get("placeHolder"));
 		photo2 = (ImageView) itemDetailView.findViewById(R.id.photo2);
 		photo2.setOnClickListener(this);
+		photo2.setBackgroundDrawable(Utilities.imageMap.get("placeHolder"));
 		photo3 = (ImageView) itemDetailView.findViewById(R.id.photo3);
 		photo3.setOnClickListener(this);
+		photo3.setBackgroundDrawable(Utilities.imageMap.get("placeHolder"));
 
 		TextView textview = (TextView) itemDetailView.findViewById(R.id.itemTitle);
 		textview.setText(ad.getTitle());

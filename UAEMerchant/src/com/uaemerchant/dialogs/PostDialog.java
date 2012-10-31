@@ -162,12 +162,12 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				/// open dialog to add pictures
-				hide();
-				CommonConstants.AD = ad;
-				CommonConstants.POST_LISTENER = new PostResponse();
-				CommonConstants.POST_DIALOG_CONTEXT = PostDialog.this;
-				startInApp();
-//				new AddPicturesDialog(context, ad, new PostResponse()).show();
+//				hide();
+//				CommonConstants.AD = ad;
+//				CommonConstants.POST_LISTENER = new PostResponse();
+//				CommonConstants.POST_DIALOG_CONTEXT = PostDialog.this;
+//				startInApp();
+				new AddPicturesDialog(context, ad, new PostResponse()).show();
 				
 				
 			}

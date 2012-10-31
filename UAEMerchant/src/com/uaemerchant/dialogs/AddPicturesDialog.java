@@ -316,7 +316,7 @@ public class AddPicturesDialog extends Dialog implements View.OnClickListener, O
 	}
 	
 	public static void setPhoto(String imagePath){
-		Bitmap bitmap = BitmapFactory.decodeFile(imagePath, Utilities.getBitmapFactoryoptions(4));
+		Bitmap bitmap = BitmapFactory.decodeFile(imagePath, Utilities.getBitmapFactoryoptions(5));
 		Bitmap bmp = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
 		BitmapDrawable drawable = new BitmapDrawable(bmp);
 		

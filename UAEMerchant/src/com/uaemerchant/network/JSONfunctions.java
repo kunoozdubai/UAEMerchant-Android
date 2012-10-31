@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -18,6 +19,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.BasicResponseHandler;
@@ -28,6 +30,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 
 import com.uaemerchant.common.Utilities;
@@ -212,10 +218,9 @@ public class JSONfunctions {
 	public static JSONObject HttpMediaPostReq(String url, List<NameValuePair> nameValuePairs,String[] imagePaths) {
 		
 		String result = "ERROR";
-//		Bitmap bm = null;
-//		Bitmap bmpCompressed = null;
+		Bitmap bm = null;
+		Bitmap bmpCompressed = null;
 		String name = "file1";
-//		String name = "file";
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
 			BasicResponseHandler responseHandler = new BasicResponseHandler();
@@ -236,7 +241,7 @@ public class JSONfunctions {
 //						ByteArrayOutputStream bos = new ByteArrayOutputStream();
 //						bmpCompressed.compress(CompressFormat.JPEG, 75, bos);
 //			            byte[] data = bos.toByteArray();
-////			            byte[] data = {10};  
+////			            byte[] data = {10};   
 //			            data  = Base64.encode(data,Base64.URL_SAFE);
 //			            ByteArrayBody bab = new ByteArrayBody(data, "image/jpg", imagePaths[i]);
 //			            reqEntity.addPart(name, bab);
@@ -250,6 +255,14 @@ public class JSONfunctions {
 			            	name = "file2";
 			            }else {
 			            	name = "file3";
+			            }
+			            if(bm != null){
+			            	bm.recycle();
+			            	bm = null;
+			            }
+			            if(bmpCompressed != null){
+			            	bmpCompressed.recycle();
+			            	bmpCompressed = null;
 			            }
 					}
 				}
@@ -266,6 +279,14 @@ public class JSONfunctions {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.e("log_tag", "Error in http connection " + e);
+			if(bm != null){
+            	bm.recycle();
+            	bm = null;
+            }
+            if(bmpCompressed != null){
+            	bmpCompressed.recycle();
+            	bmpCompressed = null;
+            }
 		}
 		Log.e("response", result);
 		JSONObject object = null;
@@ -273,7 +294,16 @@ public class JSONfunctions {
 			object = new JSONObject(result);
 		} catch (JSONException e) {
 			e.printStackTrace();
+			
 		}
+		if(bm != null){
+        	bm.recycle();
+        	bm = null;
+        }
+        if(bmpCompressed != null){
+        	bmpCompressed.recycle();
+        	bmpCompressed = null;
+        }
 		return object;
 	}
 

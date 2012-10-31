@@ -65,10 +65,27 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 //		Utilities.imageMap.put("mainBackground", bitmapDrawable);
 //		bitmapDrawable = null;
 		
+		
+		
+		
 		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.title_background, Utilities.getBitmapFactoryoptions(1));
 		BitmapDrawable bitmapDrawable = new BitmapDrawable(bitmap);
 		Utilities.imageMap.put("titleBackground", bitmapDrawable);
 		bitmapDrawable = null;
+		
+		Bitmap placeHolder = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder, Utilities.getBitmapFactoryoptions(1));
+		Bitmap bitmapCompressed = Bitmap.createScaledBitmap(placeHolder, 80, 80, true);
+		bitmapDrawable = new BitmapDrawable(bitmapCompressed);
+		Utilities.imageMap.put("placeHolder", bitmapDrawable);
+		bitmapDrawable = null;
+		
+		if(placeHolder!= null){
+			placeHolder.recycle();
+			placeHolder = null;
+		}
+		
+		
+		
 		
 //		ImageView imageView = (ImageView) findViewById(R.id.background);
 //		imageView.setBackgroundDrawable(Utilities.imageMap.get("mainBackground"));

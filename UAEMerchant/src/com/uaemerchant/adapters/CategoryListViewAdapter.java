@@ -100,7 +100,7 @@ public class CategoryListViewAdapter extends BaseAdapter {
 			imageView.setBackgroundDrawable(Utilities.thumbMap.get(filename));
 //			viewHolder.thumbnailImg.setBackgroundDrawable(Utilities.thumbMap.get(filename));
 		}else{
-			imageView.setBackgroundResource(R.drawable.test);
+			imageView.setBackgroundDrawable(Utilities.imageMap.get("placeHolder"));
 		}
 
 		return view;
