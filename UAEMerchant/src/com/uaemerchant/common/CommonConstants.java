@@ -25,7 +25,7 @@ public class CommonConstants {
 	// in app
 	public static int DIALOG_CANNOT_CONNECT_ID = 1;
 	public static int DIALOG_BILLING_NOT_SUPPORTED_ID = 2;
-	public static String INAPP_PRODUCT_ID = "201";
+	public static String INAPP_PRODUCT_ID = "android.test.purchased";
 	
 	public static IResponseListener POST_LISTENER = null;
 	public static Ad AD = null;
