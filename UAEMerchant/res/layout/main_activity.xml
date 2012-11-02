@@ -57,8 +57,8 @@
 
             <Button
                 android:id="@+id/btnCarNumberPlate"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 
@@ -85,8 +85,8 @@
 
             <Button
                 android:id="@+id/btnMobilePhoneNumbers"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/mobile_phone" />
@@ -111,8 +111,8 @@
 
             <Button
                 android:id="@+id/btnElectronics"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/electronics" />
@@ -139,8 +139,8 @@
 
             <Button
                 android:id="@+id/btnCarAndEngines"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 
@@ -168,8 +168,8 @@
 
             <Button
                 android:id="@+id/btnRealEstate"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/real_estate" />
@@ -195,8 +195,8 @@
 
             <Button
                 android:id="@+id/btnLadiesOnly"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/ladies_only" />
@@ -221,8 +221,8 @@
 
             <Button
                 android:id="@+id/btnServices"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 
@@ -250,8 +250,8 @@
 
             <Button
                 android:id="@+id/btnFurniture"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/furniture" />
@@ -277,8 +277,8 @@
 
             <Button
                 android:id="@+id/btnOthers"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/others" />
@@ -300,6 +300,21 @@
         
         
     </RelativeLayout>
->
+    
+    <RelativeLayout
+        xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+        android:id="@+id/adMobParent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible" >
 
+         <com.google.ads.AdView
+            android:id="@+id/ad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="a15093a33a88df9"
+            ads:loadAdOnCreate="true" />
+    </RelativeLayout>
 </RelativeLayout>

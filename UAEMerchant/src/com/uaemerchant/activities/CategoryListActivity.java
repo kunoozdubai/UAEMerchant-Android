@@ -55,7 +55,7 @@ public class CategoryListActivity extends Activity implements OnClickListener, O
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ad_list_activity);
-		context = this;
+		context = this; 
 
 		
 //		ImageView imageView = (ImageView) findViewById(R.id.background);

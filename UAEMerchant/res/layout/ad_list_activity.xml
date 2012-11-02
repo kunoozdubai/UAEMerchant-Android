@@ -48,12 +48,32 @@
     </RelativeLayout>
 
     <RelativeLayout
+        xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+        android:id="@+id/adMobParent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible" >
+
+         <com.google.ads.AdView
+            android:id="@+id/ad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="a15093a33a88df9"
+            ads:loadAdOnCreate="true" />
+        
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/mainParent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/searchParent"
         android:layout_centerInParent="true"
-        android:visibility="visible" >
+        android:visibility="visible"  
+        android:layout_above="@id/adMobParent">
 
         <ListView
             android:id="@+id/list"
