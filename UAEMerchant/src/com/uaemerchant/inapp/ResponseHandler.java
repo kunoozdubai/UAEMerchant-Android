@@ -154,6 +154,8 @@ public class ResponseHandler {
 		// first.
 		new Thread(new Runnable() {
 			public void run() {
+				
+				int i =0;
 				// new
 				// UserDBHandler(MainSkyMenu.getGameContext()).updateUser(DreamLifeConfig.getInstance(MainSkyMenu.getGameContext()).getGameUser());
 				//
