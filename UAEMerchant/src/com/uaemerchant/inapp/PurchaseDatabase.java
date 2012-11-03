@@ -16,7 +16,6 @@
 
 package com.uaemerchant.inapp;
 
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -24,7 +23,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.uaemerchant.inapp.InAppBillingConstants.PurchaseState;
+import com.uaemerchant.inapp.Consts.PurchaseState;
 
 /**
  * An example database that records the state of each purchase. You should use

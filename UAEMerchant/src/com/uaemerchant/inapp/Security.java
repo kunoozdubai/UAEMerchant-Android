@@ -2,7 +2,6 @@
 
 package com.uaemerchant.inapp;
 
-
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -22,7 +21,7 @@ import org.json.JSONObject;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.uaemerchant.inapp.InAppBillingConstants.PurchaseState;
+import com.uaemerchant.inapp.Consts.PurchaseState;
 import com.uaemerchant.inapp.util.Base64;
 import com.uaemerchant.inapp.util.Base64DecoderException;
 
@@ -107,7 +106,7 @@ public class Security {
             Log.e(TAG, "data is null");
             return null;
         }
-        if (InAppBillingConstants.DEBUG) {
+        if (Consts.DEBUG) {
             Log.i(TAG, "signedData: " + signedData);
         }
         boolean verified = false;
@@ -221,7 +220,7 @@ public class Security {
      * @return true if the data and signature match
      */
     public static boolean verify(PublicKey publicKey, String signedData, String signature) {
-        if (InAppBillingConstants.DEBUG) {
+        if (Consts.DEBUG) {
             Log.i(TAG, "signature: " + signature);
         }
         Signature sig;

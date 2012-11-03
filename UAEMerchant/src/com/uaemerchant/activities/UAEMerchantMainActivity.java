@@ -13,28 +13,17 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.view.View; 
+import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.uaemerchant.R;
-import com.uaemerchant.common.CommonConstants;
 import com.uaemerchant.common.Utilities;
 import com.uaemerchant.dialogs.AccountDialog;
 import com.uaemerchant.dialogs.AddPicturesDialog;
 import com.uaemerchant.dialogs.PostDialog;
-import com.uaemerchant.inapp.BillingService;
-import com.uaemerchant.inapp.BillingService.RequestPurchase;
-import com.uaemerchant.inapp.BillingService.RestoreTransactions;
-import com.uaemerchant.inapp.InAppBillingConstants;
-import com.uaemerchant.inapp.InAppBillingConstants.PurchaseState;
-import com.uaemerchant.inapp.InAppBillingConstants.ResponseCode;
-import com.uaemerchant.inapp.PurchaseObserver;
-import com.uaemerchant.inapp.ResponseHandler;
 import com.uaemerchant.twitter.TwitterApp;
 
 public class UAEMerchantMainActivity extends Activity implements android.view.View.OnClickListener{
@@ -44,11 +33,8 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 	private static String imagePath = "";
 	
 	/** Start: inApp */
-	public String mPayloadContents = null;
-	public InAppPurchaseObserver mInAppPurchaseObserver;
-	private Handler mHandler;
-	private ResponseHandler responseHandler;
-	public BillingService mBillingService;
+	
+	
 	/** End: inApp */
 	
 	@Override
@@ -117,14 +103,6 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 		button.setOnClickListener(this);
 		button = (Button) findViewById(R.id.btnOthers);
 		button.setOnClickListener(this);
-		
-		responseHandler = new ResponseHandler(this);
-		mHandler = new Handler();
-		mInAppPurchaseObserver = new InAppPurchaseObserver(mHandler);
-		mBillingService = new BillingService();
-		Log.i("InApp", "start BillingService() ");
-		mBillingService.setContext(this);
-		Utilities.setBillingSupported(mBillingService.checkBillingSupported());
 		
 	}
 
@@ -250,82 +228,6 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 		this.mTwitter = mTwitter;
 	}
 	
-	
-	private class InAppPurchaseObserver extends PurchaseObserver {
-		public InAppPurchaseObserver(Handler handler) {
-			super(UAEMerchantMainActivity.this, handler);
-		}
-		
-		@Override
-		public void onBillingSupported(boolean supported) {
-			if (InAppBillingConstants.DEBUG) {
-//				Log.d(TapResortConstants.TAG, "supported: " + supported);
-			}
-			Utilities.setBillingSupported(supported);
-			if (supported) {
-
-			} 
-		}
-
-		@Override
-		public void onPurchaseStateChange(PurchaseState purchaseState,
-				String itemId, /*int quantity, */int boughtShellsQuantity,long purchaseTime,
-				String developerPayload) {
-			// TODO Auto-generated method stub
-			if (InAppBillingConstants.DEBUG) {
-//				Log.d(Consts.TAG, "onPurchaseStateChange() itemId: " + itemId + " " + purchaseState);
-			}
-
-			if (developerPayload == null) {
-				//                logProductActivity(itemId, purchaseState.toString());
-			} else {
-				//                logProductActivity(itemId, purchaseState + "\n\t" + developerPayload);
-			}
-		}
-
-
-		@Override
-		public void onRequestPurchaseResponse(RequestPurchase request,
-				ResponseCode responseCode) {
-			// TODO Auto-generated method stub
-			if (InAppBillingConstants.DEBUG) {
-//				Log.d(TapResortConstants.TAG, request.mProductId + ": " + responseCode);
-			}
-			if (responseCode == ResponseCode.RESULT_OK) {
-				if (InAppBillingConstants.DEBUG) {
-//					Log.d(TapResortConstants.TAG, "purchase was successfully sent to server");
-				}
-				//                logProductActivity(request.mProductId, "sending purchase request");
-			} else if (responseCode == InAppBillingConstants.ResponseCode.RESULT_USER_CANCELED) {
-				if (InAppBillingConstants.DEBUG) {
-//					Log.d(TapResortConstants.TAG, "user canceled purchase");
-				}
-				//                logProductActivity(request.mProductId, "dismissed purchase dialog");
-			} else {
-				if (InAppBillingConstants.DEBUG) {
-//					Log.d(TapResortConstants.TAG, "purchase failed");
-//					Toast.makeText(TapResortActivity.this, " Transaction Failed !", Toast.LENGTH_SHORT);
-				}
-				//                logProductActivity(request.mProductId, "request purchase returned " + responseCode);
-			}
-		}
-
-		@Override
-		public void onRestoreTransactionsResponse(RestoreTransactions request,
-				ResponseCode responseCode) {
-			// TODO Auto-generated method stub
-			if (responseCode == ResponseCode.RESULT_OK) {
-				if (InAppBillingConstants.DEBUG) {
-//					Log.d(TapResortConstants.TAG, "completed RestoreTransactions request");
-				}
-
-			} else {
-				if (InAppBillingConstants.DEBUG) {
-//					Log.d(TapResortConstants.TAG, "RestoreTransactions error: " + responseCode);
-				}
-			}
-		}
-	}
 	
 	public void createBillingDialog(int id) {
 		switch(id) {

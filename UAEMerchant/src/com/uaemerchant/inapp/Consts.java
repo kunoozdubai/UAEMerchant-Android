@@ -16,13 +16,11 @@
 
 package com.uaemerchant.inapp;
 
-
-
 /**
  * This class holds global constants that are used throughout the application
  * to support in-app billing.
  */
-public class InAppBillingConstants {
+public class Consts {
     // The response codes for a request, defined by Android Market.
     public enum ResponseCode {
         RESULT_OK,
@@ -103,15 +101,5 @@ public class InAppBillingConstants {
     public static final String BILLING_RESPONSE_REQUEST_ID = "REQUEST_ID";
     public static long BILLING_RESPONSE_INVALID_REQUEST_ID = -1;
 
-    public static final boolean DEBUG = true;
-    public static final String TAG = "LOVE LIFE IN APP";
-
-    public static final String TRANSACTION_RESPONSE = "Transaction Response!";
-    public static final String COINS_CASH_TRANSACTION_COMPLETE = " Coins/Cash: Transaction Completed Successfully.";
-    public static final String TRANSACTION_OF = "Transaction Of "; 
-    public static final String COINS_TRANSACTION_CANCELLED_2 = " Coins Cancelled.";
-    public static final String CASH_TRANSACTION_CANCELLED_2 = " Cash Cancelled.";
-    public static final String COINS_COMPLETED_SUCCESSFULLY = " Coins Completed Successfully.";
-    public static final String CASH_COMPLETED_SUCCESSFULLY = " Cash Completed Successfully.";
-
+    public static final boolean DEBUG = false;
 }

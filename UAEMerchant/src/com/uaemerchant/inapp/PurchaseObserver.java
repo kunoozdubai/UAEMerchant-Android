@@ -2,7 +2,6 @@
 
 package com.uaemerchant.inapp;
 
-
 import java.lang.reflect.Method;
 
 import android.app.Activity;
@@ -16,8 +15,8 @@ import android.util.Log;
 
 import com.uaemerchant.inapp.BillingService.RequestPurchase;
 import com.uaemerchant.inapp.BillingService.RestoreTransactions;
-import com.uaemerchant.inapp.InAppBillingConstants.PurchaseState;
-import com.uaemerchant.inapp.InAppBillingConstants.ResponseCode;
+import com.uaemerchant.inapp.Consts.PurchaseState;
+import com.uaemerchant.inapp.Consts.ResponseCode;
 
 /**
  * An interface for observing changes related to purchases. The main application

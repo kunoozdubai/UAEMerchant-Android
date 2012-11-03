@@ -30,7 +30,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -55,8 +54,6 @@ public class Utilities {
 	public static AsyncFacebookRunner mAsyncRunner;
 	public static String userUID = null;
 	
-	private static boolean isBillingSupported = false;
-	private static boolean isInAppTransactionInProcess = false;
 
 	/**
 	 * @param name
@@ -98,7 +95,7 @@ public class Utilities {
 		errorMessage = errorMessage.trim();
 
 		progressDialog = new ProgressDialog(ctx);
-		// progressDialog.setCancelable(false);
+//		progressDialog.setCancelable(false);
 		progressDialog.setMessage(errorMessage);
 
 		// ((DJIMainActivity) CommonConstants.DJI_MAIN_ACTIVITY_CONTEXT)
@@ -484,19 +481,5 @@ public class Utilities {
 		}
 		return bMapArray;
 	}
-
-	public static void setBillingSupported(boolean isBillingSupported) {
-		Utilities.isBillingSupported = isBillingSupported;
-		Log.i("InApp", " isBillingSupported Flag true");
-	}
-	public static boolean isBillingSupported() {
-		return isBillingSupported;
-	}
 	
-	public static boolean isIsInAppTransactionInProcess() {
-		return Utilities.isInAppTransactionInProcess;
-	}
-	public static void setIsInAppTransactionInProcess(boolean isInAppTransactionInProcess) {
-		Utilities.isInAppTransactionInProcess = isInAppTransactionInProcess;
-	}
 }

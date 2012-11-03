@@ -16,7 +16,6 @@
 
 package com.uaemerchant.inapp;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -33,8 +32,8 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import com.android.vending.billing.IMarketBillingService;
-import com.uaemerchant.inapp.InAppBillingConstants.PurchaseState;
-import com.uaemerchant.inapp.InAppBillingConstants.ResponseCode;
+import com.uaemerchant.inapp.Consts.PurchaseState;
+import com.uaemerchant.inapp.Consts.ResponseCode;
 import com.uaemerchant.inapp.Security.VerifiedPurchase;
 
 
@@ -112,13 +111,13 @@ public class BillingService extends Service implements ServiceConnection {
          * is not connected or there was an error when trying to use it
          */
         public boolean runIfConnected() {
-            if (InAppBillingConstants.DEBUG) {
+            if (Consts.DEBUG) {
                 Log.d(TAG, getClass().getSimpleName());
             }
             if (mService != null) {
                 try {
                     mRequestId = run();
-                    if (InAppBillingConstants.DEBUG) {
+                    if (Consts.DEBUG) {
                         Log.d(TAG, "request id: " + mRequestId);
                     }
                     if (mRequestId >= 0) {
@@ -159,16 +158,16 @@ public class BillingService extends Service implements ServiceConnection {
 
         protected Bundle makeRequestBundle(String method) {
             Bundle request = new Bundle();
-            request.putString(InAppBillingConstants.BILLING_REQUEST_METHOD, method);
-            request.putInt(InAppBillingConstants.BILLING_REQUEST_API_VERSION, 1);
-            request.putString(InAppBillingConstants.BILLING_REQUEST_PACKAGE_NAME, getPackageName());
+            request.putString(Consts.BILLING_REQUEST_METHOD, method);
+            request.putInt(Consts.BILLING_REQUEST_API_VERSION, 1);
+            request.putString(Consts.BILLING_REQUEST_PACKAGE_NAME, getPackageName());
             return request;
         }
 
         protected void logResponseCode(String method, Bundle response) {
             ResponseCode responseCode = ResponseCode.valueOf(
-                    response.getInt(InAppBillingConstants.BILLING_RESPONSE_RESPONSE_CODE));
-            if (InAppBillingConstants.DEBUG) {
+                    response.getInt(Consts.BILLING_RESPONSE_RESPONSE_CODE));
+            if (Consts.DEBUG) {
                 Log.e(TAG, method + " received " + responseCode.toString());
             }
         }
@@ -189,14 +188,14 @@ public class BillingService extends Service implements ServiceConnection {
         protected long run() throws RemoteException {
             Bundle request = makeRequestBundle("CHECK_BILLING_SUPPORTED");
             Bundle response = mService.sendBillingRequest(request);
-            int responseCode = response.getInt(InAppBillingConstants.BILLING_RESPONSE_RESPONSE_CODE);
-            if (InAppBillingConstants.DEBUG) {
+            int responseCode = response.getInt(Consts.BILLING_RESPONSE_RESPONSE_CODE);
+            if (Consts.DEBUG) {
                 Log.i(TAG, "CheckBillingSupported response code: " +
                         ResponseCode.valueOf(responseCode));
             }
             boolean billingSupported = (responseCode == ResponseCode.RESULT_OK.ordinal());
             ResponseHandler.checkBillingSupportedResponse(billingSupported);
-            return InAppBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID;
+            return Consts.BILLING_RESPONSE_INVALID_REQUEST_ID;
         }
     }
 
@@ -223,23 +222,23 @@ public class BillingService extends Service implements ServiceConnection {
         @Override
         protected long run() throws RemoteException {
             Bundle request = makeRequestBundle("REQUEST_PURCHASE");
-            request.putString(InAppBillingConstants.BILLING_REQUEST_ITEM_ID, mProductId);
+            request.putString(Consts.BILLING_REQUEST_ITEM_ID, mProductId);
             // Note that the developer payload is optional.
             if (mDeveloperPayload != null) {
-                request.putString(InAppBillingConstants.BILLING_REQUEST_DEVELOPER_PAYLOAD, mDeveloperPayload);
+                request.putString(Consts.BILLING_REQUEST_DEVELOPER_PAYLOAD, mDeveloperPayload);
             }
             Bundle response = mService.sendBillingRequest(request);
             PendingIntent pendingIntent
-                    = response.getParcelable(InAppBillingConstants.BILLING_RESPONSE_PURCHASE_INTENT);
+                    = response.getParcelable(Consts.BILLING_RESPONSE_PURCHASE_INTENT);
             if (pendingIntent == null) {
                 Log.e(TAG, "Error with requestPurchase");
-                return InAppBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID;
+                return Consts.BILLING_RESPONSE_INVALID_REQUEST_ID;
             }
 
             Intent intent = new Intent();
             ResponseHandler.buyPageIntentResponse(pendingIntent, intent);
-            return response.getLong(InAppBillingConstants.BILLING_RESPONSE_REQUEST_ID,
-                    InAppBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID);
+            return response.getLong(Consts.BILLING_RESPONSE_REQUEST_ID,
+                    Consts.BILLING_RESPONSE_INVALID_REQUEST_ID);
         }
 
         @Override
@@ -262,12 +261,11 @@ public class BillingService extends Service implements ServiceConnection {
         @Override
         protected long run() throws RemoteException {
             Bundle request = makeRequestBundle("CONFIRM_NOTIFICATIONS");
-            request.putStringArray(InAppBillingConstants.BILLING_REQUEST_NOTIFY_IDS, mNotifyIds);
+            request.putStringArray(Consts.BILLING_REQUEST_NOTIFY_IDS, mNotifyIds);
             Bundle response = mService.sendBillingRequest(request);
             logResponseCode("confirmNotifications", response);
-            Log.i("InApp", "ConfirmNotifications make BillingRequest bundle");
-            return response.getLong(InAppBillingConstants.BILLING_RESPONSE_REQUEST_ID,
-                    InAppBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID);
+            return response.getLong(Consts.BILLING_RESPONSE_REQUEST_ID,
+                    Consts.BILLING_RESPONSE_INVALID_REQUEST_ID);
         }
     }
 
@@ -288,13 +286,12 @@ public class BillingService extends Service implements ServiceConnection {
             mNonce = Security.generateNonce();
 
             Bundle request = makeRequestBundle("GET_PURCHASE_INFORMATION");
-            request.putLong(InAppBillingConstants.BILLING_REQUEST_NONCE, mNonce);
-            request.putStringArray(InAppBillingConstants.BILLING_REQUEST_NOTIFY_IDS, mNotifyIds);
+            request.putLong(Consts.BILLING_REQUEST_NONCE, mNonce);
+            request.putStringArray(Consts.BILLING_REQUEST_NOTIFY_IDS, mNotifyIds);
             Bundle response = mService.sendBillingRequest(request);
             logResponseCode("getPurchaseInformation", response);
-            Log.i("InApp", "GetPurchaseInformation make punchase Info Request bundle");
-            return response.getLong(InAppBillingConstants.BILLING_RESPONSE_REQUEST_ID,
-                    InAppBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID);
+            return response.getLong(Consts.BILLING_RESPONSE_REQUEST_ID,
+                    Consts.BILLING_RESPONSE_INVALID_REQUEST_ID);
         }
 
         @Override
@@ -322,11 +319,11 @@ public class BillingService extends Service implements ServiceConnection {
             mNonce = Security.generateNonce();
 
             Bundle request = makeRequestBundle("RESTORE_TRANSACTIONS");
-            request.putLong(InAppBillingConstants.BILLING_REQUEST_NONCE, mNonce);
+            request.putLong(Consts.BILLING_REQUEST_NONCE, mNonce);
             Bundle response = mService.sendBillingRequest(request);
             logResponseCode("restoreTransactions", response);
-            return response.getLong(InAppBillingConstants.BILLING_RESPONSE_REQUEST_ID,
-                    InAppBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID);
+            return response.getLong(Consts.BILLING_RESPONSE_REQUEST_ID,
+                    Consts.BILLING_RESPONSE_INVALID_REQUEST_ID);
         }
 
         @Override
@@ -369,32 +366,27 @@ public class BillingService extends Service implements ServiceConnection {
      * @param startId an identifier for the invocation instance of this service
      */
     public void handleCommand(Intent intent, int startId) {
-    	Log.i("InApp", "BillingService - Handle Command Start");
-    	if(!(intent == null)){
-    		
-    		Log.i("InApp", "BillingService - Handle Command -- NOTIFY");
-    		String action = intent.getAction();
-    		if (InAppBillingConstants.DEBUG) {
-    			Log.i("InApp", "BillingService - Handle Command() action:" + action);
-    		}
-    		if (InAppBillingConstants.ACTION_CONFIRM_NOTIFICATION.equals(action)) {
-    			String[] notifyIds = intent.getStringArrayExtra(InAppBillingConstants.NOTIFICATION_ID);
-    			confirmNotifications(startId, notifyIds);
-    		} else if (InAppBillingConstants.ACTION_GET_PURCHASE_INFORMATION.equals(action)) {
-    			String notifyId = intent.getStringExtra(InAppBillingConstants.NOTIFICATION_ID);
-    			getPurchaseInformation(startId, new String[] { notifyId });
-    		} else if (InAppBillingConstants.ACTION_PURCHASE_STATE_CHANGED.equals(action)) {
-    			String signedData = intent.getStringExtra(InAppBillingConstants.INAPP_SIGNED_DATA);
-    			String signature = intent.getStringExtra(InAppBillingConstants.INAPP_SIGNATURE);
-    			purchaseStateChanged(startId, signedData, signature);
-    		} else if (InAppBillingConstants.ACTION_RESPONSE_CODE.equals(action)) {
-    			long requestId = intent.getLongExtra(InAppBillingConstants.INAPP_REQUEST_ID, -1);
-    			int responseCodeIndex = intent.getIntExtra(InAppBillingConstants.INAPP_RESPONSE_CODE,
-    					ResponseCode.RESULT_ERROR.ordinal());
-    			ResponseCode responseCode = ResponseCode.valueOf(responseCodeIndex);
-    			checkResponseCode(requestId, responseCode);
-    		}
-    	}
+        String action = intent.getAction();
+        if (Consts.DEBUG) {
+            Log.i(TAG, "handleCommand() action: " + action);
+        }
+        if (Consts.ACTION_CONFIRM_NOTIFICATION.equals(action)) {
+            String[] notifyIds = intent.getStringArrayExtra(Consts.NOTIFICATION_ID);
+            confirmNotifications(startId, notifyIds);
+        } else if (Consts.ACTION_GET_PURCHASE_INFORMATION.equals(action)) {
+            String notifyId = intent.getStringExtra(Consts.NOTIFICATION_ID);
+            getPurchaseInformation(startId, new String[] { notifyId });
+        } else if (Consts.ACTION_PURCHASE_STATE_CHANGED.equals(action)) {
+            String signedData = intent.getStringExtra(Consts.INAPP_SIGNED_DATA);
+            String signature = intent.getStringExtra(Consts.INAPP_SIGNATURE);
+            purchaseStateChanged(startId, signedData, signature);
+        } else if (Consts.ACTION_RESPONSE_CODE.equals(action)) {
+            long requestId = intent.getLongExtra(Consts.INAPP_REQUEST_ID, -1);
+            int responseCodeIndex = intent.getIntExtra(Consts.INAPP_RESPONSE_CODE,
+                    ResponseCode.RESULT_ERROR.ordinal());
+            ResponseCode responseCode = ResponseCode.valueOf(responseCodeIndex);
+            checkResponseCode(requestId, responseCode);
+        }
     }
 
     /**
@@ -404,11 +396,11 @@ public class BillingService extends Service implements ServiceConnection {
      */
     private boolean bindToMarketBillingService() {
         try {
-            if (InAppBillingConstants.DEBUG) {
+            if (Consts.DEBUG) {
                 Log.i(TAG, "binding to Market billing service");
             }
             boolean bindResult = bindService(
-                    new Intent(InAppBillingConstants.MARKET_BILLING_SERVICE_ACTION),
+                    new Intent(Consts.MARKET_BILLING_SERVICE_ACTION),
                     this,  // ServiceConnection.
                     Context.BIND_AUTO_CREATE);
 
@@ -434,7 +426,7 @@ public class BillingService extends Service implements ServiceConnection {
     /**
      * Requests that the given item be offered to the user for purchase. When
      * the purchase succeeds (or is canceled) the {@link BillingReceiver}
-     * receives an intent with the action {@link InAppBillingConstants#ACTION_NOTIFY}.
+     * receives an intent with the action {@link Consts#ACTION_NOTIFY}.
      * Returns false if there was an error trying to connect to Android Market.
      * @param productId an identifier for the item being offered for purchase
      * @param developerPayload a payload that is associated with a given
@@ -467,7 +459,6 @@ public class BillingService extends Service implements ServiceConnection {
      * @return false if there was an error connecting to Market
      */
     private boolean confirmNotifications(int startId, String[] notifyIds) {
-    	Log.i("InApp", "BillingService() - confirmNotifications");
         return new ConfirmNotifications(startId, notifyIds).runRequest();
     }
 
@@ -476,7 +467,7 @@ public class BillingService extends Service implements ServiceConnection {
      * notification IDs sent to us by Android Market, which we include in
      * our request. The server responds with the purchase information,
      * encoded as a JSON string, and sends that to the {@link BillingReceiver}
-     * in an intent with the action {@link InAppBillingConstants#ACTION_PURCHASE_STATE_CHANGED}.
+     * in an intent with the action {@link Consts#ACTION_PURCHASE_STATE_CHANGED}.
      * Returns false if there was an error trying to connect to the MarketBillingService.
      *
      * @param startId an identifier for the invocation instance of this service
@@ -485,7 +476,6 @@ public class BillingService extends Service implements ServiceConnection {
      * @return false if there was an error connecting to Android Market
      */
     private boolean getPurchaseInformation(int startId, String[] notifyIds) {
-    	Log.i("InApp", "BillingService() - getPurchaseInformation");
         return new GetPurchaseInformation(startId, notifyIds).runRequest();
     }
 
@@ -498,7 +488,6 @@ public class BillingService extends Service implements ServiceConnection {
      * @param signature the signature for the data, signed with the private key
      */
     private void purchaseStateChanged(int startId, String signedData, String signature) {
-    	Log.i("InApp", "BillingService() - purchaseStateChanged");
         ArrayList<Security.VerifiedPurchase> purchases;
         purchases = Security.verifyPurchase(signedData, signature);
         if (purchases == null) {
@@ -532,10 +521,9 @@ public class BillingService extends Service implements ServiceConnection {
      * of the request
      */
     private void checkResponseCode(long requestId, ResponseCode responseCode) {
-    	Log.i("InApp", "BillingService() - checkResponseCode");
         BillingRequest request = mSentRequests.get(requestId);
         if (request != null) {
-            if (InAppBillingConstants.DEBUG) {
+            if (Consts.DEBUG) {
                 Log.d(TAG, request.getClass().getSimpleName() + ": " + responseCode);
             }
             request.responseCodeReceived(responseCode);
@@ -572,7 +560,7 @@ public class BillingService extends Service implements ServiceConnection {
         // is not -1, then one of the requests started the service, so we can
         // stop it now.
         if (maxStartId >= 0) {
-            if (InAppBillingConstants.DEBUG) {
+            if (Consts.DEBUG) {
                 Log.i(TAG, "stopping service, startId: " + maxStartId);
             }
             stopSelf(maxStartId);
@@ -584,7 +572,7 @@ public class BillingService extends Service implements ServiceConnection {
      * This runs in the main UI thread.
      */
     public void onServiceConnected(ComponentName name, IBinder service) {
-        if (InAppBillingConstants.DEBUG) {
+        if (Consts.DEBUG) {
             Log.d(TAG, "Billing service connected");
         }
         mService = IMarketBillingService.Stub.asInterface(service);

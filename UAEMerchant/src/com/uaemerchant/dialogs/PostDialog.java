@@ -2,20 +2,25 @@ package com.uaemerchant.dialogs;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -29,12 +34,19 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.uaemerchant.R;
-import com.uaemerchant.activities.UAEMerchantMainActivity;
 import com.uaemerchant.asynctask.DataDownloadTask;
 import com.uaemerchant.common.CommonConstants;
 import com.uaemerchant.common.IResponseListener;
 import com.uaemerchant.common.NetworkConstants;
 import com.uaemerchant.common.Utilities;
+import com.uaemerchant.inapp.BillingService;
+import com.uaemerchant.inapp.BillingService.RequestPurchase;
+import com.uaemerchant.inapp.BillingService.RestoreTransactions;
+import com.uaemerchant.inapp.Consts;
+import com.uaemerchant.inapp.Consts.PurchaseState;
+import com.uaemerchant.inapp.Consts.ResponseCode;
+import com.uaemerchant.inapp.PurchaseObserver;
+import com.uaemerchant.inapp.ResponseHandler;
 import com.uaemerchant.pojo.Ad;
 
 public class PostDialog extends Dialog implements View.OnClickListener, OnCancelListener {
@@ -55,7 +67,27 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 	
 	private Ad ad = null;
 	
-	private static HashMap<Integer, String> imagePaths = new HashMap<Integer, String>(3); 
+	private static HashMap<Integer, String> imagePaths = new HashMap<Integer, String>(3);
+	
+	/// in app
+	
+	private static final String TAG = "PostDialog";
+	
+	private DungeonsPurchaseObserver mDungeonsPurchaseObserver;
+    private Handler mHandler;
+
+    private BillingService mBillingService;
+    
+    /**
+     * The developer payload that is sent with subsequent
+     * purchase requests.
+     */
+    private String mPayloadContents = null;
+
+    private static final int DIALOG_CANNOT_CONNECT_ID = 1;
+    private static final int DIALOG_BILLING_NOT_SUPPORTED_ID = 2;
+    
+    //////////
 	
 	
 	public PostDialog(Context context) {
@@ -73,6 +105,8 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 		userId = Utilities.getStringValuesFromPreference(context, CommonConstants.PREF_USER_ID, "");
 		if(!Utilities.isStringEmptyOrNull(userId)){
 			initializeViews();
+			
+			
 		}else{
 			showRegisterAlertDialog();
 		}
@@ -98,7 +132,9 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 
 	@Override
 	public void hide() {
+		ResponseHandler.unregister(mDungeonsPurchaseObserver);
 		cancel();
+        mBillingService.unbind();
 
 	}
 
@@ -162,14 +198,27 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				/// open dialog to add pictures
-//				hide();
-//				CommonConstants.AD = ad;
-//				CommonConstants.POST_LISTENER = new PostResponse();
-//				CommonConstants.POST_DIALOG_CONTEXT = PostDialog.this;
-//				startInApp();
-				new AddPicturesDialog(context, ad, new PostResponse()).show();
 				
+				Utilities.showprogressDialog(context, "Making transaction, please wait!");
+				mHandler = new Handler();
+		        mDungeonsPurchaseObserver = new DungeonsPurchaseObserver(mHandler);
+		        mBillingService = new BillingService();
+		        mBillingService.setContext(context);
+
+//		        mPurchaseDatabase = new PurchaseDatabase(this);
+		
+		        // Check if billing is supported.
+		        ResponseHandler.register(mDungeonsPurchaseObserver);
+		        if (!mBillingService.checkBillingSupported()) {
+		            createBillingDialog(DIALOG_CANNOT_CONNECT_ID);
+		        }
+		        ResponseHandler.register(mDungeonsPurchaseObserver);
 				
+				CommonConstants.AD = ad;
+				CommonConstants.POST_LISTENER = new PostResponse();
+				CommonConstants.POST_DIALOG_CONTEXT = PostDialog.this;
+				startInApp();
+//				new AddPicturesDialog(context, ad, new PostResponse()).show();
 			}
 		});
 
@@ -332,37 +381,173 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 		requestData.append(NetworkConstants.DESCRIPTION);
 		requestData.append("=");
 		requestData.append(description);
-//		requestData.append("&");
-//		requestData.append(NetworkConstants.PHOTO_1);
-//		requestData.append("=");
-//		requestData.append("");
-//		requestData.append("&");
-//		requestData.append(NetworkConstants.PHOTO_2);
-//		requestData.append("=");
-//		requestData.append("");
-//		requestData.append("&");
-//		requestData.append(NetworkConstants.PHOTO_3);
-//		requestData.append("=");
-//		requestData.append("");
 			
 		return requestData.toString();
 	}
 	
 	private void startInApp() {
-			if (!Utilities.isBillingSupported()) {
-				((UAEMerchantMainActivity)Utilities.mainActivityContext).createBillingDialog(1);//DreamLifeGameConstants.DIALOG_CANNOT_CONNECT_ID);
-			}else {
-				Utilities.setIsInAppTransactionInProcess(true);
-				Log.i("InApp", "BEFORE MAKING PURCHASE REQUEST .....  AT ATM ITEM ................ON CLICK");
-//				for(int i =0; i<5000; i++){
-//					// do Nothing
+		if (Consts.DEBUG) {
+            Log.d(TAG, "buying: " + CommonConstants.INAPP_PRODUCT_ID);
+        }
+        if (!mBillingService.requestPurchase(CommonConstants.INAPP_PRODUCT_ID, mPayloadContents)) {
+            createBillingDialog(DIALOG_BILLING_NOT_SUPPORTED_ID);
+        }
+		
+		
+//			if (!Utilities.isBillingSupported()) {
+//				((UAEMerchantMainActivity)Utilities.mainActivityContext).createBillingDialog(1);
+//			}else {
+//				Utilities.setIsInAppTransactionInProcess(true);
+//				Log.i("InApp", "BEFORE MAKING PURCHASE REQUEST .....  AT ATM ITEM ................ON CLICK");
+////				for(int i =0; i<5000; i++){
+////					// do Nothing
+////				}
+//				if(!((UAEMerchantMainActivity)Utilities.mainActivityContext).mBillingService.requestPurchase(CommonConstants.INAPP_PRODUCT_ID, null)){
+//					Log.i("InApp", "PURCHASE REQUEST SENT .....  AT ATM ITEM ................ON CLICK...................AFTER");
+//					Utilities.setIsInAppTransactionInProcess(false);
+//					((UAEMerchantMainActivity)Utilities.mainActivityContext).createBillingDialog(2);
 //				}
-				if(!((UAEMerchantMainActivity)Utilities.mainActivityContext).mBillingService.requestPurchase(CommonConstants.INAPP_PRODUCT_ID, null)){
-					Log.i("InApp", "PURCHASE REQUEST SENT .....  AT ATM ITEM ................ON CLICK...................AFTER");
-					Utilities.setIsInAppTransactionInProcess(false);
-					((UAEMerchantMainActivity)Utilities.mainActivityContext).createBillingDialog(2); //DreamLifeGameConstants.DIALOG_BILLING_NOT_SUPPORTED_ID);
-				}
-			}
+//			}
 	}
 
+	
+	/**
+     * Each product in the catalog is either MANAGED or UNMANAGED.  MANAGED
+     * means that the product can be purchased only once per user (such as a new
+     * level in a game). The purchase is remembered by Android Market and
+     * can be restored if this application is uninstalled and then
+     * re-installed. UNMANAGED is used for products that can be used up and
+     * purchased multiple times (such as poker chips). It is up to the
+     * application to keep track of UNMANAGED products for the user.
+     */
+    private enum Managed { MANAGED, UNMANAGED }
+
+    /**
+     * A {@link PurchaseObserver} is used to get callbacks when Android Market sends
+     * messages to this application so that we can update the UI.
+     */
+    private class DungeonsPurchaseObserver extends PurchaseObserver {
+        public DungeonsPurchaseObserver(Handler handler) {
+            super((Activity)context, handler);
+        }
+
+        @Override
+        public void onBillingSupported(boolean supported) {
+            if (Consts.DEBUG) {
+                Log.i(TAG, "supported: " + supported);
+            }
+            if (supported) {
+//                restoreDatabase();
+//                mBuyButton.setEnabled(true);
+//                mEditPayloadButton.setEnabled(true);
+            } else {
+                createBillingDialog(DIALOG_BILLING_NOT_SUPPORTED_ID);
+            }
+        }
+
+        @Override
+        public void onPurchaseStateChange(PurchaseState purchaseState, String itemId,
+                int quantity, long purchaseTime, String developerPayload) {
+            if (Consts.DEBUG) {
+                Log.i(TAG, "onPurchaseStateChange() itemId: " + itemId + " " + purchaseState);
+            }
+
+//            if (developerPayload == null) {
+//                logProductActivity(itemId, purchaseState.toString());
+//            } else {
+//                logProductActivity(itemId, purchaseState + "\n\t" + developerPayload);
+//            }
+//
+//            if (purchaseState == PurchaseState.PURCHASED) {
+//                mOwnedItems.add(itemId);
+//            }
+//            mCatalogAdapter.setOwnedItems(mOwnedItems);
+//            mOwnedItemsCursor.requery();
+        }
+
+        @Override
+        public void onRequestPurchaseResponse(RequestPurchase request,
+                ResponseCode responseCode) {
+            if (Consts.DEBUG) {
+                Log.d(TAG, request.mProductId + ": " + responseCode);
+            }
+            if (responseCode == ResponseCode.RESULT_OK) {
+                if (Consts.DEBUG) {
+                    Log.i(TAG, "purchase was successfully sent to server");
+                }
+//                logProductActivity(request.mProductId, "sending purchase request");
+            } else if (responseCode == ResponseCode.RESULT_USER_CANCELED) {
+                if (Consts.DEBUG) {
+                    Log.i(TAG, "user canceled purchase");
+                }
+//                logProductActivity(request.mProductId, "dismissed purchase dialog");
+            } else {
+                if (Consts.DEBUG) {
+                    Log.i(TAG, "purchase failed");
+                }
+//                logProductActivity(request.mProductId, "request purchase returned " + responseCode);
+            }
+        }
+
+        @Override
+        public void onRestoreTransactionsResponse(RestoreTransactions request,
+                ResponseCode responseCode) {
+            if (responseCode == ResponseCode.RESULT_OK) {
+                if (Consts.DEBUG) {
+                    Log.d(TAG, "completed RestoreTransactions request");
+                }
+                // Update the shared preferences so that we don't perform
+                // a RestoreTransactions again.
+//                SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+//                SharedPreferences.Editor edit = prefs.edit();
+//                edit.putBoolean(DB_INITIALIZED, true);
+//                edit.commit();
+            } else {
+                if (Consts.DEBUG) {
+                    Log.d(TAG, "RestoreTransactions error: " + responseCode);
+                }
+            }
+        }
+    }
+    
+    public void createBillingDialog(int id) {
+		switch(id) {
+		case 1: //CommonConstants.DIALOG_CANNOT_CONNECT_ID:
+			createBillingResponseDialog(R.string.cannot_connect_title,
+					R.string.cannot_connect_message);
+			break;
+		case 2: //CommonConstants.DIALOG_BILLING_NOT_SUPPORTED_ID:
+			createBillingResponseDialog(R.string.billing_not_supported_title,
+					R.string.billing_not_supported_message);
+			break;
+		}
+	}
+	private void createBillingResponseDialog(int titleId, int messageId) {
+		String helpUrl = replaceLanguageAndRegion(context.getString(R.string.help_url));
+		final Uri helpUri = Uri.parse(helpUrl);
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle(titleId);
+		builder.setIcon(android.R.drawable.stat_sys_warning);
+		builder.setMessage(messageId);
+		builder.setCancelable(false);
+		builder.setPositiveButton(android.R.string.ok, null);
+		builder.setNegativeButton(R.string.learn_more, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				Intent intent = new Intent(Intent.ACTION_VIEW, helpUri);
+				context.startActivity(intent);
+			}
+		});
+		builder.create();
+		builder.show();
+	}
+	private String replaceLanguageAndRegion(String str) {
+		// Substitute language and or region if present in string
+		if (str.contains("%lang%") || str.contains("%region%")) {
+			Locale locale = Locale.getDefault();
+			str = str.replace("%lang%", locale.getLanguage().toLowerCase());
+			str = str.replace("%region%", locale.getCountry().toLowerCase());
+		}
+		return str;
+	}
+	
 }

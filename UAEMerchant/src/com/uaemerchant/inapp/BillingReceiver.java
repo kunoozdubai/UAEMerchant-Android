@@ -16,13 +16,12 @@
 
 package com.uaemerchant.inapp;
 
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.uaemerchant.inapp.InAppBillingConstants.ResponseCode;
+import com.uaemerchant.inapp.Consts.ResponseCode;
 
 /**
  * This class implements the broadcast receiver for in-app billing. All asynchronous messages from
@@ -35,7 +34,7 @@ import com.uaemerchant.inapp.InAppBillingConstants.ResponseCode;
  *
  * You should modify and obfuscate this code before using it.
  */
-public class BillingReceiver extends BroadcastReceiver {
+public class BillingReceiver extends BroadcastReceiver { 
     private static final String TAG = "BillingReceiver";
 
     /**
@@ -47,21 +46,20 @@ public class BillingReceiver extends BroadcastReceiver {
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-    	Log.i("InApp", "BillingReceiver - onReceive");
         String action = intent.getAction();
-        if (InAppBillingConstants.ACTION_PURCHASE_STATE_CHANGED.equals(action)) {
-            String signedData = intent.getStringExtra(InAppBillingConstants.INAPP_SIGNED_DATA);
-            String signature = intent.getStringExtra(InAppBillingConstants.INAPP_SIGNATURE);
+        if (Consts.ACTION_PURCHASE_STATE_CHANGED.equals(action)) {
+            String signedData = intent.getStringExtra(Consts.INAPP_SIGNED_DATA);
+            String signature = intent.getStringExtra(Consts.INAPP_SIGNATURE);
             purchaseStateChanged(context, signedData, signature);
-        } else if (InAppBillingConstants.ACTION_NOTIFY.equals(action)) {
-            String notifyId = intent.getStringExtra(InAppBillingConstants.NOTIFICATION_ID);
-            if (InAppBillingConstants.DEBUG) {
+        } else if (Consts.ACTION_NOTIFY.equals(action)) {
+            String notifyId = intent.getStringExtra(Consts.NOTIFICATION_ID);
+            if (Consts.DEBUG) {
                 Log.i(TAG, "notifyId: " + notifyId);
             }
             notify(context, notifyId);
-        } else if (InAppBillingConstants.ACTION_RESPONSE_CODE.equals(action)) {
-            long requestId = intent.getLongExtra(InAppBillingConstants.INAPP_REQUEST_ID, -1);
-            int responseCodeIndex = intent.getIntExtra(InAppBillingConstants.INAPP_RESPONSE_CODE,
+        } else if (Consts.ACTION_RESPONSE_CODE.equals(action)) {
+            long requestId = intent.getLongExtra(Consts.INAPP_REQUEST_ID, -1);
+            int responseCodeIndex = intent.getIntExtra(Consts.INAPP_RESPONSE_CODE,
                     ResponseCode.RESULT_ERROR.ordinal());
             checkResponseCode(context, requestId, responseCodeIndex);
         } else {
@@ -79,11 +77,10 @@ public class BillingReceiver extends BroadcastReceiver {
      * @param signature the signature for the signedData
      */
     private void purchaseStateChanged(Context context, String signedData, String signature) {
-    	Log.i("InApp", "BillingReceiver - purchaseStateChanged");
-        Intent intent = new Intent(InAppBillingConstants.ACTION_PURCHASE_STATE_CHANGED);
+        Intent intent = new Intent(Consts.ACTION_PURCHASE_STATE_CHANGED);
         intent.setClass(context, BillingService.class);
-        intent.putExtra(InAppBillingConstants.INAPP_SIGNED_DATA, signedData);
-        intent.putExtra(InAppBillingConstants.INAPP_SIGNATURE, signature);
+        intent.putExtra(Consts.INAPP_SIGNED_DATA, signedData);
+        intent.putExtra(Consts.INAPP_SIGNATURE, signature);
         context.startService(intent);
     }
 
@@ -99,10 +96,9 @@ public class BillingReceiver extends BroadcastReceiver {
      * @param notifyId the notification ID
      */
     private void notify(Context context, String notifyId) {
-    	Log.i("inApp", "Billing reciever: Notify");
-        Intent intent = new Intent(InAppBillingConstants.ACTION_GET_PURCHASE_INFORMATION);
+        Intent intent = new Intent(Consts.ACTION_GET_PURCHASE_INFORMATION);
         intent.setClass(context, BillingService.class);
-        intent.putExtra(InAppBillingConstants.NOTIFICATION_ID, notifyId);
+        intent.putExtra(Consts.NOTIFICATION_ID, notifyId);
         context.startService(intent);
     }
 
@@ -115,11 +111,10 @@ public class BillingReceiver extends BroadcastReceiver {
      * @param responseCodeIndex the ResponseCode ordinal value for the request
      */
     private void checkResponseCode(Context context, long requestId, int responseCodeIndex) {
-    	Log.i("InApp", "BillingReceiver - checkResponseCode");
-        Intent intent = new Intent(InAppBillingConstants.ACTION_RESPONSE_CODE);
+        Intent intent = new Intent(Consts.ACTION_RESPONSE_CODE);
         intent.setClass(context, BillingService.class);
-        intent.putExtra(InAppBillingConstants.INAPP_REQUEST_ID, requestId);
-        intent.putExtra(InAppBillingConstants.INAPP_RESPONSE_CODE, responseCodeIndex);
+        intent.putExtra(Consts.INAPP_REQUEST_ID, requestId);
+        intent.putExtra(Consts.INAPP_RESPONSE_CODE, responseCodeIndex);
         context.startService(intent);
     }
 }
