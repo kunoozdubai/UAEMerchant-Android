@@ -48,7 +48,11 @@ public class ThumbImageDownloadTask extends AsyncTask<Void, Void, Void> {
 
 				bitmap = BitmapFactory.decodeFile(CommonConstants.MERCHANT_IMAGE_DIR
 						+ filename, Utilities.getBitmapFactoryoptions(5));
-				Bitmap bmpCompressed = Bitmap.createScaledBitmap(bitmap, 100, 100, true); 
+				
+				Bitmap bmpCompressed = null;
+				if(bitmap != null){
+					bmpCompressed = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+				}
 				
 				if (bmpCompressed != null) {
 					Utilities.thumbMap.put(filename, new BitmapDrawable(
@@ -75,8 +79,10 @@ public class ThumbImageDownloadTask extends AsyncTask<Void, Void, Void> {
 			if (Utilities.thumbMap.get(filename) == null) {
 				bitmap = BitmapFactory.decodeFile(CommonConstants.MERCHANT_IMAGE_DIR
 						+ filename, Utilities.getBitmapFactoryoptions(5));
-				
-				Bitmap bmpCompressed = Bitmap.createScaledBitmap(bitmap, 100, 100, true); 
+				Bitmap bmpCompressed = null;
+				if(bitmap != null){
+					bmpCompressed = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+				}
 				
 				if (bmpCompressed != null) {
 					Utilities.thumbMap.put(filename, new BitmapDrawable(
