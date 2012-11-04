@@ -109,22 +109,22 @@ public class ResponseHandler {
     public static void purchaseResponse(
             final Context context, final PurchaseState purchaseState, final String productId,
             final String orderId, final long purchaseTime, final String developerPayload) {
-    	Toast.makeText(Utilities.mainActivityContext, " in purchase response", Toast.LENGTH_SHORT).show();
+//    	Toast.makeText(Utilities.mainActivityContext, " in purchase response", Toast.LENGTH_SHORT).show();
     	
 		if (purchaseState == PurchaseState.PURCHASED) {
 			Utilities.cancelprogressDialog();
 			if(CommonConstants.AD != null && CommonConstants.POST_LISTENER != null){
 				new AddPicturesDialog(Utilities.mainActivityContext, CommonConstants.AD, CommonConstants.POST_LISTENER).show();
 			}
-			Toast.makeText(Utilities.mainActivityContext, "Transaction successful, you can post Pictures", Toast.LENGTH_SHORT).show();
+			Toast.makeText(Utilities.mainActivityContext, "Transaction successful, you can add Pictures", Toast.LENGTH_SHORT).show();
 			
 		} else if (purchaseState == PurchaseState.CANCELED) {
-			Utilities.cancelprogressDialog();
-			Toast.makeText(Utilities.mainActivityContext, "Transaction unsuccessful, ", Toast.LENGTH_SHORT).show();
+//			((PostDialog)CommonConstants.POST_DIALOG_CONTEXT).showAddPicturesDialog();
+			Toast.makeText(Utilities.mainActivityContext, "Transaction failed! ", Toast.LENGTH_SHORT).show();
 			CommonConstants.AD.setPhoto1("");
 			CommonConstants.AD.setPhoto2("");
 			CommonConstants.AD.setPhoto3("");
-			((PostDialog)CommonConstants.POST_DIALOG_CONTEXT).showAddPicturesDialog();
+			Utilities.cancelprogressDialog();
 		}
     	
         // Update the database with the purchase state. We shouldn't do that

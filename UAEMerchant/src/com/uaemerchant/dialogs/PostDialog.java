@@ -133,8 +133,9 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 	@Override
 	public void hide() {
 		ResponseHandler.unregister(mDungeonsPurchaseObserver);
+		mBillingService.unbind();
+		
 		cancel();
-        mBillingService.unbind();
 
 	}
 

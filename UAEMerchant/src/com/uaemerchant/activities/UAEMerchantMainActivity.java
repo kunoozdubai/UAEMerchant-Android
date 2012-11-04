@@ -268,6 +268,12 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 		}
 		return str;
 	}
-
+	@Override
+	protected void onDestroy() {
+		System.gc();
+		super.onDestroy();
+		//Killing application process on exit.
+		android.os.Process.killProcess(android.os.Process.myPid());
+	}
 	
 }

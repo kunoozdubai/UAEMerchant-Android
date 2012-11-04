@@ -95,7 +95,7 @@ public class Utilities {
 		errorMessage = errorMessage.trim();
 
 		progressDialog = new ProgressDialog(ctx);
-//		progressDialog.setCancelable(false);
+		progressDialog.setCancelable(false);
 		progressDialog.setMessage(errorMessage);
 
 		// ((DJIMainActivity) CommonConstants.DJI_MAIN_ACTIVITY_CONTEXT)
