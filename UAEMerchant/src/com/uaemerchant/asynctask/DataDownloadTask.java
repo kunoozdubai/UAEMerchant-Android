@@ -30,7 +30,6 @@ public class DataDownloadTask extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		Utilities.showprogressDialog(context, "Loading...");
 	}
 
 	@Override

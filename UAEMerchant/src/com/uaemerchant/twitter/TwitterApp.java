@@ -76,7 +76,6 @@ public class TwitterApp {
 	private void configureToken() {
 		if (mAccessToken != null) {
 			mTwitter.setOAuthConsumer(mConsumerKey, mSecretKey);
-			
 			mTwitter.setOAuthAccessToken(mAccessToken);
 		}
 	}

@@ -2,7 +2,7 @@
 <resources>
 
     <string name="hello">Hello World, UAEMerchantActivity!</string>
-    <string name="app_name">UAEMerchant</string>
+    <string name="app_name">UAE Merchant</string>
     
     <string name="categories_text">Categories</string>
     

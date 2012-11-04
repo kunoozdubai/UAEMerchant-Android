@@ -87,6 +87,7 @@ public class CategoryListActivity extends Activity implements OnClickListener, O
 		// } else {
 		// titleTxt.setText(getString(R.string.al_qawaneen_btn));
 		// }
+		Utilities.showprogressDialog(context, "Loading...");
 		new DataDownloadTask(context, new AdsResponse(), NetworkConstants.UAE_MERCHANT_URL + NetworkConstants.WS_AD_LIST, postData).execute();
 
 		searchBar = (EditText) findViewById(R.id.searchBar);

@@ -21,6 +21,7 @@ import com.uaemerchant.R;
 import com.uaemerchant.activities.UAEMerchantGoogleMapActivity;
 import com.uaemerchant.activities.UAEMerchantMainActivity;
 import com.uaemerchant.asynctask.ThumbImageDownloadTask;
+import com.uaemerchant.asynctask.TwitterTask;
 import com.uaemerchant.common.CommonConstants;
 import com.uaemerchant.common.Utilities;
 import com.uaemerchant.facebook.FacebookHandler;
@@ -178,10 +179,15 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 			}
 			
 		} else if (id == R.id.twitterBtn) {
-			Toast.makeText(context, "Twitter button clicked", Toast.LENGTH_SHORT).show();
-			((UAEMerchantMainActivity) Utilities.mainActivityContext).setmTwitter(new TwitterApp(context, TwitterGlobals.TWITTER_CONSUMER_KEY, TwitterGlobals.TWITTER_CONSUMER_SECRET));	
+//			Utilities.showprogressDialog(context, "Sharing on twitter, please wait!");
+//			Toast.makeText(Utilities.mainActivityContext, "Twitter button clicked", Toast.LENGTH_SHORT).show();
+			if(((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter() == null){
+				((UAEMerchantMainActivity) Utilities.mainActivityContext).setmTwitter(new TwitterApp(context, TwitterGlobals.TWITTER_CONSUMER_KEY, TwitterGlobals.TWITTER_CONSUMER_SECRET));
+			}
+//			
 			if(((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().hasAccessToken()){
-				shareOnTwitter();
+				new TwitterTask(context, mTwLoginDialogListener, ad).execute();
+				//shareOnTwitter();
 			}else{
 //				((UAEMerchantMainActivity) Utilities.mainActivityContext).setmTwitter(new TwitterApp(context, TwitterGlobals.TWITTER_CONSUMER_KEY, TwitterGlobals.TWITTER_CONSUMER_SECRET));
 				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().setListener(mTwLoginDialogListener);
@@ -248,7 +254,7 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 	}
 	
 	private void shareOnTwitter() {
-		
+		Toast.makeText(Utilities.mainActivityContext, "in sharing", Toast.LENGTH_SHORT).show();
 		String date = ad.getCreated();
 		String[] tokens = date.split(" ");
 		date = tokens[0];
@@ -278,7 +284,7 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 			
 			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + filename);
 			try {
-//				Toast.makeText(context, "Sharing photo1", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "Sharing photo1", Toast.LENGTH_SHORT).show();
 				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia(captionStringBuilder.toString() + ".", file);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -290,7 +296,7 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 		if(!Utilities.isStringEmptyOrNull(filename)){
 			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + filename);
 			try {
-//				Toast.makeText(context, "Sharing photo2", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "Sharing photo2", Toast.LENGTH_SHORT).show();
 				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia(captionStringBuilder.toString() + "..", file);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -302,12 +308,14 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 		if(!Utilities.isStringEmptyOrNull(filename)){
 			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + filename);
 			try {
-//				Toast.makeText(context, "Sharing photo3", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "Sharing photo3", Toast.LENGTH_SHORT).show();
 				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia(captionStringBuilder.toString() + "...", file);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+		
+//		Utilities.cancelprogressDialog();
 
 		
 	}
@@ -355,8 +363,8 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 			String username = ((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().getUsername();
 			username = (username.equals("")) ? "No Name" : username;
 			Toast.makeText(context, "Connected to Twitter as " + username, Toast.LENGTH_LONG).show();
-			
-			shareOnTwitter();
+			new TwitterTask(context, mTwLoginDialogListener, ad).execute();
+			//shareOnTwitter();
 
 		}
 
@@ -364,11 +372,11 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 		public void onError(String value) {
 			String username = ((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().getUsername();
 			username = (username.equals("")) ? "No Name" : username;
-//			Toast.makeText(context, "Twitter connection failed", Toast.LENGTH_LONG).show();
+			Toast.makeText(context, "Twitter connection failed", Toast.LENGTH_LONG).show();
 //			Configuration.isTwitterLogin = true;
 //			new ShareOptionsDialog(context).showSourceDialog(com.sg.common.Configuration.mediaPath, mediaType);
 
-			shareOnTwitter();
+//			shareOnTwitter();
 		}
 	};
 	
