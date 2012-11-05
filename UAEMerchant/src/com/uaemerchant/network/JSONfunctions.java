@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -18,7 +19,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -29,6 +30,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 
 import com.uaemerchant.common.Utilities;
@@ -43,8 +47,7 @@ public class JSONfunctions {
 	 * @return
 	 */
 
-	public static JSONArray getArrayfromURLValues(String url,
-		String webServiceName, List<NameValuePair> nameValuePairs, String view) {
+	public static JSONArray getArrayfromURLValues(String url, String webServiceName, List<NameValuePair> nameValuePairs, String view) {
 		InputStream is = null;
 		String result = "";
 		JSONArray jArray = null;
@@ -61,40 +64,33 @@ public class JSONfunctions {
 			HttpEntity entity = response.getEntity();
 			result = EntityUtils.toString(entity, HTTP.UTF_8);
 
-//			is = entity.getContent();
+			// is = entity.getContent();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		// convert response to string
-		/*try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					is, "iso-8859-1"), 8);
-			StringBuilder sb = new StringBuilder();
-			String line = null;
-			// add element with the service name
-			sb.append("{\"" + webServiceName + "\"" + ":");
-			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
-			}
-			is.close();
-			sb.append("}");
-			result = sb.toString();
+		/*
+		 * try { BufferedReader reader = new BufferedReader(new
+		 * InputStreamReader( is, "iso-8859-1"), 8); StringBuilder sb = new
+		 * StringBuilder(); String line = null; // add element with the service
+		 * name sb.append("{\"" + webServiceName + "\"" + ":"); while ((line =
+		 * reader.readLine()) != null) { sb.append(line + "\n"); } is.close();
+		 * sb.append("}"); result = sb.toString();
+		 * 
+		 * } catch (Exception e) { e.printStackTrace(); }
+		 */
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
+		// try {
+		// if(view.equals("training") && !result.equals("[]")){
+		// jArray = new JSONArray("[" + result + "]");
+		// }else{
+		// jArray = new JSONArray(result);
+		// }
+		//
+		// } catch (JSONException e) {
+		// e.printStackTrace();
+		// }
 
-//		try {
-//			if(view.equals("training") && !result.equals("[]")){
-//				jArray = new JSONArray("[" + result + "]");
-//			}else{
-//				jArray = new JSONArray(result);
-//			}
-//
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
-		
 		try {
 			jArray = new JSONArray(result);
 		} catch (JSONException e) {
@@ -112,8 +108,7 @@ public class JSONfunctions {
 	 * @return
 	 */
 
-	public static JSONObject getJSONObjectWebService(String url,
-			String webServiceName, List<NameValuePair> nameValuePairs) {
+	public static JSONObject getJSONObjectWebService(String url, String webServiceName, List<NameValuePair> nameValuePairs) {
 		InputStream is = null;
 		String result = "";
 		JSONObject json = null;
@@ -133,8 +128,7 @@ public class JSONfunctions {
 		}
 		// convert response to string
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					is, "iso-8859-1"), 8);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
 			StringBuilder sb = new StringBuilder();
 			String line = null;
 			// add element with the service name
@@ -157,16 +151,18 @@ public class JSONfunctions {
 		}
 		return json;
 	}
-	
+
 	/**
 	 * This method sends a request to passed URL using POST method.
 	 * 
-	 * @param 	requestURL URL on which request is to be sent
-	 * @param	postData Json data to be posted
-	 * @return	InputStream from connection
+	 * @param requestURL
+	 *            URL on which request is to be sent
+	 * @param postData
+	 *            Json data to be posted
+	 * @return InputStream from connection
 	 */
-	public static JSONObject httpPostRequest( String requestURL, String postData ) {
-		//		StringBuilder response = null;
+	public static JSONObject httpPostRequest(String requestURL, String postData) {
+		// StringBuilder response = null;
 		HttpURLConnection connection = null;
 		URL url = null;
 		try {
@@ -189,29 +185,29 @@ public class JSONfunctions {
 		String result = "";
 		int responseCode;
 		try {
-			
+
 			responseCode = connection.getResponseCode();
-			
-			if ( responseCode == HttpURLConnection.HTTP_OK ) {
+
+			if (responseCode == HttpURLConnection.HTTP_OK) {
 				result = Utilities.readServerResponse(connection.getInputStream());
 			}
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		try {
-			jsonObject =  new JSONObject(result);
+			jsonObject = new JSONObject(result);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return jsonObject;
-		
+
 	}
-	
-	public static JSONObject HttpMediaPostReq(String url, List<NameValuePair> nameValuePairs,String[] imagePaths) {
-		
+
+	public static JSONObject HttpMediaPostReq(String url, List<NameValuePair> nameValuePairs, String[] imagePaths) {
+
 		String result = "ERROR";
 		Bitmap bm = null;
 		Bitmap bmpCompressed = null;
@@ -220,68 +216,67 @@ public class JSONfunctions {
 			HttpClient httpclient = new DefaultHttpClient();
 			BasicResponseHandler responseHandler = new BasicResponseHandler();
 			HttpPost httppost = new HttpPost(url);
-//			httppost.setHeader("Content-type", "application/x-www-form-urlencoded");
+			// httppost.setHeader("Content-type",
+			// "application/x-www-form-urlencoded");
 			MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-			
-			for(int i = 0 ; i < imagePaths.length ; i ++){
-				if(!Utilities.isStringEmptyOrNull(imagePaths[i])){
+
+			for (int i = 0; i < imagePaths.length; i++) {
+				if (!Utilities.isStringEmptyOrNull(imagePaths[i])) {
 					File file = new File(imagePaths[i]);
 					if (file != null) {
-//						bm = BitmapFactory.decodeFile(imagePaths[i]);
-//						bm.getWidth();
-//						bm.getHeight();
-//						bmpCompressed = Bitmap.createScaledBitmap(bm, 320, 240, true);
-//						bmpCompressed.getWidth();
-//						bmpCompressed.getHeight();
-//						ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//						bmpCompressed.compress(CompressFormat.JPEG, 75, bos);
-//			            byte[] data = bos.toByteArray();
-////			            byte[] data = {10};   
-//			            data  = Base64.encode(data,Base64.URL_SAFE);
-//			            ByteArrayBody bab = new ByteArrayBody(data, "image/jpg", imagePaths[i]);
-//			            reqEntity.addPart(name, bab);
-						
-						FileBody fileBody = new FileBody(file, "image/jpeg");
-						
-						reqEntity.addPart(name, fileBody);
-						
-						
-			            if(name.equals("file1")){
-			            	name = "file2";
-			            }else {
-			            	name = "file3";
-			            }
-			            if(bm != null){
-			            	bm.recycle();
-			            	bm = null;
-			            }
-			            if(bmpCompressed != null){
-			            	bmpCompressed.recycle();
-			            	bmpCompressed = null;
-			            }
+						bm = BitmapFactory.decodeFile(imagePaths[i]);
+
+						// double width = bm.getWidth();
+						// double height = bm.getHeight();
+						// double aspectRatio = width/height;
+
+						bmpCompressed = Bitmap.createScaledBitmap(bm, 400, 400, true);
+						ByteArrayOutputStream bos = new ByteArrayOutputStream();
+						bmpCompressed.compress(CompressFormat.JPEG, 75, bos);
+						byte[] data = bos.toByteArray();
+						// data = Base64.encode(data,Base64.URL_SAFE);
+						ByteArrayBody bab = new ByteArrayBody(data, "image/jpeg", imagePaths[i]);
+						reqEntity.addPart(name, bab);
+
+						// FileBody fileBody = new FileBody(file, "image/jpeg");
+						//
+						// reqEntity.addPart(name, fileBody);
+
+						if (name.equals("file1")) {
+							name = "file2";
+						} else {
+							name = "file3";
+						}
+						if (bm != null) {
+							bm.recycle();
+							bm = null;
+						}
+						if (bmpCompressed != null) {
+							bmpCompressed.recycle();
+							bmpCompressed = null;
+						}
 					}
 				}
 			}
-						
+
 			for (int i = 0; i < nameValuePairs.size(); i++) {
-				reqEntity.addPart(nameValuePairs.get(i).getName(),
-						new StringBody(nameValuePairs.get(i).getValue()));
+				reqEntity.addPart(nameValuePairs.get(i).getName(), new StringBody(nameValuePairs.get(i).getValue()));
 			}
 			httppost.setEntity(reqEntity);
 			HttpResponse response = httpclient.execute(httppost);
-//			result = EntityUtils.toString(response.getEntity());
+			// result = EntityUtils.toString(response.getEntity());
 			result = responseHandler.handleResponse(response);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.e("log_tag", "Error in http connection " + e);
-			if(bm != null){
-            	bm.recycle();
-            	bm = null;
-            }
-            if(bmpCompressed != null){
-            	bmpCompressed.recycle();
-            	bmpCompressed = null;
-            }
+			if (bm != null) {
+				bm.recycle();
+				bm = null;
+			}
+			if (bmpCompressed != null) {
+				bmpCompressed.recycle();
+				bmpCompressed = null;
+			}
 		}
 		Log.e("response", result);
 		JSONObject object = null;
@@ -289,16 +284,19 @@ public class JSONfunctions {
 			object = new JSONObject(result);
 		} catch (JSONException e) {
 			e.printStackTrace();
-			
+
+		} finally {
+			if (bm != null) {
+				bm.recycle();
+				bm = null;
+			}
+			if (bmpCompressed != null) {
+				bmpCompressed.recycle();
+				bmpCompressed = null;
+			}
+
 		}
-		if(bm != null){
-        	bm.recycle();
-        	bm = null;
-        }
-        if(bmpCompressed != null){
-        	bmpCompressed.recycle();
-        	bmpCompressed = null;
-        }
+
 		return object;
 	}
 

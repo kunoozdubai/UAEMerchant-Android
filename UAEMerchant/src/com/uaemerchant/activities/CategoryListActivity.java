@@ -34,7 +34,7 @@ import com.uaemerchant.pojo.Ad;
 public class CategoryListActivity extends Activity implements OnClickListener, OnItemClickListener, OnScrollListener {
 
 	private Context context;
-	private static ListView myList;
+	private ListView myList = null;
 	CategoryListViewAdapter adapter = null;
 	
 	private static int totalRows;
@@ -56,7 +56,6 @@ public class CategoryListActivity extends Activity implements OnClickListener, O
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ad_list_activity);
 		context = this; 
-
 		
 //		ImageView imageView = (ImageView) findViewById(R.id.background);
 //		imageView.setBackgroundDrawable(Utilities.imageMap.get("mainBackground"));

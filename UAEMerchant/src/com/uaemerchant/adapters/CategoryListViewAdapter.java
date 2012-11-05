@@ -62,10 +62,10 @@ public class CategoryListViewAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-		View view = convertView;
-		ViewHolder viewHolder;
+		final View view;
+		final ViewHolder viewHolder;
 
-		if (view == null) {
+		if (convertView == null) {
 			viewHolder = new ViewHolder();
 			view = mInflater.inflate(R.layout.ad_item, parent, false);
 
@@ -82,6 +82,7 @@ public class CategoryListViewAdapter extends BaseAdapter {
 			
 			view.setTag(viewHolder);
 		} else {
+			view = convertView;
 			viewHolder = (ViewHolder) view.getTag();
 			viewHolder.itemName.setText(categoryList.get(position).getTitle());
 			viewHolder.priceTxt.setText(categoryList.get(position).getPrice());
