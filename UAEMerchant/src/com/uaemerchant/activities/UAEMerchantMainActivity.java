@@ -113,10 +113,10 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 		
 		if(id == R.id.btnAccount){
 			new AccountDialog(context).show();
-			Toast.makeText(context, "btnAccount Clicked", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(context, "btnAccount Clicked", Toast.LENGTH_SHORT).show();
 		}else if(id == R.id.btnPostAd){
 			new PostDialog(context).show();
-			Toast.makeText(context, "btnPostAd Clicked", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(context, "btnPostAd Clicked", Toast.LENGTH_SHORT).show();
 		}else if(id == R.id.btnCarNumberPlate || id == R.id.btnMobilePhoneNumbers || id == R.id.btnElectronics
 				|| id == R.id.btnCarAndEngines || id == R.id.btnRealEstate || id == R.id.btnLadiesOnly 
 				|| id == R.id.btnServices || id == R.id.btnFurniture || id == R.id.btnOthers){

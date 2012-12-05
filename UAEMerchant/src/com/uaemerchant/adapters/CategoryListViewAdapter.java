@@ -64,6 +64,7 @@ public class CategoryListViewAdapter extends BaseAdapter {
 
 		final View view;
 		final ViewHolder viewHolder;
+		final Ad a = categoryList.get(position);
 
 		if (convertView == null) {
 			viewHolder = new ViewHolder();
@@ -75,22 +76,26 @@ public class CategoryListViewAdapter extends BaseAdapter {
 			viewHolder.byTxt = (TextView) view.findViewById(R.id.byTxt);
 			viewHolder.dateTxt = (TextView) view.findViewById(R.id.dateTxt);
 
-			viewHolder.itemName.setText(categoryList.get(position).getTitle());
-			viewHolder.priceTxt.setText(categoryList.get(position).getPrice());
-			viewHolder.byTxt.setText(categoryList.get(position).getName());
-			viewHolder.dateTxt.setText(categoryList.get(position).getCreated());
+//			viewHolder.itemName.setText(categoryList.get(position).getTitle());
+//			viewHolder.priceTxt.setText(categoryList.get(position).getPrice());
+//			viewHolder.byTxt.setText(categoryList.get(position).getName());
+//			viewHolder.dateTxt.setText(categoryList.get(position).getCreated());
+			viewHolder.itemName.setText(a.getTitle());
+			viewHolder.priceTxt.setText(a.getPrice());
+			viewHolder.byTxt.setText(a.getName());
+			viewHolder.dateTxt.setText(a.getCreated());
 			
 			view.setTag(viewHolder);
 		} else {
 			view = convertView;
 			viewHolder = (ViewHolder) view.getTag();
-			viewHolder.itemName.setText(categoryList.get(position).getTitle());
-			viewHolder.priceTxt.setText(categoryList.get(position).getPrice());
-			viewHolder.byTxt.setText(categoryList.get(position).getName());
-			viewHolder.dateTxt.setText(categoryList.get(position).getCreated());
+			viewHolder.itemName.setText(a.getTitle());
+			viewHolder.priceTxt.setText(a.getPrice());
+			viewHolder.byTxt.setText(a.getName());
+			viewHolder.dateTxt.setText(a.getCreated());
 		}
 		
-		String url = categoryList.get(position).getPhoto1();
+		String url = a.getPhoto1();
 		String[] urlTokens = url.split("/");
 		String filename = urlTokens[urlTokens.length - 1];
 		ImageView imageView  = (ImageView)view.findViewById(R.id.thumbnailImg);

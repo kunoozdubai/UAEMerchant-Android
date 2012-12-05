@@ -159,7 +159,7 @@ public class CategoryListActivity extends Activity implements OnClickListener, O
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 		Ad adObject = (Ad) adapter.getItem(position);
 		new ItemDetailDialog(context, adObject).show();
-		Toast.makeText(context, "Item Clicked: " + adObject.getTitle(), Toast.LENGTH_SHORT).show();
+//		Toast.makeText(context, "Item Clicked: " + adObject.getTitle(), Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
@@ -178,7 +178,7 @@ public class CategoryListActivity extends Activity implements OnClickListener, O
 
 		@Override
 		public void onSuccess(JSONObject response) {
-			 Toast.makeText(context, "onSuccess", Toast.LENGTH_SHORT).show();
+//			 Toast.makeText(context, "onSuccess", Toast.LENGTH_SHORT).show();
 			if (categoryArrayList.size() == 0) {
 				categoryArrayList = Parser.parseAdsList(response);
 				adapter = new CategoryListViewAdapter(context, categoryArrayList);
@@ -197,7 +197,7 @@ public class CategoryListActivity extends Activity implements OnClickListener, O
 
 		@Override
 		public void onError(JSONObject response) {
-			Toast.makeText(context, "onError", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(context, "onError", Toast.LENGTH_SHORT).show();
 			// Button button = (Button) findViewById(R.id.loadMoreBtn);
 			// button.setVisibility(View.GONE);
 		}
@@ -252,7 +252,7 @@ public class CategoryListActivity extends Activity implements OnClickListener, O
 				key = searchBar.getText().toString();
 				String postJSON = createRequestJSON(catId, String.valueOf(page), "10", key);
 				new DataDownloadTask(context, new AdsResponse(), NetworkConstants.UAE_MERCHANT_URL + NetworkConstants.WS_AD_LIST, postJSON).execute();
-				Toast.makeText(context, "Reached last item", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(context, "Reached last item", Toast.LENGTH_SHORT).show();
 	
 			}
 		}

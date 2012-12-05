@@ -186,7 +186,7 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 		Builder alertBuilder = new Builder(context);
         
 		alertBuilder.setTitle("Add Pictures");
-        alertBuilder.setMessage("Would you like to add pictures to the Ad for $1");
+        alertBuilder.setMessage("Would you like to add pictures to the Ad?");
         
         alertBuilder.setNegativeButton("No, Post Ad", new OnClickListener() {
 			@Override
@@ -201,27 +201,30 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				/// open dialog to add pictures
+///////////uncomment this part to enable in app purchase
+//				Utilities.showprogressDialog(context, "Making transaction, please wait!");
+//				mHandler = new Handler();
+//		        mDungeonsPurchaseObserver = new DungeonsPurchaseObserver(mHandler);
+//		        mBillingService = new BillingService();
+//		        mBillingService.setContext(context);
+//////////////////////////////////////////////////////////
 				
-				Utilities.showprogressDialog(context, "Making transaction, please wait!");
-				mHandler = new Handler();
-		        mDungeonsPurchaseObserver = new DungeonsPurchaseObserver(mHandler);
-		        mBillingService = new BillingService();
-		        mBillingService.setContext(context);
-
 //		        mPurchaseDatabase = new PurchaseDatabase(this);
 		
+/////////////////uncomment this part as well to for in-aap purchase				
 		        // Check if billing is supported.
-		        ResponseHandler.register(mDungeonsPurchaseObserver);
-		        if (!mBillingService.checkBillingSupported()) {
-		            createBillingDialog(DIALOG_CANNOT_CONNECT_ID);
-		        }
-		        ResponseHandler.register(mDungeonsPurchaseObserver);
+//		        ResponseHandler.register(mDungeonsPurchaseObserver);
+//		        if (!mBillingService.checkBillingSupported()) {
+//		            createBillingDialog(DIALOG_CANNOT_CONNECT_ID);
+//		        }
+//		        ResponseHandler.register(mDungeonsPurchaseObserver);
 				
-				CommonConstants.AD = ad;
-				CommonConstants.POST_LISTENER = new PostResponse();
-				CommonConstants.POST_DIALOG_CONTEXT = PostDialog.this;
-				startInApp();
-//				new AddPicturesDialog(context, ad, new PostResponse()).show();
+//				CommonConstants.AD = ad;
+//				CommonConstants.POST_LISTENER = new PostResponse();
+//				CommonConstants.POST_DIALOG_CONTEXT = PostDialog.this;
+//				startInApp();
+////////////////////////////////////////////
+				new AddPicturesDialog(context, ad, new PostResponse()).show();
 			}
 		});
 
@@ -249,7 +252,7 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 
 		@Override
 		public void onSuccess(JSONObject response) {
-			Toast.makeText(context, "onSuccess", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(context, "onSuccess", Toast.LENGTH_SHORT).show();
 
 			hide();				
 			
@@ -257,7 +260,7 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 
 		@Override
 		public void onError(JSONObject response) {
-			Toast.makeText(context, "onError", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(context, "onError", Toast.LENGTH_SHORT).show();
 		}
 
 	}
@@ -307,14 +310,14 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 			Location location = lm.getLastKnownLocation(bestProvider);
 
 			if (location == null) {
-				Toast.makeText(activity, "Location Not found", Toast.LENGTH_LONG).show();
+//				Toast.makeText(activity, "Location Not found", Toast.LENGTH_LONG).show();
 			} else {
 				geocoder = new Geocoder(activity);
 				try {
 					user = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 					lat = (double) user.get(0).getLatitude();
 					lng = (double) user.get(0).getLongitude();
-					Toast.makeText(activity, " DDD lat: " + lat + ",  longitude: " + lng, Toast.LENGTH_LONG).show();
+//					Toast.makeText(activity, " DDD lat: " + lat + ",  longitude: " + lng, Toast.LENGTH_LONG).show();
 					longitude = String.valueOf(lng);
 					latitude = String.valueOf(lat);
 					

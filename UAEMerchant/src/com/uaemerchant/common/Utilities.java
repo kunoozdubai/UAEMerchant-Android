@@ -362,6 +362,7 @@ public class Utilities {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, HTTP.UTF_8));
 				while (reader.read(buffer) != -1) {
 					response.append(buffer);
+					buffer = new char[1024];
 				}
 			} finally {
 				if (inputStream != null) {
@@ -378,7 +379,8 @@ public class Utilities {
 		if (response == null || response.length() <= 0) {
 			response = new StringBuilder("");
 		}
-		return response.toString();
+		String result = response.toString().substring(0, response.toString().lastIndexOf("}")+1);
+		return result;
 	}
 
 	public static String getCatId(String name) {

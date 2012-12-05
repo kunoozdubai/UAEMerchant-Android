@@ -171,7 +171,7 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 		} else if (id == R.id.facebookBtn) {
 			FacebookHandler.getInstance(context);
 			if(!Utilities.mFacebook.isSessionValid()){
-				Toast.makeText(context, "Facebook Login", Toast.LENGTH_SHORT).show();
+//				(context, "Facebook Login", Toast.LENGTH_SHORT).show();
 				FacebookHandler.getInstance(context).Login(new LoginFacebookListener());
 			} else {
 				Toast.makeText(context, "Sharing on facebook!", Toast.LENGTH_SHORT).show();
@@ -254,7 +254,7 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 	}
 	
 	private void shareOnTwitter() {
-		Toast.makeText(Utilities.mainActivityContext, "in sharing", Toast.LENGTH_SHORT).show();
+//		Toast.makeText(Utilities.mainActivityContext, "in sharing", Toast.LENGTH_SHORT).show();
 		String date = ad.getCreated();
 		String[] tokens = date.split(" ");
 		date = tokens[0];
@@ -284,7 +284,7 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 			
 			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + filename);
 			try {
-				Toast.makeText(context, "Sharing photo1", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(context, "Sharing photo1", Toast.LENGTH_SHORT).show();
 				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia(captionStringBuilder.toString() + ".", file);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -296,7 +296,7 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 		if(!Utilities.isStringEmptyOrNull(filename)){
 			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + filename);
 			try {
-				Toast.makeText(context, "Sharing photo2", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(context, "Sharing photo2", Toast.LENGTH_SHORT).show();
 				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia(captionStringBuilder.toString() + "..", file);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -308,7 +308,7 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 		if(!Utilities.isStringEmptyOrNull(filename)){
 			File file = new File(CommonConstants.MERCHANT_IMAGE_DIR + filename);
 			try {
-				Toast.makeText(context, "Sharing photo3", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(context, "Sharing photo3", Toast.LENGTH_SHORT).show();
 				((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().updateStatusMedia(captionStringBuilder.toString() + "...", file);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -342,13 +342,13 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 
 		@Override
 		public void onAuthSucceed() {
-			Toast.makeText(context, "Facebook login scucessfull", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(context, "Facebook login scucessfull", Toast.LENGTH_SHORT).show();
 			shareOnFacebook();
 		}
 
 		@Override
 		public void onAuthFail(String error) {
-			Toast.makeText(context, "Facebook login failed", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(context, "Facebook login failed", Toast.LENGTH_SHORT).show();
 		}
 		
 	}
@@ -362,7 +362,7 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 		public void onComplete(String value) {
 			String username = ((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().getUsername();
 			username = (username.equals("")) ? "No Name" : username;
-			Toast.makeText(context, "Connected to Twitter as " + username, Toast.LENGTH_LONG).show();
+//			Toast.makeText(context, "Connected to Twitter as " + username, Toast.LENGTH_LONG).show();
 			new TwitterTask(context, mTwLoginDialogListener, ad).execute();
 			//shareOnTwitter();
 
@@ -372,7 +372,7 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 		public void onError(String value) {
 			String username = ((UAEMerchantMainActivity) Utilities.mainActivityContext).getmTwitter().getUsername();
 			username = (username.equals("")) ? "No Name" : username;
-			Toast.makeText(context, "Twitter connection failed", Toast.LENGTH_LONG).show();
+//			Toast.makeText(context, "Twitter connection failed", Toast.LENGTH_LONG).show();
 //			Configuration.isTwitterLogin = true;
 //			new ShareOptionsDialog(context).showSourceDialog(com.sg.common.Configuration.mediaPath, mediaType);
 

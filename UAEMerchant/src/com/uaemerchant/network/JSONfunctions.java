@@ -187,7 +187,11 @@ public class JSONfunctions {
 		try {
 
 			responseCode = connection.getResponseCode();
-
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			if (responseCode == HttpURLConnection.HTTP_OK) {
 				result = Utilities.readServerResponse(connection.getInputStream());
 			}
