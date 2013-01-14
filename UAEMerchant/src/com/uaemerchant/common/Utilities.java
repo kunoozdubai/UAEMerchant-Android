@@ -13,6 +13,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
 
 import org.apache.http.protocol.HTTP;
 
@@ -23,9 +25,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Address;
+import android.location.Criteria;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -34,6 +42,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.uaemerchant.R;
 import com.uaemerchant.activities.UAEMerchantMainActivity;
 import com.uaemerchant.facebook.AsyncFacebookRunner;
 import com.uaemerchant.facebook.Facebook;
@@ -53,7 +62,6 @@ public class Utilities {
 	public static Facebook mFacebook;
 	public static AsyncFacebookRunner mAsyncRunner;
 	public static String userUID = null;
-	
 
 	/**
 	 * @param name
@@ -379,38 +387,44 @@ public class Utilities {
 		if (response == null || response.length() <= 0) {
 			response = new StringBuilder("");
 		}
-		String result = response.toString().substring(0, response.toString().lastIndexOf("}")+1);
+		String result = response.toString().substring(0, response.toString().lastIndexOf("}") + 1);
 		return result;
 	}
 
 	public static String getCatId(String name) {
 
-		if (name.equals("Car Number Plates")) {
+		if (name.equals(Utilities.mainActivityContext.getString(R.string.car_number_plates_txt))) {
 			return "1";
 		}
-		if (name.equals("Mobile Phone Numbers")) {
+		if (name.equals(Utilities.mainActivityContext.getString(R.string.mobile_phone_numbers_txt))) {
 			return "2";
 		}
-		if (name.equals("Electronics")) {
+		if (name.equals(Utilities.mainActivityContext.getString(R.string.electronics_txt))) {
 			return "3";
 		}
-		if (name.equals("Car and Engines")) {
+		if (name.equals(Utilities.mainActivityContext.getString(R.string.car_and_engines_txt))) {
 			return "4";
 		}
-		if (name.equals("Real Estate")) {
-			return "5";
+		if (name.equals(Utilities.mainActivityContext.getString(R.string.real_estate_sale_txt))) {
+			return "11";
 		}
-		if (name.equals("Ladies Only")) {
+		if (name.equals(Utilities.mainActivityContext.getString(R.string.ladies_only_txt))) {
 			return "6";
 		}
-		if (name.equals("Services")) {
+		if (name.equals(Utilities.mainActivityContext.getString(R.string.services_txt))) {
 			return "7";
 		}
-		if (name.equals("Furniture")) {
+		if (name.equals(Utilities.mainActivityContext.getString(R.string.furniture_txt))) {
 			return "8";
 		}
-		if (name.equals("Others")) {
+		if (name.equals(Utilities.mainActivityContext.getString(R.string.others_txt))) {
 			return "9";
+		}
+		if (name.equals(Utilities.mainActivityContext.getString(R.string.pets_txt))) {
+			return "10";
+		}
+		if (name.equals(Utilities.mainActivityContext.getString(R.string.real_estate_rent_txt))) {
+			return "12";
 		}
 
 		return "";
@@ -483,5 +497,60 @@ public class Utilities {
 		}
 		return bMapArray;
 	}
-	
+
+	public static void updateLocale(String localeCode) {
+		Locale locale = new Locale(localeCode);
+		Locale.setDefault(locale);
+		Configuration config = new Configuration();
+		config.locale = locale;
+
+		Utilities.mainActivityContext.getApplicationContext().getResources().updateConfiguration(config, null);
+	}
+
+	public static String getLocale() {
+		Configuration config = Utilities.mainActivityContext.getApplicationContext().getResources().getConfiguration();
+		Locale locale = config.locale;
+		return locale.getLanguage();
+
+	}
+
+	public static void restartMainActivity(Context context) {
+		((UAEMerchantMainActivity) mainActivityContext).onCreate(null);
+	}
+
+	public static void saveUserCurrentLocation() {
+		// get current GPS location of the device and put in longitude and
+		// latitude variables;
+		Geocoder geocoder;
+		String bestProvider;
+		List<Address> user = null;
+		double lat;
+		double lng;
+
+		LocationManager lm = (LocationManager) mainActivityContext.getSystemService(Context.LOCATION_SERVICE);
+
+		Criteria criteria = new Criteria();
+		bestProvider = lm.getBestProvider(criteria, false);
+		Location location = lm.getLastKnownLocation(bestProvider);
+
+		if (location == null) {
+			// Toast.makeText(activity, "Location Not found",
+			// Toast.LENGTH_LONG).show();
+		} else {
+			geocoder = new Geocoder(mainActivityContext);
+			try {
+				user = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+				lat = (double) user.get(0).getLatitude();
+				lng = (double) user.get(0).getLongitude();
+				// Toast.makeText(activity, " DDD lat: " + lat +
+				// ",  longitude: " + lng, Toast.LENGTH_LONG).show();
+
+				CommonConstants.CURRENT_LATITUDE = lat;
+				CommonConstants.CURRENT_LONGITUDE = lng;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

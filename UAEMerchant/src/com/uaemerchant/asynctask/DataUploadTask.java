@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.uaemerchant.R;
 import com.uaemerchant.common.IResponseListener;
 import com.uaemerchant.common.Utilities;
 import com.uaemerchant.network.JSONfunctions;
@@ -37,7 +38,7 @@ public class DataUploadTask extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		Utilities.showprogressDialog(context, "Loading...");
+		Utilities.showprogressDialog(context, context.getString(R.string.loading));
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,10 +17,10 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.uaemerchant.R;
+import com.uaemerchant.asynctask.RestartingApplicationTask;
 import com.uaemerchant.common.Utilities;
 import com.uaemerchant.dialogs.AccountDialog;
 import com.uaemerchant.dialogs.AddPicturesDialog;
@@ -41,27 +42,24 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_activity);
-
+		
 		context = this;
 		
 		Utilities.mainActivityContext = context;
 		
-//		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.background, Utilities.getBitmapFactoryoptions(1));
-//		BitmapDrawable bitmapDrawable = new BitmapDrawable(bitmap);
-//		Utilities.imageMap.put("mainBackground", bitmapDrawable);
-//		bitmapDrawable = null;
-		
-		
-		
-		
-		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.title_background, Utilities.getBitmapFactoryoptions(1));
-		BitmapDrawable bitmapDrawable = new BitmapDrawable(bitmap);
-		Utilities.imageMap.put("titleBackground", bitmapDrawable);
+		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.background, Utilities.getBitmapFactoryoptions(1));
+		BitmapDrawable bitmapDrawable = new BitmapDrawable(null, bitmap);
+		Utilities.imageMap.put("mainBackground", bitmapDrawable);
 		bitmapDrawable = null;
 		
+		/*bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.title_background, Utilities.getBitmapFactoryoptions(1));
+		bitmapDrawable = new BitmapDrawable(bitmap);
+		Utilities.imageMap.put("titleBackground", bitmapDrawable);
+		bitmapDrawable = null;*/
+		
 		Bitmap placeHolder = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder, Utilities.getBitmapFactoryoptions(1));
-		Bitmap bitmapCompressed = Bitmap.createScaledBitmap(placeHolder, 80, 80, true);
-		bitmapDrawable = new BitmapDrawable(bitmapCompressed);
+		Bitmap bitmapCompressed = Bitmap.createScaledBitmap(placeHolder, 90, 90, true);
+		bitmapDrawable = new BitmapDrawable(null, bitmapCompressed);
 		Utilities.imageMap.put("placeHolder", bitmapDrawable);
 		bitmapDrawable = null;
 		
@@ -71,14 +69,13 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 		}
 		
 		
+		ImageView imageView = (ImageView) findViewById(R.id.background);
+		imageView.setBackgroundDrawable(Utilities.imageMap.get("mainBackground"));
 		
+//		RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.titleParent);
+//		relativeLayout.setBackgroundDrawable(Utilities.imageMap.get("titleBackground"));
 		
-//		ImageView imageView = (ImageView) findViewById(R.id.background);
-//		imageView.setBackgroundDrawable(Utilities.imageMap.get("mainBackground"));
-		
-		RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.titleParent);
-		relativeLayout.setBackgroundDrawable(Utilities.imageMap.get("titleBackground"));
-		
+		Utilities.saveUserCurrentLocation();
 		
 		Button button = (Button) findViewById(R.id.btnAccount);
 		button.setOnClickListener(this);
@@ -101,11 +98,23 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 		button.setOnClickListener(this);
 		button = (Button) findViewById(R.id.btnFurniture);
 		button.setOnClickListener(this);
+		button = (Button) findViewById(R.id.btnPets);
+		button.setOnClickListener(this);
 		button = (Button) findViewById(R.id.btnOthers);
 		button.setOnClickListener(this);
 		
+		if(Utilities.getBooleanValuesFromPreference(context, "showLanguageDialog", true)){
+			createAlertDialogForLanguage();
+			Utilities.setBooleanValuesToPreferences(context, "showLanguageDialog", false);
+		}
+		
 	}
 
+	@Override
+	protected void onStart() {
+		super.onStart();
+	}
+	
 	@Override
 	public void onClick(View v) {
 		
@@ -118,16 +127,18 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 			new PostDialog(context).show();
 //			Toast.makeText(context, "btnPostAd Clicked", Toast.LENGTH_SHORT).show();
 		}else if(id == R.id.btnCarNumberPlate || id == R.id.btnMobilePhoneNumbers || id == R.id.btnElectronics
-				|| id == R.id.btnCarAndEngines || id == R.id.btnRealEstate || id == R.id.btnLadiesOnly 
-				|| id == R.id.btnServices || id == R.id.btnFurniture || id == R.id.btnOthers){
+				|| id == R.id.btnCarAndEngines || id == R.id.btnLadiesOnly 
+				|| id == R.id.btnServices || id == R.id.btnFurniture || id == R.id.btnPets || id == R.id.btnOthers){
 			
 			String catId = getCatId(id);
-			String catName = getCatName(id);
+			String catName = "";
 			
 			Intent intent = new Intent(context, CategoryListActivity.class);
 			intent.putExtra("catId", catId);
 			intent.putExtra("catName", catName);
 			startActivity(intent);
+		}else if(id == R.id.btnRealEstate){
+			createAlertDialogForRealEstate();
 		}
 	}
 
@@ -145,9 +156,9 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 		if (id == R.id.btnCarAndEngines) {
 			return getString(R.string.car_and_engines_txt);
 		}
-		if (id == R.id.btnRealEstate) {
-			return getString(R.string.real_estate_txt);
-		}
+//		if (id == R.id.btnRealEstate) {
+//			return getString(R.string.real_estate_txt);
+//		}
 		if (id == R.id.btnLadiesOnly) {
 			return getString(R.string.ladies_only_txt);
 		}
@@ -159,6 +170,9 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 		}
 		if (id == R.id.btnOthers) {
 			return getString(R.string.others_txt);
+		}
+		if (id == R.id.btnPets) {
+			return getString(R.string.pets_txt);
 		}
 		return "";
 	}
@@ -191,6 +205,9 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 		}
 		if (id == R.id.btnOthers) {
 			return "9";
+		}
+		if (id == R.id.btnPets) {
+			return "10";
 		}
 		return "";
 	}
@@ -268,8 +285,85 @@ public class UAEMerchantMainActivity extends Activity implements android.view.Vi
 		}
 		return str;
 	}
+	
+	private void createAlertDialogForLanguage() {
+		Builder alertBuilder = new Builder(context);
+
+		alertBuilder.setTitle("");
+		alertBuilder.setMessage("Choose Language");
+		
+		alertBuilder.setPositiveButton("English", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+//				new RestartingApplicationTask(context, "en").execute();
+				//Configurations.currentLanguage = 1;
+				//Utilities.updateLocale("en");
+				
+			}
+		});
+		alertBuilder.setNegativeButton(getString(R.string.arabic), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				new RestartingApplicationTask(context, "ar").execute();
+				//Configurations.currentLanguage = 2;
+				//Utilities.updateLocale("ar");
+				
+			}
+		});
+		alertBuilder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+
+			}
+		});
+		alertBuilder.create().show();
+	}
+	
+	private void createAlertDialogForRealEstate() {
+		Builder alertBuilder = new Builder(context);
+
+		alertBuilder.setTitle("");
+		alertBuilder.setMessage("Choose Language");
+		
+		alertBuilder.setPositiveButton(getString(R.string.sale), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				String catId = "11";
+				String catName = "";
+				
+				Intent intent = new Intent(context, CategoryListActivity.class);
+				intent.putExtra("catId", catId);
+				intent.putExtra("catName", catName);
+				startActivity(intent);
+				
+			}
+		});
+		alertBuilder.setNegativeButton(getString(R.string.rent), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				String catId = "12";
+				String catName = "";
+				
+				Intent intent = new Intent(context, CategoryListActivity.class);
+				intent.putExtra("catId", catId);
+				intent.putExtra("catName", catName);
+				startActivity(intent);
+				
+			}
+		});
+		alertBuilder.setNeutralButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+
+			}
+		});
+		alertBuilder.create().show();
+	}
+	
+	
 	@Override
 	protected void onDestroy() {
+		Utilities.setBooleanValuesToPreferences(context, "showLanguageDialog", true);
 		System.gc();
 		super.onDestroy();
 		//Killing application process on exit.

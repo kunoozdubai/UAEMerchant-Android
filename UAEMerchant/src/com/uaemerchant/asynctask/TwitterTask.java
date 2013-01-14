@@ -10,9 +10,7 @@ import com.uaemerchant.activities.UAEMerchantMainActivity;
 import com.uaemerchant.common.CommonConstants;
 import com.uaemerchant.common.Utilities;
 import com.uaemerchant.pojo.Ad;
-import com.uaemerchant.twitter.TwitterApp;
 import com.uaemerchant.twitter.TwitterApp.TwDialogListener;
-import com.uaemerchant.twitter.TwitterGlobals;
 
 public class TwitterTask extends AsyncTask<Void, Void, Void> {
 

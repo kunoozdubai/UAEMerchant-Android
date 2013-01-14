@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Used in View/Spinner1.java -->
+    <string-array name="cities">
+        <item>دبي</item>
+        <item>عجمان</item>
+        <item>الشارقة</item>
+        <item>أبو ظبي</item>
+        <item>أم القيوين</item>
+        <item>رأس الخيمة</item>
+        <item>الفجيرة</item>
+    </string-array>
+    
+    
+    <string-array name="category">
+        <item>أرقام لوحات السيارات</item>
+        <item>أرقام جوالات</item>
+        <item>إلكترونيات</item>
+        <item>سيارات ومحركات</item>
+        <item>عقارات (بيع)</item>
+        <item>عقارات (إيجار)</item>
+        <item>سيدات فقط</item>
+        <item>خدمات</item>
+        <item>أثاث</item>
+        <item>حيوانات اليفة</item>
+        <item>متنوغ</item>
+        
+    </string-array>
+    
+</resources>

@@ -20,6 +20,9 @@ public class CommonConstants {
 	public static double LATITUDE;
 	public static double LONGITUDE;
 	
+	public static double CURRENT_LATITUDE;
+	public static double CURRENT_LONGITUDE;
+	
 	public static String MERCHANT_IMAGE_DIR = "/mnt/sdcard/UAEMerchant/";
 	
 	// in app

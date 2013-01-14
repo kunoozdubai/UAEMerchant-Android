@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/register_dialog"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/backgourndImg"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/background"
+         />
+
+    <RelativeLayout
+        android:id="@+id/titleParent"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/title_background" >
+
+        <TextView
+            android:id="@+id/titleTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/register_title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white" />
+
+        <!-- <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:text="@string/save_btn"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/btn_bg"
+            android:textColor="@android:color/white" /> -->
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mainParent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleParent"
+        android:layout_marginTop="20dp" >
+
+        <RelativeLayout
+            android:id="@+id/block1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" >
+
+            <EditText
+                android:id="@+id/nameInput"
+                android:layout_width="280dp"
+                android:layout_height="45dp"
+                android:hint="@string/name"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:textColor="@android:color/black" />
+
+            <!-- <TextView
+                android:id="@+id/nameHeadingTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/nameInput"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toLeftOf="@id/nameInput"
+                android:text="Name"
+                android:textColor="@android:color/black" /> -->
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/block2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/block1"
+            android:layout_marginTop="10dp" >
+
+            <EditText
+                android:id="@+id/emailInput"
+                android:layout_width="280dp"
+                android:layout_height="45dp"
+                android:hint="@string/email"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:textColor="@android:color/black" 
+                android:inputType="textEmailAddress"/>
+
+            <!-- <TextView
+                android:id="@+id/emailHeadingTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/emailInput"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toLeftOf="@id/emailInput"
+                android:text="Email"
+                android:textColor="@android:color/black" /> -->
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/block3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/block2"
+            android:layout_marginTop="10dp" >
+
+            <EditText
+                android:id="@+id/phoneInput"
+                android:layout_width="280dp"
+                android:layout_height="45dp"
+                android:hint="@string/phone"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:textColor="@android:color/black" 
+                android:inputType="phone"/>
+
+            <!-- <TextView
+                android:id="@+id/phoneHeadingTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/phoneInput"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toLeftOf="@id/phoneInput"
+                android:text="Phone"
+                android:textColor="@android:color/black" /> -->
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/block4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/block3"
+            android:layout_marginTop="10dp" >
+
+            <Spinner
+                android:id="@+id/cityInput"
+                android:layout_width="280dp"
+                android:layout_height="45dp"
+                style="?android:attr/editTextStyle"
+                android:clickable="true"
+                android:scrollbars="none"
+                android:textColor="@android:color/black"
+                android:prompt="@string/city_spinner_prompt"
+                android:drawSelectorOnTop="true" 
+                />
+
+            <!-- <TextView
+                android:id="@+id/cityHeadingTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/cityInput"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toLeftOf="@id/cityInput"
+                android:text="City"
+                android:textColor="@android:color/black" /> -->
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="5dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/combo_arrow" 
+                />
+        </RelativeLayout>
+        
+            <Button
+                android:id="@+id/registerBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/block4"
+                android:layout_centerHorizontal="true"
+                android:text="@string/register_btn"
+                android:textColor="@android:color/white"
+                android:background="@drawable/blue_btn_bg" 
+                android:layout_marginTop="20dp"/>
+    </RelativeLayout>
+
+</RelativeLayout>

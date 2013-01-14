@@ -52,22 +52,36 @@ public class RegisterDialog extends Dialog implements View.OnClickListener, OnCa
 	}
 
 	private void initializeViews() {
-
-		Button button = (Button) registerView.findViewById(R.id.saveBtn);
-		button.setOnClickListener(this);
-		button = (Button) registerView.findViewById(R.id.registerBtn);
+		
+//		Button button = (Button) registerView.findViewById(R.id.saveBtn);
+//		button.setOnClickListener(this);
+		Button button = (Button) registerView.findViewById(R.id.registerBtn);
 		button.setOnClickListener(this);
 		
 		Spinner s1 = (Spinner) findViewById(R.id.cityInput);
-		ArrayAdapter<CharSequence> adaptergender = ArrayAdapter.createFromResource(context, R.array.cities, android.R.layout.simple_spinner_item);
-		adaptergender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		ArrayAdapter<CharSequence> adaptergender = ArrayAdapter.createFromResource(context, R.array.cities,R.layout.simple_spinner_selected_layout);
+		adaptergender.setDropDownViewResource(R.layout.simple_spinner_layout);
 		s1.setAdapter(adaptergender);
+
+		if(!"".equals(Utilities.getStringValuesFromPreference(context, CommonConstants.PREF_USER_ID, ""))){
+			
+			EditText editText = (EditText) registerView.findViewById(R.id.nameInput);
+			editText.setText(Utilities.getStringValuesFromPreference(context, CommonConstants.PREF_NAME, ""));
+			editText = (EditText) registerView.findViewById(R.id.emailInput);
+			editText.setText(Utilities.getStringValuesFromPreference(context, CommonConstants.PREF_EMAIL, ""));
+			editText = (EditText) registerView.findViewById(R.id.phoneInput);
+			editText.setText(Utilities.getStringValuesFromPreference(context, CommonConstants.PREF_PHONE, ""));
+			Spinner spinner = (Spinner) registerView.findViewById(R.id.cityInput);
+			ArrayAdapter<String> array = new ArrayAdapter<String>(context, R.array.cities);
+			spinner.setSelection(array.getPosition(Utilities.getStringValuesFromPreference(context, CommonConstants.PREF_CITY, "")));
+			
+		}
 	}
 
 	@Override
 	public void hide() {
 		cancel();
-
+		super.hide();
 	}
 
 	@Override
@@ -76,11 +90,10 @@ public class RegisterDialog extends Dialog implements View.OnClickListener, OnCa
 		if(id == R.id.registerBtn){
 			
 			register();
-			
-			
-		}else if(id == R.id.saveBtn){
-			register();
 		}
+//		else if(id == R.id.saveBtn){
+//			register();
+//		}
 
 	}
 

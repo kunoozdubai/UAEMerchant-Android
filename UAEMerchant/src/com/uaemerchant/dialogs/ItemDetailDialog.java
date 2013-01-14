@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -92,6 +93,10 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 
 	private void initializeViews() {
 
+		
+		Button button = (Button) itemDetailView.findViewById(R.id.btnItemsList);
+		button.setOnClickListener(this);
+		
 		photo1 = (ImageView) itemDetailView.findViewById(R.id.photo1);
 		photo1.setOnClickListener(this);
 		photo1.setBackgroundDrawable(Utilities.imageMap.get("placeHolder"));
@@ -104,18 +109,6 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 
 		TextView textview = (TextView) itemDetailView.findViewById(R.id.itemTitle);
 		textview.setText(ad.getTitle());
-
-		textview = (TextView) itemDetailView.findViewById(R.id.byTxt);
-		textview.setText(ad.getName());
-
-		textview = (TextView) itemDetailView.findViewById(R.id.cityTxt);
-		textview.setText(ad.getCity());
-
-		textview = (TextView) itemDetailView.findViewById(R.id.addressTxt);
-		textview.setText(ad.getAddress());
-
-		textview = (TextView) itemDetailView.findViewById(R.id.dateTxt);
-		textview.setText(ad.getCreated());
 
 		textview = (TextView) itemDetailView.findViewById(R.id.descriptionTxt);
 		textview.setText(ad.getDescription());
@@ -144,6 +137,8 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 			imageView = (ImageView) findViewById(R.id.locationIcon);
 			imageView.setVisibility(View.VISIBLE);
 			imageView.setOnClickListener(this);
+		}else{
+			imageView.setVisibility(View.GONE);
 		}
 
 	}
@@ -151,17 +146,22 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 	@Override
 	public void hide() {
 		cancel();
+		super.hide();
 
 	}
 
 	@Override
 	public void onClick(View v) {
 		int id = v.getId();
-		if (id == R.id.locationIcon) {
+		if (id == R.id.btnItemsList) {
+			hide();
+		} else if (id == R.id.locationIcon) {
 			CommonConstants.LATITUDE = Double.parseDouble(ad.getLatitude());
 			CommonConstants.LONGITUDE = Double.parseDouble(ad.getLongitude());
 			Intent intent = new Intent(context, UAEMerchantGoogleMapActivity.class);
 			context.startActivity(intent);
+//			Intent intent = new Intent(context, com.uaemerchant.activities.MarkerDemoActivity.class);
+//			context.startActivity(intent);
 		} else if (id == R.id.messageBtn) {
 			Utilities.sms(ad.getPhone());
 		} else if (id == R.id.callBtn) {

@@ -8,8 +8,7 @@
     <ImageView
         android:id="@+id/backgourndImg"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="#A3A3A1" />
+        android:layout_height="fill_parent" />
 
     <RelativeLayout
         android:id="@+id/titleParent"
@@ -22,18 +21,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Location"
-            android:textColor="@android:color/black" />
+            android:text="@string/location_txt"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/mainParent"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_centerInParent="true"
         android:layout_below="@id/titleParent"
-        >
-        
+        android:layout_centerInParent="true" >
+
+        <!--
         <com.google.android.maps.MapView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/map_view"
@@ -43,9 +44,18 @@
          android:apiKey="03TuqZ7BCOn3pUf9WFwy44HP8WXbB-ZaJ3hdj7Q"
         android:clickable="true"
         android:enabled="true" />
-        
-        
-        
+        -->
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <fragment
+                android:id="@+id/map1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                class="com.google.android.gms.maps.SupportMapFragment" />
+        </FrameLayout>
     </RelativeLayout>
 
 </RelativeLayout>

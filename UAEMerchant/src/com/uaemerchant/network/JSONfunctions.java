@@ -32,7 +32,6 @@ import org.json.JSONObject;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.util.Log;
 
 import com.uaemerchant.common.Utilities;
@@ -229,10 +228,6 @@ public class JSONfunctions {
 					File file = new File(imagePaths[i]);
 					if (file != null) {
 						bm = BitmapFactory.decodeFile(imagePaths[i]);
-
-						// double width = bm.getWidth();
-						// double height = bm.getHeight();
-						// double aspectRatio = width/height;
 
 						bmpCompressed = Bitmap.createScaledBitmap(bm, 400, 400, true);
 						ByteArrayOutputStream bos = new ByteArrayOutputStream();

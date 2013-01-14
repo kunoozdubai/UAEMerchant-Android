@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -59,7 +60,7 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 	String price;
 	String category;
 	String city;
-	String address;
+	String address = "";
 	String description;
 	boolean location;
 	String longitude = "";
@@ -105,26 +106,29 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 		userId = Utilities.getStringValuesFromPreference(context, CommonConstants.PREF_USER_ID, "");
 		if(!Utilities.isStringEmptyOrNull(userId)){
 			initializeViews();
-			
-			
 		}else{
 			showRegisterAlertDialog();
 		}
 	}
 
 	private void initializeViews() {
-
+		
 		Button button = (Button) postView.findViewById(R.id.postBtn);
 		button.setOnClickListener(this); 
 		
+		button = (Button) postView.findViewById(R.id.btnCategories);
+		button.setOnClickListener(this);
+		
 		Spinner city = (Spinner) findViewById(R.id.cityInput);
-		ArrayAdapter<CharSequence> adapterCity = ArrayAdapter.createFromResource(context, R.array.cities, android.R.layout.simple_spinner_item);
-		adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		ArrayAdapter<CharSequence> adapterCity = ArrayAdapter.createFromResource(context, R.array.cities, R.layout.simple_spinner_selected_layout);
+//		adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		adapterCity.setDropDownViewResource(R.layout.simple_spinner_layout);
 		city.setAdapter(adapterCity);
 		
-		Spinner category = (Spinner) findViewById(R.id.categoryInput); 
-		ArrayAdapter<CharSequence> adaptergCategory = ArrayAdapter.createFromResource(context, R.array.category, android.R.layout.simple_spinner_item);
-		adaptergCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		Spinner category = (Spinner) findViewById(R.id.categoryInput);
+		ArrayAdapter<CharSequence> adaptergCategory = ArrayAdapter.createFromResource(context, R.array.category, R.layout.simple_spinner_selected_layout);
+//		adaptergCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		adaptergCategory.setDropDownViewResource(R.layout.simple_spinner_layout);
 		category.setAdapter(adaptergCategory);
 		
 		
@@ -153,13 +157,16 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 				Toast.makeText(context, "Please fill in the form!", Toast.LENGTH_SHORT).show();
 			}
 		}
+		if(id == R.id.btnCategories){
+			hide();
+		}
 
 	}
 
 	
 	private void showRegisterAlertDialog() {
 		Builder alertBuilder = new Builder(context);
-        
+        alertBuilder.setCancelable(false);
 		alertBuilder.setTitle("Register!");
         alertBuilder.setMessage("You need to register to post your ads");
         
@@ -291,7 +298,7 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 			return;
 		}
 		city = ((Spinner) findViewById(R.id.cityInput)).getSelectedItem().toString();
-		address = ((EditText) findViewById(R.id.addressInput)).getText().toString();
+		//address = ((EditText) findViewById(R.id.addressInput)).getText().toString();
 		description  = ((EditText) findViewById(R.id.descriptionInput)).getText().toString();
 		location  = ((ToggleButton) findViewById(R.id.locationInput)).isChecked();
 		if (location) {

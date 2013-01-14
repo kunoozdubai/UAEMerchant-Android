@@ -8,11 +8,9 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.uaemerchant.activities.UAEMerchantMainActivity;
 import com.uaemerchant.common.CommonConstants;
 import com.uaemerchant.common.Utilities;
 import com.uaemerchant.dialogs.AddPicturesDialog;
-import com.uaemerchant.dialogs.PostDialog;
 import com.uaemerchant.inapp.BillingService.RequestPurchase;
 import com.uaemerchant.inapp.BillingService.RestoreTransactions;
 import com.uaemerchant.inapp.Consts.PurchaseState;

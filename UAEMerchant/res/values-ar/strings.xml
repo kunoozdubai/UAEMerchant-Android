@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">UAEMerchant</string>
+    
+    <string name="categories_text">الأقسام</string>
+    
+    <string name="car_number_plates_txt">أرقام لوحات السيارات</string>
+    <string name="mobile_phone_numbers_txt">أرقام جوالات</string>
+    <string name="electronics_txt">إلكترونيات</string>
+    <string name="car_and_engines_txt">سيارات ومحركات</string>
+    <string name="real_estate_sale_txt">عقارات (بيع)</string>
+    <string name="real_estate_rent_txt">عقارات (إيجار)</string>
+    <string name="ladies_only_txt">سيدات فقط</string>
+    <string name="services_txt">خدمات</string>
+    <string name="furniture_txt">أثاث</string>
+    <string name="others_txt">متنوغ</string>
+    <string name="pets_txt">حيوانات اليفة</string>
+    <string name="city_spinner_prompt">مدينة</string>
+    <string name="category_spinner_prompt">الأقسام</string>
+    
+    <string name="arabic">Arabic</string>
+    <string name="english">English</string>
+    <string name="sale">بيع</string>
+    <string name="rent">استئجار</string>
+    <string name="cancel">إلغاء</string>
+    <string name="title_hint">عنوان</string>
+    <string name="price_hint">السعر</string>
+    <string name="address_hint">البريد</string>
+    
+    <string name="location_txt">الموقع</string>
+    <string name="description_txt">تفاصيل</string>
+    
+    <string name="post_btn">أعلن</string>
+    <string name="edit_btn">تعديل</string>
+    <string name="save_btn">تسجيل</string>
+    <string name="account_title">الحساب</string>
+    <string name="post_ad_title">إعلان</string>
+    <string name="item_list_title">المحتويات</string>
+    <string name="item_details_title">التفاصيل</string>
+    <string name="register_title">تسجيل</string>
+    <string name="register_btn">تسجيل</string>
+    
+    <string name="loading">تحميل</string>
+    
+    
+    
+    <string name="name">الإسم</string>
+    <string name="email">الإيميل</string>
+    <string name="phone">رقم التيليفون</string>
+    <string name="city">مدينة</string>
+    <string name="photos">صور</string>
+    
+    <string name="by">بواسطة:</string>
+    <string name="date">التاريخ:</string>
+    
+
+    <!-- IN APP BILLING -->
+    <string name="cannot_connect_title">Can\'t connect to Market</string>
+    <string name="cannot_connect_message">This app cannot connect to Market.
+     Your version of Market may be out of date.
+     You can continue to use this app but you
+     won\'t be able to make purchases.</string>
+    <string name="billing_not_supported_title">Can\'t make purchases</string>
+    <string name="billing_not_supported_message">The Market billing
+     service is not available at this time.  You can continue to use this app but you
+     won\'t be able to make purchases.</string>
+    <string formatted="false" name="help_url">http://market.android.com/support/bin/answer.py?answer=1050566&amp;hl=%lang%&amp;dl=%region%</string>
+    <string name="learn_more">Learn more</string>
+    
+</resources>

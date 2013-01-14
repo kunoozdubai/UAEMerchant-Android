@@ -9,16 +9,16 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uaemerchant.R;
@@ -31,7 +31,7 @@ import com.uaemerchant.dialogs.ItemDetailDialog;
 import com.uaemerchant.network.Parser;
 import com.uaemerchant.pojo.Ad;
 
-public class CategoryListActivity extends Activity implements OnClickListener, OnItemClickListener, OnScrollListener {
+public class CategoryListActivity extends Activity implements View.OnClickListener, OnItemClickListener, OnScrollListener {
 
 	private Context context;
 	private ListView myList = null;
@@ -57,16 +57,19 @@ public class CategoryListActivity extends Activity implements OnClickListener, O
 		setContentView(R.layout.ad_list_activity);
 		context = this; 
 		
-//		ImageView imageView = (ImageView) findViewById(R.id.background);
-//		imageView.setBackgroundDrawable(Utilities.imageMap.get("mainBackground"));
+		ImageView imageView = (ImageView) findViewById(R.id.background);
+		imageView.setBackgroundDrawable(Utilities.imageMap.get("mainBackground"));
 		
 		Bundle extras = getIntent().getExtras();
 		catName = extras.getString("catName");
 		catId = extras.getString("catId");
 		catName = catName.trim();
 		
-		TextView titleTxt = (TextView) findViewById(R.id.titleTxt);
-		titleTxt.setText(catName);
+//		TextView titleTxt = (TextView) findViewById(R.id.titleTxt);
+//		titleTxt.setText(catName);
+		
+		Button button = (Button) findViewById(R.id.btnCategories);
+		button.setOnClickListener(this);
 
 		categoryArrayList = new ArrayList<Ad>();
 
@@ -165,13 +168,9 @@ public class CategoryListActivity extends Activity implements OnClickListener, O
 	@Override
 	public void onClick(View v) {
 		int id = v.getId();
-
-//		if (id == R.id.loadMoreBtn) {
-//			page = page + 1;
-//			String postJSON = createRequestJSON(catId, String.valueOf(page), "10", key);
-//			new DataDownloadTask(context, new AdsResponse(), NetworkConstants.UAE_MERCHANT_URL + NetworkConstants.WS_AD_LIST, postJSON).execute();
-//		}
-		
+		if (id == R.id.btnCategories) {
+			finish();
+		}
 	}
 
 	private class AdsResponse implements IResponseListener {

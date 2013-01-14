@@ -1,5 +1,6 @@
 package com.uaemerchant.dialogs;
 
+
 import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
@@ -10,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.uaemerchant.R;
@@ -39,16 +41,15 @@ public class AccountDialog extends Dialog implements View.OnClickListener, OnCan
 		if(!Utilities.isStringEmptyOrNull(userId)){
 			initializeViews();
 		}else{
+			
 			showRegisterAlertDialog();
 		}
 	}
-
-	
 	
 	
 	private void showRegisterAlertDialog() {
 		Builder alertBuilder = new Builder(context);
-        
+        alertBuilder.setCancelable(false);
 		alertBuilder.setTitle("Register!");
         alertBuilder.setMessage("You need to register to post your ads");
         
@@ -74,6 +75,14 @@ public class AccountDialog extends Dialog implements View.OnClickListener, OnCan
 
 
 	private void initializeViews() {
+		
+		
+		
+		Button button = (Button) accountView.findViewById(R.id.btnCategories);
+		button.setOnClickListener(this);
+		button = (Button) accountView.findViewById(R.id.btnEdit);
+		button.setOnClickListener(this);
+		
 		TextView textview = (TextView) accountView.findViewById(R.id.nameTxt);
 		String value = Utilities.getStringValuesFromPreference(context, CommonConstants.PREF_NAME, "");
 		textview.setText(value);
@@ -92,20 +101,29 @@ public class AccountDialog extends Dialog implements View.OnClickListener, OnCan
 
 	}
 
-
 	@Override
 	public void hide() {
 		cancel();
-
 	}  
 
 	@Override
 	public void onClick(View v) {
-	int id = v.getId();	
-	
+		int id = v.getId();	
+		if(id == R.id.btnCategories){
+			hide();
+		}
+		if(id == R.id.btnEdit){
+			new RegisterDialog(context).show();
+		}
 	}
 	
-	
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		if(!hasFocus){
+			hide();
+		}
+		super.onWindowFocusChanged(hasFocus);
+	}
 	
 	private OnKeyListener accountKeyListener = new OnKeyListener() {
 
@@ -131,6 +149,11 @@ public class AccountDialog extends Dialog implements View.OnClickListener, OnCan
 		context = null;
 		activity = null;
 		Utilities.unbindDrawables(findViewById(R.id.account_dialog));
+	}
+	@Override
+	protected void onStop() {
+		super.onStop();
+		hide();
 	}
 
 

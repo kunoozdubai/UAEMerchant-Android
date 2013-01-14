@@ -1,6 +1,8 @@
 package com.uaemerchant.adapters;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -72,9 +74,10 @@ public class CategoryListViewAdapter extends BaseAdapter {
 
 			viewHolder.thumbnailImg = (ImageView) view.findViewById(R.id.thumbnailImg);
 			viewHolder.itemName = (TextView) view.findViewById(R.id.itemName);
-			viewHolder.priceTxt = (TextView) view.findViewById(R.id.priceTxt);
+			viewHolder.priceTxt = (TextView) view.findViewById(R.id.itemPrice);
 			viewHolder.byTxt = (TextView) view.findViewById(R.id.byTxt);
 			viewHolder.dateTxt = (TextView) view.findViewById(R.id.dateTxt);
+			viewHolder.descriptionTxt = (TextView) view.findViewById(R.id.itemDescription);
 
 //			viewHolder.itemName.setText(categoryList.get(position).getTitle());
 //			viewHolder.priceTxt.setText(categoryList.get(position).getPrice());
@@ -83,7 +86,11 @@ public class CategoryListViewAdapter extends BaseAdapter {
 			viewHolder.itemName.setText(a.getTitle());
 			viewHolder.priceTxt.setText(a.getPrice());
 			viewHolder.byTxt.setText(a.getName());
-			viewHolder.dateTxt.setText(a.getCreated());
+//			Date date = new Date());
+//			DateFormat df = DateFormat.getDateTimeInstance();
+//			String dateStr = df.format(date);
+			viewHolder.dateTxt.setText(a.getCreated().split(" ")[0]);
+			viewHolder.descriptionTxt.setText(a.getDescription().trim());
 			
 			view.setTag(viewHolder);
 		} else {
@@ -92,7 +99,11 @@ public class CategoryListViewAdapter extends BaseAdapter {
 			viewHolder.itemName.setText(a.getTitle());
 			viewHolder.priceTxt.setText(a.getPrice());
 			viewHolder.byTxt.setText(a.getName());
-			viewHolder.dateTxt.setText(a.getCreated());
+//			Date date = new Date(a.getCreated());
+//			DateFormat df = DateFormat.getDateTimeInstance();
+//			String dateStr = df.format(date);
+			viewHolder.dateTxt.setText(a.getCreated().split(" ")[0]);
+			viewHolder.descriptionTxt.setText(a.getDescription().trim());
 		}
 		
 		String url = a.getPhoto1();
@@ -122,6 +133,7 @@ public class CategoryListViewAdapter extends BaseAdapter {
 		TextView priceTxt;
 		TextView byTxt;
 		TextView dateTxt;
+		TextView descriptionTxt;
 	}
 
 }
