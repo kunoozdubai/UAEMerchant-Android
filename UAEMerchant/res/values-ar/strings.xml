@@ -54,6 +54,13 @@
     <string name="by">بواسطة:</string>
     <string name="date">التاريخ:</string>
     
+    <string name="no_thanks">لا شكرا</string>
+    <string name="register_msg">تحتاج إلى تسجيل لإضافة إعلاناتك</string>
+    
+    <string name="add_pictures">إضافة الصور</string>
+    <string name="no_post_ad">لا، نشر إعلان</string>
+    <string name="add_pictures_msg">ترغب إدراج الصور في الإعلان؟</string>
+    
 
     <!-- IN APP BILLING -->
     <string name="cannot_connect_title">Can\'t connect to Market</string>

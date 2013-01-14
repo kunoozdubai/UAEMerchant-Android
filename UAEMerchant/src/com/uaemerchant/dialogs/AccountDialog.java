@@ -50,10 +50,10 @@ public class AccountDialog extends Dialog implements View.OnClickListener, OnCan
 	private void showRegisterAlertDialog() {
 		Builder alertBuilder = new Builder(context);
         alertBuilder.setCancelable(false);
-		alertBuilder.setTitle("Register!");
-        alertBuilder.setMessage("You need to register to post your ads");
+		alertBuilder.setTitle(context.getString(R.string.register_title));
+        alertBuilder.setMessage(context.getString(R.string.register_msg));
         
-        alertBuilder.setNegativeButton("No Thanks", new OnClickListener() {
+        alertBuilder.setNegativeButton(context.getString(R.string.no_thanks), new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				// Go back to main category activity
@@ -61,7 +61,7 @@ public class AccountDialog extends Dialog implements View.OnClickListener, OnCan
 			}
 		});
 
-        alertBuilder.setPositiveButton("Register", new OnClickListener() {
+        alertBuilder.setPositiveButton(context.getString(R.string.register_title), new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				/// open registration dialog

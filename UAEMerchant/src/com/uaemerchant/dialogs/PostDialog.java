@@ -167,17 +167,17 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 	private void showRegisterAlertDialog() {
 		Builder alertBuilder = new Builder(context);
         alertBuilder.setCancelable(false);
-		alertBuilder.setTitle("Register!");
-        alertBuilder.setMessage("You need to register to post your ads");
+		alertBuilder.setTitle(context.getString(R.string.register_title));
+        alertBuilder.setMessage(context.getString(R.string.register_msg));
         
-        alertBuilder.setNegativeButton("No Thanks", new OnClickListener() {
+        alertBuilder.setNegativeButton(context.getString(R.string.no_thanks), new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				hide();
 			}
 		});
 
-        alertBuilder.setPositiveButton("Register", new OnClickListener() {
+        alertBuilder.setPositiveButton(context.getString(R.string.register_title), new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				/// open registration dialog
@@ -192,10 +192,10 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 	public void showAddPicturesDialog() {
 		Builder alertBuilder = new Builder(context);
         
-		alertBuilder.setTitle("Add Pictures");
-        alertBuilder.setMessage("Would you like to add pictures to the Ad?");
+		alertBuilder.setTitle(context.getString(R.string.add_pictures));
+        alertBuilder.setMessage(context.getString(R.string.add_pictures_msg));
         
-        alertBuilder.setNegativeButton("No, Post Ad", new OnClickListener() {
+        alertBuilder.setNegativeButton(context.getString(R.string.no_post_ad), new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				
@@ -204,7 +204,7 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 			}
 		});
 
-        alertBuilder.setPositiveButton("Add Pictures", new OnClickListener() {
+        alertBuilder.setPositiveButton(context.getString(R.string.add_pictures), new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				/// open dialog to add pictures

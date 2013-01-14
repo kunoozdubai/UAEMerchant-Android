@@ -43,7 +43,11 @@
     
     <string name="loading">Loading...</string>
     
-    
+    <string name="no_thanks">No Thanks</string>
+    <string name="register_msg">You need to register to post your ads</string>
+    <string name="add_pictures">Add pictures</string>
+    <string name="no_post_ad">No, post ad</string>
+    <string name="add_pictures_msg">Would you like to add pictures to the ad?</string>
     
     <string name="name">Name</string>
     <string name="email">Email</string>
