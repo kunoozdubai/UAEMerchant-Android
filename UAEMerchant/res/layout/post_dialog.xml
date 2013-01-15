@@ -157,7 +157,7 @@
         <RelativeLayout
             android:id="@+id/block6"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/block5"
             android:layout_marginTop="30dp" >
@@ -173,7 +173,7 @@
 
             <ToggleButton
                 android:id="@+id/locationInput"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="20dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="30dp"
