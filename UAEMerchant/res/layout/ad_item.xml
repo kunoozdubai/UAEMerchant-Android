@@ -33,8 +33,9 @@
             android:layout_toRightOf="@id/thumbnailImg"
             android:gravity="center"
             android:layout_centerHorizontal="true"
-            android:width="180dp"
             android:maxLines="1"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
             android:text=""
             android:textColor="@android:color/black" 
             android:background="@drawable/title_bg"/>

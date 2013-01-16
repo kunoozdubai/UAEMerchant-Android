@@ -36,7 +36,7 @@ public class UAEMerchantGoogleMapActivity extends FragmentActivity implements On
 	private GoogleMap mMap;
 	private Marker adMarker;
 	private String adAdress = "";
-	private static final LatLng adLocation = new LatLng(CommonConstants.LATITUDE, CommonConstants.LONGITUDE);
+	private static LatLng adLocation;
 
 	private Marker currentMarker;
 	private String currentAdress = "";
@@ -56,12 +56,17 @@ public class UAEMerchantGoogleMapActivity extends FragmentActivity implements On
 
 		context = this;
 
+		Bundle extras = getIntent().getExtras();
+		double latitude = Double.parseDouble(extras.getString("latitude"));
+		double longitude =  Double.parseDouble(extras.getString("longitude"));
+		adLocation = new LatLng(latitude,longitude);
+		
 		mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map1)).getMap();
 
 		Geocoder geocoder = new Geocoder(this, Locale.ENGLISH);
 		List<Address> addresses;
 		try {
-			addresses = geocoder.getFromLocation(latitudeE6, longitudeE6, 1);
+			addresses = geocoder.getFromLocation(latitude,longitude, 1);
 			Address returnedAddress = new Address(new Locale("en"));
 			if (addresses != null && addresses.size() > 0) {
 				returnedAddress = addresses.get(0);
@@ -160,6 +165,8 @@ public class UAEMerchantGoogleMapActivity extends FragmentActivity implements On
 
 	@Override
 	protected void onDestroy() {
+		CommonConstants.LATITUDE = 0.0;
+		CommonConstants.LONGITUDE = 0.0;
 		Utilities.unbindDrawables(findViewById(R.id.location_activity));
 		System.gc();
 		super.onDestroy();

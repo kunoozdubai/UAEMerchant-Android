@@ -130,11 +130,11 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 		
 		imageView = (ImageView) findViewById(R.id.twitterBtn);
 		imageView.setOnClickListener(this);
-
+		
+		imageView = (ImageView) findViewById(R.id.locationIcon);
 		if (!Utilities.isStringEmptyOrNull(ad.getLongitude()) && !Utilities.isStringEmptyOrNull(ad.getLatitude())
 				&& !ad.getLongitude().equals("-1.0000") && !ad.getLatitude().equals("-1.0000") ) {
 
-			imageView = (ImageView) findViewById(R.id.locationIcon);
 			imageView.setVisibility(View.VISIBLE);
 			imageView.setOnClickListener(this);
 		}else{
@@ -156,10 +156,13 @@ public class ItemDetailDialog extends Dialog implements View.OnClickListener, On
 		if (id == R.id.btnItemsList) {
 			hide();
 		} else if (id == R.id.locationIcon) {
-			CommonConstants.LATITUDE = Double.parseDouble(ad.getLatitude());
-			CommonConstants.LONGITUDE = Double.parseDouble(ad.getLongitude());
+//			CommonConstants.LATITUDE = Double.parseDouble(ad.getLatitude());
+//			CommonConstants.LONGITUDE = Double.parseDouble(ad.getLongitude());
 			Intent intent = new Intent(context, UAEMerchantGoogleMapActivity.class);
+			intent.putExtra("longitude", ad.getLongitude());
+			intent.putExtra("latitude", ad.getLatitude());
 			context.startActivity(intent);
+			
 //			Intent intent = new Intent(context, com.uaemerchant.activities.MarkerDemoActivity.class);
 //			context.startActivity(intent);
 		} else if (id == R.id.messageBtn) {

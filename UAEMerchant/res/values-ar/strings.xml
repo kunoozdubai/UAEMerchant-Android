@@ -61,6 +61,9 @@
     <string name="no_post_ad">لا، نشر إعلان</string>
     <string name="add_pictures_msg">ترغب إدراج الصور في الإعلان؟</string>
     
+    <string name="location_msg">غير قادر على الحصول على موقعك</string>
+    <string name="try_again">حاول مرة أخرى</string>
+    <string name="post_anyway">أضف أي حال</string>
 
     <!-- IN APP BILLING -->
     <string name="cannot_connect_title">Can\'t connect to Market</string>

@@ -152,7 +152,14 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 
 			prepareData();
 			if(ad != null){
+				if(location){
+					if("".equals(ad.getLongitude()) || "".equals(ad.getLatitude())){
+						showLocationAlertDialog();
+						return;
+					}	
+				}
 				showAddPicturesDialog();
+				
 			}else{
 				Toast.makeText(context, "Please fill in the form!", Toast.LENGTH_SHORT).show();
 			}
@@ -189,6 +196,31 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
         alertBuilder.create().show(); 
 	}
 	
+	private void showLocationAlertDialog() {
+		Builder alertBuilder = new Builder(context);
+        alertBuilder.setCancelable(true);
+		alertBuilder.setTitle(context.getString(R.string.location_txt));
+        alertBuilder.setMessage(context.getString(R.string.register_msg));
+        
+        alertBuilder.setNegativeButton(context.getString(R.string.try_again), new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				PostDialog.this.onClick(postView.findViewById(R.id.postBtn));
+			}
+		});
+
+        alertBuilder.setPositiveButton(context.getString(R.string.post_anyway), new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				/// open registration dialog
+				showAddPicturesDialog();
+				
+			}
+		});
+
+        alertBuilder.create().show(); 
+	}
+	
 	public void showAddPicturesDialog() {
 		Builder alertBuilder = new Builder(context);
         
@@ -200,7 +232,7 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 			public void onClick(DialogInterface dialog, int which) {
 				
 				postData();
-				hide();
+				//hide();
 			}
 		});
 

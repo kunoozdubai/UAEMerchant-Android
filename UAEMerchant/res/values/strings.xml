@@ -49,6 +49,10 @@
     <string name="no_post_ad">No, post ad</string>
     <string name="add_pictures_msg">Would you like to add pictures to the ad?</string>
     
+    <string name="location_msg">Unable to get your location</string>
+    <string name="try_again">Try again</string>
+    <string name="post_anyway">Post Anyway</string>
+    
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="phone">Phone</string>
