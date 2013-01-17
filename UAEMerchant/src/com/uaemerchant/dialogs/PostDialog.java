@@ -200,7 +200,7 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 		Builder alertBuilder = new Builder(context);
         alertBuilder.setCancelable(true);
 		alertBuilder.setTitle(context.getString(R.string.location_txt));
-        alertBuilder.setMessage(context.getString(R.string.register_msg));
+        alertBuilder.setMessage(context.getString(R.string.location_msg));
         
         alertBuilder.setNegativeButton(context.getString(R.string.try_again), new OnClickListener() {
 			@Override
@@ -356,7 +356,6 @@ public class PostDialog extends Dialog implements View.OnClickListener, OnCancel
 					user = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 					lat = (double) user.get(0).getLatitude();
 					lng = (double) user.get(0).getLongitude();
-//					Toast.makeText(activity, " DDD lat: " + lat + ",  longitude: " + lng, Toast.LENGTH_LONG).show();
 					longitude = String.valueOf(lng);
 					latitude = String.valueOf(lat);
 					
